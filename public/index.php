@@ -13,5 +13,8 @@ chdir(dirname(__DIR__));
 
 // Composer autoloading
 if (file_exists('vendor/autoload.php')) {
-    $loader = require 'vendor/autoload.php';
+    $loader = require_once 'vendor/autoload.php';
 }
+
+// Run the application
+Shopreview\Mvc\Application::init(require_once 'config/application.config.php')->run();
