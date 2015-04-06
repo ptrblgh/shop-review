@@ -1,6 +1,6 @@
 <?php
 
-namespace Shopreview\Mvc\Router;
+namespace Shopreview\Mvc;
 
 class Router
 {
