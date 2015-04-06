@@ -2,6 +2,8 @@
 
 namespace Shopreview\Mvc;
 
+use Shopreview\Helper\Helper;
+
 class Application
 {
     protected $appConfig = array();
@@ -39,6 +41,8 @@ class Application
      */
     public function run()
     {
+        Helper::removeMagicQuotes();
+        Helper::unregisterGlobals();
     }
 
     /**
