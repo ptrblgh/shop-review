@@ -43,6 +43,9 @@ class Application
     {
         Helper::removeMagicQuotes();
         Helper::unregisterGlobals();
+
+        $router = new Router($_GET['route']);
+        $router->dispatch();
     }
 
     /**
