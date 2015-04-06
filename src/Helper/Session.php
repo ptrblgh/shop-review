@@ -29,6 +29,9 @@ class Session
         static $instance = null;
 
         if (null === $instance) {
+            session_start();
+            self::$sessionId = session_id();
+            
             $instance = new static();
         }
 
