@@ -3,6 +3,7 @@
 namespace Shopreview\Mvc;
 
 use Shopreview\Helper\Helper;
+use Shopreview\Helper\Session;
 
 class Application
 {
@@ -41,11 +42,19 @@ class Application
      */
     public function run()
     {
+        // start session
+        $sess = Session::getInstance();
+
+        // some polish helpers
         Helper::removeMagicQuotes();
         Helper::unregisterGlobals();
 
+        // dispatching to route
         $router = new Router($_GET['route']);
         $router->dispatch();
+
+        // speed up concurrent connections
+        $sess->writeSession();
     }
 
     /**
