@@ -1,0 +1,16 @@
+{
+    "name": "ptrblgh/shop-review",
+    "description": "Review a shop",
+    "keywords": [
+        "shop",
+        "review"
+    ],
+    "homepage": "http://shop-review.theory9.hu",    
+    "autoload": {
+        "psr-4": {"Shopreview\\": "src/"}
+    },
+    "require": {
+        "twitter/bootstrap": "3.3.4",
+        "php": ">=5.3.3"
+    }
+}

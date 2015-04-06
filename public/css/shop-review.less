@@ -1,0 +1,349 @@
+// import original bootstrap less files that needed too
+@import "../../vendor/twitter/bootstrap/less/bootstrap.less";
+
+// custom styles, overrides
+@brand-first: #1e1e1e;
+@brand-secondary: rgb(51, 51, 51);
+@brand-third: #ccc;
+@brand-fourth: rgb(119, 119, 119);
+@brand-fifth: #f9f9f9;
+@icon-font-path: "../fonts/";
+
+//recreate local variables
+@input-height-base: 34px;
+@input-height-small: 30px;
+@input-height-large: 46px;
+@padding-base-horizontal: 12px;
+@grid-gutter-width: 30px;
+@screen-sm-min: 768px;
+
+// http://plnkr.co/edit/ZrnnkFR3Yv9HGQHrRMiW?p=preview
+.has-feedback {
+  // Right Icon Input Padding improvements
+  // when the padding mirrors the input height, it makes the icon look like it 
+  // occupies a square on the side of the control
+  .form-control{
+    padding-right: @input-height-base;
+  }
+  .form-control.input-sm,
+  &.form-group-sm .form-control{
+    padding-right: @input-height-small;
+  }
+  .form-control.input-lg,
+  &.form-group-lg .form-control {
+    padding-right: @input-height-large; 
+  }
+}
+.has-feedback-left {  
+  // Left Icon Input Padding
+  .form-control {
+    //reset changes to right
+    padding-right: @padding-base-horizontal;
+    padding-left: @input-height-base;
+  }
+  .form-control.input-sm,
+  &.form-group-sm .form-control{
+    padding-left: @input-height-small;
+  }
+  .form-control.input-lg,
+  &.form-group-lg .form-control {
+    padding-left: @input-height-large; 
+  }
+}
+
+// Left Align Icon
+.has-feedback-left .form-control-feedback {
+    left: 0; 
+}
+
+// Set Icon Line Height for vertical centering 
+// If using font awesome, library is likely to come after bootstrap library and 
+// override line-height set here.  I'm inclined to use !important to make it
+// easier for these line heights to persist in the case the icons are being 
+// used explicitly within an input box.
+.form-control-feedback {
+    line-height: @input-height-base !important;
+}
+.input-sm + .form-control-feedback,
+.form-horizontal .form-group-sm .form-control-feedback {
+    width: @input-height-small;
+    height: @input-height-small;
+    line-height: @input-height-small !important;
+}
+.input-lg + .form-control-feedback,
+.form-horizontal .form-group-lg .form-control-feedback {
+  width: @input-height-large;
+  height: @input-height-large;
+  line-height: @input-height-large !important;
+}
+
+
+// Move Icon to top
+// Added to first selector.  If the form-control-feedback is not a sibling,
+// but a child of a sibling, we want to move it up when there is no label.
+.has-feedback label {
+  &.sr-only ~ .form-control-feedback,
+  &.sr-only ~ div .form-control-feedback {
+    top: 0;
+  }
+}
+
+.form-inline {
+  @media (min-width: @screen-sm-min) {
+    // Allow left aligned icon in inline form
+    .inline-feedback {
+      // enable absolute positioning
+      position: relative;
+      display: inline-block;
+    }
+    
+    // Re-override the feedback icon.
+    .has-feedback .form-control-feedback {
+      top: 0;
+    }
+  }
+}
+
+.form-horizontal {
+  .has-feedback-left .form-control-feedback {
+    left: (@grid-gutter-width / 2);
+  }
+}
+
+html, body {
+  font-family: 'Roboto', Arial, sans-serif;
+  color: @brand-fourth;
+  text-rendering: auto;
+  padding-top: 25px;
+}
+
+a, a:focus, a:active, a:hover {
+  outline: none;
+  text-decoration: none;
+  color: @brand-warning;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Roboto Slab', sans-serif;
+  font-weight: 700;
+  color: @brand-secondary;
+  line-height: 1.5;
+}
+
+strong {
+  font-weight: 700;
+}
+
+hr {
+  border-color: @gray-lighter;
+  margin: 13px 0;
+}
+
+h3 a, h3 a:hover, h3 a:focus, h3:active {
+  color: @brand-secondary;
+}
+
+#map-canvas {
+  width: 100%;  
+  height: 360px;
+}
+
+#top-menu {
+    margin-right: 0;
+}
+
+.navbar-brand .brand-light {
+  font-weight: 100;
+}
+
+.color-brand-warning, .rating-container .rating-stars {
+  color: @brand-warning;
+}
+
+.navbar-default .navbar-nav > li > a:hover, 
+.navbar-default .navbar-nav > li > a:focus, #top-menu a.active {
+  border-bottom: 3px solid @brand-warning;
+}
+
+nav .nav > li > a {
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: @grid-gutter-width;
+}
+
+.navbar-bottom {
+  margin-top: 40px;
+  margin-bottom: 0;
+}
+
+.navbar-bottom p.navbar-text {
+  margin-left: 0;
+}
+
+.rating-container .rating-stars:before {
+  text-shadow: none;
+}
+
+.rating-xs {
+  font-size: 1.5em;
+}
+
+.rating-disabled .glyphicon-minus-sign {
+  display: none;
+}
+
+.rating-disabled .clear-rating {
+  padding-right: 0;
+}
+
+.media .star-rating {
+  margin-bottom: (@grid-gutter-width / 2)
+}
+
+.star-rating .label {
+  font-size: 100%;
+}
+
+.section-your-review {
+  background: @navbar-default-bg;
+  margin-top: 40px;
+  padding-bottom: 40px;
+}
+
+.section-your-review h3 {
+  border-bottom: none;
+}
+
+.collapse-body {
+  display: none;
+}
+
+.media, .media:first-child {
+  margin-top: @grid-gutter-width;
+}
+
+.media-left .glyphicon {
+  font-size: 3em;
+}
+
+.media-body {
+  padding-left: @grid-gutter-width;
+  border-left: 3px solid @brand-third;
+}
+
+.media-body p {
+  line-height: 1.5;
+  font-style: italic;
+}
+
+.thumbnail {
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: rgb(245, 245, 245);
+  margin-bottom: @grid-gutter-width;
+}
+
+.thumbnail .caption {
+  padding: 30px;
+}
+
+.thumbnail .caption p {
+  line-height: 1.9;
+}
+
+.thumbnail .caption h3 small {
+  white-space: nowrap;
+}
+
+.btn-full-width {
+  width: 100%;
+}
+
+.badge {
+  line-height: 1.3;
+  font-weight: normal;
+}
+
+.carousel-indicators {
+  bottom: 0;
+}
+
+.carousel-indicators li {
+  border-color: #fff;
+}
+
+.carousel-indicators .active {
+  background: #fff;
+}
+
+.carousel-control.right, .carousel-control.left {
+  background: none;
+}
+
+.carousel-control .glyphicon-chevron-right, 
+.carousel-control .glyphicon-chevron-left {
+  width: auto;
+  height: auto;
+  background: rgba(0,0,0,0.8);
+  padding: 7px;
+  border-radius: @border-radius-base;
+  font-size: 20px;
+}
+
+#top-link-block {
+    position: fixed; /* keeps it on the bottom once in view */
+    bottom: 35px; /* height of link element */
+    right: 15px; /* padding from the left side of the window */
+    display: none;
+}
+
+.name-group {
+  display: none;
+}
+
+@media (max-width: @screen-xs-max) {
+  
+  .carousel-control .glyphicon-chevron-right, 
+  .carousel-control .glyphicon-chevron-left {
+    font-size: 30px;
+  }
+
+  .navbar .btn-group {
+    margin-left: (@grid-gutter-width / 2);
+  }
+
+  #top-menu {
+    margin-right: 0;
+    margin-left: 0;
+  }
+
+  #top-menu li {
+    text-align: center;
+  }
+
+  .navbar-default .navbar-nav > li > a:hover, 
+  .navbar-default .navbar-nav > li > a:focus, #top-menu a.active {
+    border-bottom: none;
+  }
+
+  .nav > li > a {
+    padding-left: (@grid-gutter-width / 2);
+    padding-right: (@grid-gutter-width / 2);
+    margin-left: 0;
+  }
+
+  .media-body {
+    padding-left: 0;
+    border-left: none;
+  }
+}
+@media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+
+}
+@media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+
+}
+@media (min-width: @screen-lg-min) {
+
+}
