@@ -9,7 +9,7 @@ class Router
     const ACTION_PREFIX = 'Action';
 
     protected $route = '';
-    protected $action = 'index';
+    protected $action;
     protected $params = array();
     protected $view;
 
