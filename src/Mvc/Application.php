@@ -7,7 +7,7 @@ use Shopreview\Helper\Session;
 
 class Application
 {
-    protected $appConfig = array();
+    protected $config;
 
     /**
      * Prevent creating a new instance
@@ -25,13 +25,16 @@ class Application
      * @param  array  $config application configuration parameters
      * @return object singleton
      */
-    public static function init($config = array())
+    public static function getInstance(array $config)
     {
         static $instance = null;
 
         if (null === $instance) {
             $instance = new static();
-            $instance->appConfig = $config;  
+
+            if (!empty($config) && is_array($config)) {
+                $instance->config = $config;
+            }
         }
 
         return $instance;

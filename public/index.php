@@ -17,4 +17,6 @@ if (file_exists('vendor/autoload.php')) {
 }
 
 // Run the application
-Shopreview\Mvc\Application::init(require_once 'config/application.config.php')->run();
+Shopreview\Mvc\Application::getInstance(require_once 'config/application.config.php')
+    ->run()
+;
