@@ -2,6 +2,7 @@
 
 namespace Shopreview\Mvc;
 
+use Shopreview\Helper\Helper;
 use Shopreview\Helper\Session;
 
 class Controller
@@ -37,9 +38,10 @@ class Controller
         $view->display();
     }
 
-    public function loginAction()
+    public function forgotAction()
     {
-        $view = new JsonTemplate();
+        $data = Helper::sanitizeInput($_POST['email']);
+        $view = new JsonTemplate($data);
 
         $view->display();
     }
