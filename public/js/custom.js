@@ -168,36 +168,69 @@ $( document ).ready( function() {
         $("#form-register").valid();
     });
 
-    // forgot
-    var spinnerEl = '<span class="spinner-icon"></span>'
-    $('#forgot-btn').click( function(e) {
-        var $form = $('#form-forgot');
-        var name = $('#forgot-name').val();
-        e.preventDefault();
-        
-        // bot
-        if (name) {
-            return;
+    // forgot validation
+    $('#form-forgot').validate({
+        rules: {
+            'forgot-email': {
+                email: true,                
+                required: true
+            }
+        },
+        errorElement: 'small',
+        errorClass: 'text-danger',
+        highlight: function(element, errorClass, validClass) {
+            $(element).closest('.form-group').find('small')
+                .removeClass(validClass).addClass(errorClass)
+            ;
+            $(element).closest('.form-group').removeClass('has-success')
+                .addClass('has-error')
+            ;
+        },
+        unhighlight: function(element, errorClass, validClass) {
+            $(element).closest('.form-group').find('small')
+                .removeClass(errorClass).addClass(validClass)
+            ;
+            $(element).closest('.form-group').removeClass('has-error')
+                .addClass('has-success')
+            ;
         }
-
-        // not a bot
-        $form.fadeOut(600, 'easeOutExpo', function() {
-            $('#forgot').append(spinnerEl);
-            var url = '/forgot',
-                postData = {
-                    'method': 'forgot',
-                    'params': {
-                        'email': $('#login-username').val(),
-                    }
-                },
-                posting = $.post(url, JSON.stringify(postData));
+    });
+    $('#forgot-btn').on('click', function() {
+        if ($("#form-forgot").valid()) {
+            var spinnerEl = '<span class="spinner-icon"></span>'
+            var $form = $('#form-forgot');
+            var name = $('#forgot-name').val();
             
-            posting.done( function(data) {
-                $('.spinner-icon').remove();
-                //window.location.href = "/";
+            // bot
+            if (name) {
+                return;
+            }
+
+            // not a bot
+            $form.fadeOut(600, 'easeOutExpo', function() {
+                $('#forgot').append(spinnerEl);
+                var url = '/forgot',
+                    postData = {
+                        'method': 'forgot',
+                        'params': {
+                            'email': $('#login-username').val(),
+                        }
+                    },
+                    posting = $.post(url, JSON.stringify(postData));
+                
+                posting.done( function(data) {
+                    $('.spinner-icon').fadeOut(600, 'easeOutExpo', function() {
+                        var msg = '<small class="forgot-msg text-success">'
+                            + 'A new password was sent.</small>';
+                        $('.forgot-msg').remove();
+                        $('#form-forgot').append(msg);
+                        $('#forgot-email').val('');
+                        $('#form-forgot').fadeIn(600, 'easeOutExpo');
+                    });
+                });
             });
-        });
-    });    
+        }
+    });
 
     // google maps lazy load
     var element = $(this);
