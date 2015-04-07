@@ -215,7 +215,7 @@ $( document ).ready( function() {
                 posting.done( function(data) {
                     $('.spinner-icon').fadeOut(600, 'easeOutExpo', function() {
                         var msg = '<small class="forgot-msg text-success">'
-                            + 'A new password was sent.</small>';
+                            + data + '</small>';
                         $('.forgot-msg').remove();
                         $('#form-forgot').append(msg);
                         $('#forgot-email').val('');
