@@ -214,8 +214,6 @@
     <script src="js/jquery-1.11.1.min.js"></script>
     <script src="js/jquery.easing.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <script src="js/isotope.pkgd.min.js"></script>
-    <script src="js/imagesloaded.pkgd.min.js"></script>
     <script src="js/star-rating.min.js"></script>
     <script src="js/bootstrap-confirmation.min.js"></script>
     <script src="js/jquery.validate.min.js"></script>
