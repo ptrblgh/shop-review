@@ -16,7 +16,7 @@ class Controller
         $this->defaultActionPrefix = Router::ACTION_PREFIX;
     }
 
-    public function indexAction($params = array())
+    public function indexAction()
     {
         $templateFileName 
             = str_replace($this->defaultActionPrefix, '', __FUNCTION__);
@@ -28,7 +28,15 @@ class Controller
             (isset(Session::getInstance()->username)) 
                 ? Session::getInstance()->username : null
         ;
-        $view = new Template($templatePath, $templateFileName, $templateParams);
+        $view = new SmartyTemplate($templatePath, $templateFileName, $templateParams);
+
+        $view->display();
+    }
+
+    public function loginAction()
+    {
+        $data = array('status' => 'ok', 'other' => 'asd');
+        $view = new JsonTemplate($data);
 
         $view->display();
     }

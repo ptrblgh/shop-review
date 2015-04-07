@@ -2,7 +2,7 @@
 
 namespace Shopreview\Mvc;
 
-class Template
+class SmartyTemplate implements TemplateInterface
 {
     const EXTENSION = '.tpl';
 
