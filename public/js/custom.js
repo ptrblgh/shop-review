@@ -196,27 +196,21 @@ $( document ).ready( function() {
         }
     });
     $('#forgot-btn').on('click', function() {
-        if ($("#form-forgot").valid()) {
+        var name = $('#forgot-name').val();
+
+        // if name not empty, it is probably a bot
+        if ($("#form-forgot").valid() && !name) {
             var spinnerEl = '<span class="spinner-icon"></span>'
             var $form = $('#form-forgot');
-            var name = $('#forgot-name').val();
-            
-            // bot
-            if (name) {
-                return;
-            }
 
             // not a bot
             $form.fadeOut(600, 'easeOutExpo', function() {
                 $('#forgot').append(spinnerEl);
                 var url = '/forgot',
                     postData = {
-                        'method': 'forgot',
-                        'params': {
-                            'email': $('#login-username').val(),
-                        }
+                        'email': $('#forgot-email').val()
                     },
-                    posting = $.post(url, JSON.stringify(postData));
+                    posting = $.post(url, postData);
                 
                 posting.done( function(data) {
                     $('.spinner-icon').fadeOut(600, 'easeOutExpo', function() {
