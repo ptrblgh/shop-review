@@ -39,6 +39,7 @@ class Helper
         
         return $value;
     }
+    
     /**
     * Check for Magic Quotes and remove them
     */

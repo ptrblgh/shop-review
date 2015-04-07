@@ -50,7 +50,8 @@ class Application
         Helper::unregisterGlobals();
 
         // dispatching to route
-        $router = new Router($_GET['route']);
+        $route = isset($_GET['route']) ? $_GET['route'] : '';
+        $router = new Router($route);
         $router->dispatch();
 
         // speed up concurrent connections
