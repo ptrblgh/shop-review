@@ -40,7 +40,7 @@ class Router
             }
 
             // the second part is a digit, use as an id
-            if (is_numeric($matches[1])) {
+            if (!empty($metches[1]) && is_numeric($matches[1])) {
                 $this->params['id'] = $matches[1];
             }
     }
