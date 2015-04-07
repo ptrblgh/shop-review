@@ -71,12 +71,23 @@ class Helper
             '@<style[^>]*?>.*?</style>@siU',    // Strip style tags properly
             '@<![\s\S]*?--[ \t\n\r]*>@'         // Strip multi-line comments
         );
-        $input = preg_replace($search, '', $input);
 
-        if (get_magic_quotes_gpc()) {
-            $input = stripslashes($input);
+        $inputArr = array();
+
+        if (!is_array($input)) {
+            $inputArr[] = $input;
         }
 
-        return $input;
+        foreach ($inputArr as $key => $val) {
+            $val = preg_replace($search, '', $val);
+
+            if (get_magic_quotes_gpc()) {
+                $val = stripslashes($val);
+            }
+
+            $inputArr[$key] = $val;
+        }
+
+        return $inputArr;
     }
 }
