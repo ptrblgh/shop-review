@@ -73,7 +73,7 @@ class MysqlDbAdapter
     public static function getInstance($server, $username, $password, $dbName)
     {
         static $instance = null;
-        
+
         if (null === $instance) {
             $instance = new static();
 
@@ -111,6 +111,85 @@ class MysqlDbAdapter
         }
         
         return $this->connection;
+    }
+
+    /**
+     * Find user by its username
+     * 
+     * @param string $value username
+     * @return object
+     */
+    public function findUser($value)
+    {
+        $q = 'SELECT `username` FROM `user` WHERE `username` = :value';
+
+        try {
+            $stmt = $this->connection->prepare($q);
+            $stmt->execute(array('username' => $value));
+        } catch (\PDOException $e) {
+            trigger_error($e->getMessage(), E_USER_ERROR);
+
+            return false;
+        }
+
+        return $stmt->fetch(PDO::FETCH_OBJ);
+    }
+
+    /**
+     * Find user email in table
+     * 
+     * @param string $value username
+     * @return object
+     */
+    public function findEmail($value)
+    {
+        $q = 'SELECT `username` FROM `user` WHERE `email` = :value';
+
+        try {
+            $stmt = $this->connection->prepare($q);
+            $stmt->execute(array('username' => $value));
+        } catch (\PDOException $e) {
+            trigger_error($e->getMessage(), E_USER_ERROR);
+
+            return false;
+        }
+
+        return $stmt->fetch(PDO::FETCH_OBJ);
+    }
+
+    /**
+     * Insert registration data into database
+     * 
+     * @param array $data
+     * @return boolean
+     */
+    public function saveRegistration($data)
+    {
+        $userNameExists = $this->findUser($data['register_username']);
+        $emailExists = $this->findUser($data['register_username']);
+
+        if ((!empty($data) && is_array($data)) 
+            && ($data['register_username'] >= 3 
+                && $data['register_username'] <= 20
+                && !$userNameExists)
+            && (!empty($data['register_psw']) 
+                && $data['register_psw'] === $data['register_psw2'])
+            && (!empty($data['register_email']) && !$emailExists)
+        ) {
+            $q = 'INSERT INTO `user` '
+                . '(`username`, `password`, `email`) '
+                . 'VALUES (:register_username, `:register_password`, `:register_email`)'
+            ;
+
+            try {
+                $stmt = $this->connection->prepare($q);
+                $stmt->execute($data);
+            } catch (\PDOException $e) {
+                trigger_error($e->getMessage(), E_USER_ERROR);
+
+                return false;
+            }
+        }
     }
 
     /**

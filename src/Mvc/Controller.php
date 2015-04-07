@@ -67,6 +67,20 @@ class Controller
     }
 
     /**
+     * Registration
+     * 
+     * @return void
+     */
+    public function registerAction()
+    {
+        $data = Helper::sanitizeInput($_POST);
+        
+        $this->getDbAdapter()->saveRegistration($data);
+
+        header('Location: /');
+    }
+
+    /**
      * Create new password for email
      * 
      * @return string application/json
