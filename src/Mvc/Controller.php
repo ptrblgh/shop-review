@@ -7,9 +7,23 @@ use Shopreview\Helper\Session;
 
 class Controller
 {
+    /**
+     * Application config
+     * 
+     * @var array
+     */
     protected $appConfig;
+
+    /**
+     * Default prefix for actions parsed from route
+     * 
+     * @var string
+     */
     protected $defaultActionPrefix;
 
+    /**
+     * Constructor for Controller
+     */
     public function __construct()
     {
         $application = Application::getInstance();
@@ -17,6 +31,11 @@ class Controller
         $this->defaultActionPrefix = Router::ACTION_PREFIX;
     }
 
+    /**
+     * Homepage for site
+     * 
+     * @return string text/html
+     */
     public function indexAction()
     {
         $templateFileName 
@@ -35,9 +54,14 @@ class Controller
             $templateParams
         );
 
-        $view->display();
+        return $view->display();
     }
 
+    /**
+     * Create new password for email
+     * 
+     * @return string application/json
+     */
     public function forgotAction()
     {
         $data = Helper::sanitizeInput($_POST['email']);
