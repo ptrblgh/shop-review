@@ -57,7 +57,7 @@ class Router
         $controller = new $controllerName;
 
         if (!method_exists($controller, $methodName)) {
-            throw new Exception("Wrong controller.");
+            $methodName = self::ACTION . self::ACTION_PREFIX;
         }
 
         // call action method

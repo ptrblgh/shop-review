@@ -25,7 +25,7 @@ class Application
      * @param  array  $config application configuration parameters
      * @return object singleton
      */
-    public static function getInstance(array $config)
+    public static function getInstance($config = array())
     {
         static $instance = null;
 
@@ -59,6 +59,16 @@ class Application
 
         // speed up concurrent connections
         $sess->writeSession();
+    }
+
+    /**
+     * Getter for application config
+     * 
+     * @return array
+     */
+    public function getConfig()
+    {
+        return $this->config;
     }
 
     /**

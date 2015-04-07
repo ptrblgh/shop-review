@@ -4,6 +4,8 @@ if ($_SERVER['APPLICATION_ENV'] == 'development') {
      error_reporting(E_ALL);
      ini_set("display_errors", 1);
 }
+
+define('DS', DIRECTORY_SEPARATOR);
  
 /**
  * This makes our life easier when dealing with paths. Everything is relative
