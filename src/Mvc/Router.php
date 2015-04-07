@@ -4,7 +4,6 @@ namespace Shopreview\Mvc;
 
 class Router
 {
-    const CONTROLLER = 'Controller';
     const ACTION = 'index';
     const ACTION_PREFIX = 'Action';
 
@@ -52,9 +51,8 @@ class Router
     {
         $this->parseRoute();
 
-        $controllerName = self::CONTROLLER;
         $methodName = $this->action . self::ACTION_PREFIX;
-        $controller = new $controllerName;
+        $controller = new Controller();
 
         if (!method_exists($controller, $methodName)) {
             $methodName = self::ACTION . self::ACTION_PREFIX;
@@ -66,7 +64,7 @@ class Router
             $this->params
         );
 
-        // print out the html
-        echo $this->view;
+        // // print out the html
+        // echo $this->view;
     }
 }
