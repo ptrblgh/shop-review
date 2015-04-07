@@ -28,15 +28,18 @@ class Controller
             (isset(Session::getInstance()->username)) 
                 ? Session::getInstance()->username : null
         ;
-        $view = new SmartyTemplate($templatePath, $templateFileName, $templateParams);
+        $view = new SmartyTemplate(
+            $templatePath, 
+            $templateFileName, 
+            $templateParams
+        );
 
         $view->display();
     }
 
     public function loginAction()
     {
-        $data = array('status' => 'ok', 'other' => 'asd');
-        $view = new JsonTemplate($data);
+        $view = new JsonTemplate();
 
         $view->display();
     }
