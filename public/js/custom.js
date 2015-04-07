@@ -26,22 +26,6 @@ $( document ).ready( function() {
         s.parentNode.insertBefore(wf, s);
     })();
 
-    // initialize Isotope
-    var $container = $('#grid-items').isotope({
-        itemSelector: '.grid-item',
-        layoutMode: 'masonry',
-    });
-
-    // layout Isotope again after all images have loaded
-    $container.imagesLoaded( function() {
-        $container.isotope('layout');
-    });
-
-    // trigger Isotope when fonts have loaded
-    $('html').on('wfactive', function() {
-        $container.isotope('layout');
-    });
-
     // bind filter button click
     $('#filters').on( 'click', 'button', function() {
         var filterValue = $( this ).attr('data-filter');
