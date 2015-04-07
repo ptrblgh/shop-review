@@ -59,4 +59,26 @@ class Helper
             
         }
     }
+
+    /**
+    * Sanitize user input
+    */
+    public static function sanitizeInput($input)
+    {
+        $search = array(
+            '@<script[^>]*?>.*?</script>@si',   // Strip out javascript
+            '@<[\/\!]*?[^<>]*?>@si',            // Strip out HTML tags
+            '@<style[^>]*?>.*?</style>@siU',    // Strip style tags properly
+            '@<![\s\S]*?--[ \t\n\r]*>@'         // Strip multi-line comments
+        );
+        $input = preg_replace($search, '', $input);
+
+        if (get_magic_quotes_gpc()) {
+            $input = stripslashes($input);
+        }
+
+        $input = mysql_real_escape_string($input);
+
+        return $input;
+    }
 }
