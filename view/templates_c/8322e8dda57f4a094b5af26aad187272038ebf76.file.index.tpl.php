@@ -1,4 +1,29 @@
-<!DOCTYPE html>
+<?php /* Smarty version Smarty-3.1.21, created on 2015-04-07 12:08:07
+         compiled from "view/templates/index.tpl" */ ?>
+<?php /*%%SmartyHeaderCode:3791069155523a3821c5025-39052917%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+$_valid = $_smarty_tpl->decodeProperties(array (
+  'file_dependency' => 
+  array (
+    '8322e8dda57f4a094b5af26aad187272038ebf76' => 
+    array (
+      0 => 'view/templates/index.tpl',
+      1 => 1428401285,
+      2 => 'file',
+    ),
+  ),
+  'nocache_hash' => '3791069155523a3821c5025-39052917',
+  'function' => 
+  array (
+  ),
+  'version' => 'Smarty-3.1.21',
+  'unifunc' => 'content_5523a38222eb98_27512379',
+  'variables' => 
+  array (
+    'logged_in' => 0,
+  ),
+  'has_nocache_code' => false,
+),false); /*/%%SmartyHeaderCode%%*/?>
+<?php if ($_valid && !is_callable('content_5523a38222eb98_27512379')) {function content_5523a38222eb98_27512379($_smarty_tpl) {?><!DOCTYPE html>
 <!--[if IE 7]>
 <html class="ie ie7">
 <![endif]-->
@@ -116,11 +141,13 @@
     </div>
 </div>
 
-{if isset($logged_in)}
-    {include file="partial_form_review.tpl"}
-{else}
-    {include file="partial_form_login.tpl"}
-{/if}
+<?php if (isset($_smarty_tpl->tpl_vars['logged_in']->value)) {?>
+    <?php echo $_smarty_tpl->getSubTemplate ("partial_form_review.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, null, array(), 0);?>
+
+<?php } else { ?>
+    <?php echo $_smarty_tpl->getSubTemplate ("partial_form_login.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, null, array(), 0);?>
+
+<?php }?>
 
 <div class="container">
     <div class="row">
@@ -207,18 +234,37 @@
 </div>
 <!-- /#shop-modal -->
 
-{if !isset($logged_in)}
-    {include file="partial_modal_service.tpl"}
-{/if}
+<?php if (!isset($_smarty_tpl->tpl_vars['logged_in']->value)) {?>
+    <?php echo $_smarty_tpl->getSubTemplate ("partial_modal_service.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, null, array(), 0);?>
 
-    <script src="js/jquery-1.11.1.min.js"></script>
-    <script src="js/jquery.easing.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/isotope.pkgd.min.js"></script>
-    <script src="js/imagesloaded.pkgd.min.js"></script>
-    <script src="js/star-rating.min.js"></script>
-    <script src="js/bootstrap-confirmation.min.js"></script>
-    <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
-    <script src="js/custom.js"></script>
+<?php }?>
+
+    <?php echo '<script'; ?>
+ src="js/jquery-1.11.1.min.js"><?php echo '</script'; ?>
+>
+    <?php echo '<script'; ?>
+ src="js/jquery.easing.min.js"><?php echo '</script'; ?>
+>
+    <?php echo '<script'; ?>
+ src="js/bootstrap.min.js"><?php echo '</script'; ?>
+>
+    <?php echo '<script'; ?>
+ src="js/isotope.pkgd.min.js"><?php echo '</script'; ?>
+>
+    <?php echo '<script'; ?>
+ src="js/imagesloaded.pkgd.min.js"><?php echo '</script'; ?>
+>
+    <?php echo '<script'; ?>
+ src="js/star-rating.min.js"><?php echo '</script'; ?>
+>
+    <?php echo '<script'; ?>
+ src="js/bootstrap-confirmation.min.js"><?php echo '</script'; ?>
+>
+    <?php echo '<script'; ?>
+ src="http://maps.google.com/maps/api/js?sensor=false"><?php echo '</script'; ?>
+>
+    <?php echo '<script'; ?>
+ src="js/custom.js"><?php echo '</script'; ?>
+>
 </body>
-</html>
+</html><?php }} ?>
