@@ -18,13 +18,13 @@ class Template
     ) {
         $this->path = $templatePath;
 
-        $this->template = new Smarty();
-        $this->template->template_dir = $this->path.'/'.'templates';
-        $this->template->compile_dir = $this->path.'/'.'templates_c';
-        $this->template->cache_dir = $this->path.'/'.'cache';
-        $this->template->config_dir = $this->path.'/'.'config';
+        $this->template = new \Smarty();
+        $this->template->template_dir = $this->path . DS . 'templates';
+        $this->template->compile_dir = $this->path . DS . 'templates_c';
+        $this->template->cache_dir = $this->path . DS . 'cache';
+        $this->template->config_dir = $this->path . DS . 'config';
 
-        $this->fileName = $templateFileName . EXTENSION;
+        $this->fileName = $templateFileName . self::EXTENSION;
         $this->templateParams = $templateParams;
     }
 
@@ -36,6 +36,10 @@ class Template
             }
         }
 
-        $this->template->display($fileName);
+        // setting utf-8 character coding for php
+        mb_internal_encoding('UTF-8');
+        header('Content-Type: text/html; charset=utf-8');
+
+        $this->template->display($this->fileName);
     }
 }
