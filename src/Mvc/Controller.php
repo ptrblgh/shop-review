@@ -2,24 +2,34 @@
 
 namespace Shopreview\Mvc;
 
+use Shopreview\Helper\Session;
+
 class Controller
 {
     protected $appConfig;
     protected $defaultActionPrefix;
 
-    public function __construct(array $appConfig)
+    public function __construct()
     {
         $application = Application::getInstance();
         $this->appConfig = $application->getConfig();
         $this->defaultActionPrefix = Router::ACTION_PREFIX;
     }
 
-    public function indexAction(array $params)
+    public function indexAction($params = array())
     {
-        $templateFileName = str_replace($defaultActionPrefix, '', __METHOD__);
-        $templatePath = $appConfig['template_path'];
-        $view = new Template($templatePath, $templateFileName);
+        $templateFileName 
+            = str_replace($this->defaultActionPrefix, '', __FUNCTION__);
+        $templatePath = $this->appConfig['template_path'];
+        $templateParams = array();
+        
+        // sets variable for template if logged in
+        $templateParams['logged_in'] = 
+            (isset(Session::getInstance()->username)) 
+                ? Session::getInstance()->username : null
+        ;
+        $view = new Template($templatePath, $templateFileName, $templateParams);
 
-        return $view;
+        $view->display();
     }
 }
