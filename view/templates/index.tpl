@@ -218,6 +218,7 @@
     <script src="js/imagesloaded.pkgd.min.js"></script>
     <script src="js/star-rating.min.js"></script>
     <script src="js/bootstrap-confirmation.min.js"></script>
+    <script src="js/jquery.validate.min.js"></script>
     <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
     <script src="js/custom.js"></script>
 </body>

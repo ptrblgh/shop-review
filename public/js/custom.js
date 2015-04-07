@@ -94,6 +94,77 @@ $( document ).ready( function() {
     // bootstrap delete confirmation
     $('.btn-confirm').confirmation();
 
+    // login validation
+    $('#form-login').validate({
+        rules: {
+            'login-username': {
+                minlength: 3,
+                maxlength: 20,
+                required: true
+            },
+            'login-psw': {
+                minlength: 6,
+                maxlength: 72,                
+                required: true
+            }
+        },
+        errorElement: 'small',
+        errorClass: 'text-danger',
+        highlight: function(element, errorClass, validClass) {
+            $(element).closest('.form-group').find('small')
+                .removeClass(validClass).addClass(errorClass)
+            ;
+            $(element).closest('.form-group').removeClass('has-success')
+                .addClass('has-error')
+            ;
+        },
+        unhighlight: function(element, errorClass, validClass) {
+            $(element).closest('.form-group').find('small')
+                .removeClass(errorClass).addClass(validClass)
+            ;
+            $(element).closest('.form-group').removeClass('has-error')
+                .addClass('has-success')
+            ;
+        },
+        submitHandler: function(form) {
+            form.submit();
+        }
+    });
+    $('#login-btn').on('click', function() {
+        $("#form-login").valid();
+    });
+
+    // forgot
+    var spinnerEl = '<span class="spinner-icon"></span>'
+    $('#forgot-btn').click( function(e) {
+        var $form = $('#form-forgot');
+        var name = $('#forgot-name').val();
+        e.preventDefault();
+        
+        // bot
+        if (name) {
+            return;
+        }
+
+        // not a bot
+        $form.fadeOut(600, 'easeOutExpo', function() {
+            $('#forgot').append(spinnerEl);
+            var url = '/forgot',
+                postData = {
+                    'method': 'forgot',
+                    'params': {
+                        'email': $('#login-username').val(),
+                    }
+                },
+                posting = $.post(url, JSON.stringify(postData));
+            
+            posting.done( function(data) {
+                $('.spinner-icon').remove();
+                //window.location.href = "/";
+            });
+        });
+    });    
+
     // google maps lazy load
     var element = $(this);
     var map;
