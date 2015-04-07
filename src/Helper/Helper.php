@@ -77,8 +77,6 @@ class Helper
             $input = stripslashes($input);
         }
 
-        $input = mysql_real_escape_string($input);
-
         return $input;
     }
 }
