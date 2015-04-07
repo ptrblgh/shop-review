@@ -6,7 +6,7 @@ class JsonTemplate implements TemplateInterface
 {
     protected $data;
 
-    public function __construct($data)
+    public function __construct($data = null)
     {
         $this->data = $data;
     }
@@ -15,7 +15,9 @@ class JsonTemplate implements TemplateInterface
     {
         header('Content-Type: application/json; charset=utf-8');
         ob_start();
-        echo json_encode($this->data);
+        if (isset($this->data)) {
+            echo json_encode($this->data);
+        }
         ob_end_flush();
     }
 }
