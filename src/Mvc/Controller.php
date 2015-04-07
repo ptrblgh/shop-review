@@ -4,6 +4,7 @@ namespace Shopreview\Mvc;
 
 use Shopreview\Helper\Helper;
 use Shopreview\Helper\Session;
+use Shopreview\Helper\MysqlDbAdapter;
 
 class Controller
 {
@@ -20,6 +21,13 @@ class Controller
      * @var string
      */
     protected $defaultActionPrefix;
+
+    /**
+     * Database adapter
+     * 
+     * @var MysqlDbAdapter
+     */
+    protected $dbAdapter;
 
     /**
      * Constructor for Controller
@@ -48,6 +56,7 @@ class Controller
             (isset(Session::getInstance()->username)) 
                 ? Session::getInstance()->username : null
         ;
+        $this->getDbAdapter();
         $view = new SmartyTemplate(
             $templatePath, 
             $templateFileName, 
@@ -68,5 +77,26 @@ class Controller
         $view = new JsonTemplate($data);
 
         $view->display();
+    }
+
+    /**
+     * Lazy-load mysql database adapter
+     * 
+     * @return MysqlDbADapter
+     */
+    public function getDbAdapter()
+    {
+        if (!$this->dbAdapter) {
+            $dbConfig = $this->appConfig['db'];
+
+            $this->dbAdapter = MysqlDbAdapter::getInstance(
+                $dbConfig['server'],
+                $dbConfig['username'],
+                $dbConfig['password'],
+                $dbConfig['dbname']
+            );
+        }
+
+        return $this->dbAdapter;
     }
 }
