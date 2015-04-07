@@ -134,6 +134,56 @@ $( document ).ready( function() {
         $("#form-login").valid();
     });
 
+    // register validation
+    $('#form-register').validate({
+        rules: {
+            'register-username': {
+                minlength: 3,
+                maxlength: 20,
+                required: true
+            },
+            'register-psw': {
+                minlength: 6,
+                maxlength: 72,                
+                required: true
+            },
+            'register-psw2': {
+                minlength: 6,
+                maxlength: 72,                
+                required: true,
+                equalTo : "#register-psw"
+            },
+            'register-email': {
+                email: true,                
+                required: true
+            }
+        },
+        errorElement: 'small',
+        errorClass: 'text-danger',
+        highlight: function(element, errorClass, validClass) {
+            $(element).closest('.form-group').find('small')
+                .removeClass(validClass).addClass(errorClass)
+            ;
+            $(element).closest('.form-group').removeClass('has-success')
+                .addClass('has-error')
+            ;
+        },
+        unhighlight: function(element, errorClass, validClass) {
+            $(element).closest('.form-group').find('small')
+                .removeClass(errorClass).addClass(validClass)
+            ;
+            $(element).closest('.form-group').removeClass('has-error')
+                .addClass('has-success')
+            ;
+        },
+        submitHandler: function(form) {
+            form.submit();
+        }
+    });
+    $('#register-btn').on('click', function() {
+        $("#form-register").valid();
+    });
+
     // forgot
     var spinnerEl = '<span class="spinner-icon"></span>'
     $('#forgot-btn').click( function(e) {
