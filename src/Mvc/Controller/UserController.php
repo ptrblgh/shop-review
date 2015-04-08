@@ -40,7 +40,11 @@ class UserController extends BaseController
         $bcrypt = new BCrypt();
         $data['crypted_psw'] = $bcrypt->crypt($data['register_psw']);
 
-        $form = new UserRegistrationFormValidator($data);
+        $form = new UserRegistrationFormValidator(
+            $data, 
+            array(), 
+            $this->getUserRepository()
+        );
 
         if ($form->isValid()) {
             $res = $this->getUserRepository()->saveUser($data);
@@ -52,7 +56,7 @@ class UserController extends BaseController
             Session::getInstance()->form_errors = $form->getErrors();
         }
 
-        //header('Location: /');
+        header('Location: /');
     }
 
     /**
