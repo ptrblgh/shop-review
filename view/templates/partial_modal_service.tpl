@@ -38,30 +38,30 @@
                         </form>
                     </div>
                     <div class="tab-pane fade text-center" id="register">
-                        <form name="form-register" id="form-register" method="post" action ="/">
+                        <form name="form-register" id="form-register" method="post" action ="/register">
                             <div class="form-group">
                                 <div class="form-group has-feedback has-feedback-left">
                                     <label class="control-label" for="register-username">Username</label>
-                                    <input type="text" name="register-username" id="register-username" class="form-control" placeholder="Username" />
+                                    <input type="text" name="register_username" id="register-username" class="form-control" placeholder="Username" />
                                     <span class="form-control-feedback glyphicon glyphicon-user"></span>
                                 </div>
                                 <div class="form-group has-feedback has-feedback-left">
                                     <label class="control-label" for="register-psw">Password</label>
-                                    <input type="password" name="register-psw" id="register-psw" class="form-control" placeholder="Password" />
+                                    <input type="password" name="register_psw" id="register-psw" class="form-control" placeholder="Password" />
                                     <span class="form-control-feedback glyphicon glyphicon-lock"></span>
                                 </div>
                                 <div class="form-group has-feedback has-feedback-left">
                                     <label class="control-label" for="register-psw2">Re-enter password</label>
-                                    <input type="password" name="register-psw2" id="register-psw2" class="form-control" placeholder="Password" />
+                                    <input type="password" name="register_psw2" id="register-psw2" class="form-control" placeholder="Password" />
                                     <span class="form-control-feedback glyphicon glyphicon-lock"></span>
                                 </div>
                                 <div class="form-group has-feedback has-feedback-left">
                                     <label class="control-label" for="register-email">E-mail</label>
-                                    <input type="text" name="register-email" id="register-email" class="form-control" placeholder="E-mail" />
+                                    <input type="text" name="register_email" id="register-email" class="form-control" placeholder="E-mail" />
                                     <span class="form-control-feedback glyphicon glyphicon-envelope"></span>
                                 </div>
                                 <div class="name-group">
-                                    <input type="text" name="register-name" id="register-name" class="form-control" placeholder="E-mail" />
+                                    <input type="text" name="register_name" id="register-name" class="form-control" placeholder="E-mail" />
                                 </div>
                                 <div class="form-group text-center">
                                     <button type="button" name="register-btn" id="register-btn" class="btn btn-success">Register</button>

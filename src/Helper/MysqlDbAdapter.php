@@ -125,14 +125,14 @@ class MysqlDbAdapter
 
         try {
             $stmt = $this->connection->prepare($q);
-            $stmt->execute(array('username' => $value));
+            $stmt->execute(array('value' => $value));
         } catch (\PDOException $e) {
             trigger_error($e->getMessage(), E_USER_ERROR);
 
             return false;
         }
 
-        return $stmt->fetch(PDO::FETCH_OBJ);
+        return $stmt->fetch(\PDO::FETCH_OBJ);
     }
 
     /**
@@ -165,25 +165,38 @@ class MysqlDbAdapter
      */
     public function saveRegistration($data)
     {
-        $userNameExists = $this->findUser($data['register_username']);
-        $emailExists = $this->findUser($data['register_username']);
+        $userNameExists 
+            = isset($data['register_username']) 
+                ? $this->findUser($data['register_username']) 
+                : null
+        ;
+        $emailExists             
+            = isset($data['register_email']) 
+                ? $this->findUser($data['register_email']) 
+                : null
+        ;
 
         if ((!empty($data) && is_array($data)) 
-            && ($data['register_username'] >= 3 
-                && $data['register_username'] <= 20
+            && (strlen($data['register_username']) >= 3 
+                && strlen($data['register_username']) <= 20
                 && !$userNameExists)
-            && (!empty($data['register_psw']) 
+            && (strlen($data['register_psw']) >= 6
+                && strlen($data['register_psw']) <= 72
                 && $data['register_psw'] === $data['register_psw2'])
             && (!empty($data['register_email']) && !$emailExists)
         ) {
-            $q = 'INSERT INTO `user` '
-                . '(`username`, `password`, `email`) '
-                . 'VALUES (:register_username, `:register_password`, `:register_email`)'
+            $q = "INSERT INTO `user` "
+                . "(`username`, `password`, `email`) "
+                . "VALUES (:register_username, :register_psw, :register_email)"
             ;
 
             try {
                 $stmt = $this->connection->prepare($q);
-                $stmt->execute($data);
+                $stmt->execute(array(
+                    'register_username' => $data['register_username'],
+                    'register_psw' => $data['register_psw'],
+                    'register_email' => $data['register_email']
+                ));
             } catch (\PDOException $e) {
                 trigger_error($e->getMessage(), E_USER_ERROR);
 

@@ -74,10 +74,13 @@ class Controller
     public function registerAction()
     {
         $data = Helper::sanitizeInput($_POST);
-        
+
+        // TODO
+        // bcrypt $data['psw']
+
         $this->getDbAdapter()->saveRegistration($data);
 
-        header('Location: /');
+        //header('Location: /');
     }
 
     /**
@@ -88,6 +91,7 @@ class Controller
     public function forgotAction()
     {
         $data = Helper::sanitizeInput($_POST['email']);
+
         $view = new JsonTemplate($data);
 
         $view->display();
