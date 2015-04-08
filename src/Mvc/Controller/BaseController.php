@@ -51,9 +51,10 @@ class BaseController
         
         // sets variable for template if logged in
         $templateParams['logged_in'] = 
-            (isset(Session::getInstance()->username)) 
+            (Session::getInstance()->username !== '') 
                 ? Session::getInstance()->username : null
         ;
+
         $this->getReviewRepository();
         $view = new View\SmartyTemplate(
             $templatePath, 
