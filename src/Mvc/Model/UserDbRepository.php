@@ -117,48 +117,26 @@ class UserDbRepository extends MysqlDb
      */
     public function saveUser($data)
     {
-        $userNameExists 
-            = isset($data['register_username']) 
-                ? $this->findUsername($data['register_username']) 
-                : null
-        ;
-        $emailExists             
-            = isset($data['register_email']) 
-                ? $this->findEmail($data['register_email']) 
-                : null
+        $q = "INSERT INTO `user` "
+            . "(`username`, `password`, `email`) "
+            . "VALUES (:register_username, :register_psw, :register_email)"
         ;
 
-        if ((!empty($data) && is_array($data)) 
-            && (strlen($data['register_username']) >= 3 
-                && strlen($data['register_username']) <= 20
-                && !$userNameExists)
-            && (!empty($data['register_psw'])
-                && $data['register_psw'] === $data['register_psw2'])
-            && !empty($data['crypted_psw'])
-            && (!empty($data['register_email']) && !$emailExists)
-        ) {
-            $q = "INSERT INTO `user` "
-                . "(`username`, `password`, `email`) "
-                . "VALUES (:register_username, :register_psw, :register_email)"
-            ;
+        try {
+            $stmt = $this->connection->prepare($q);
+            $ret = $stmt->execute(array(
+                'register_username' => $data['register_username'],
+                'register_psw' => $data['crypted_psw'],
+                'register_email' => $data['register_email']
+            ));
 
-            try {
-                $stmt = $this->connection->prepare($q);
-                $ret = $stmt->execute(array(
-                    'register_username' => $data['register_username'],
-                    'register_psw' => $data['crypted_psw'],
-                    'register_email' => $data['register_email']
-                ));
-
-                return $ret;
-            } catch (\PDOException $e) {
-                trigger_error($e->getMessage(), E_USER_ERROR);
-
-                return false;
-            }
+            return $ret;
+        } catch (\PDOException $e) {
+            trigger_error($e->getMessage(), E_USER_ERROR);
 
             return false;
         }
+
     }
 
     /**
