@@ -103,7 +103,7 @@ class UserController extends BaseController
             $mailConfig = $this->appConfig['mail'];
             $mail = new Message($mailConfig);
             $mail->setAddress = $user->email;
-            $mail->setSubject = $user->email;
+            $mail->setSubject = '[Shop review] New password';
             $mail->setBody = 'Dear' . $user->username . ',\n\n'
                 . 'Your new password: ' . $user->password;
             $mailSent = $mail->send();
