@@ -3,16 +3,50 @@
 namespace Shopreview\Mvc\Model;
 
 use Shopreview\Helper\Db\MysqlDb;
+use Shopreview\Mvc\Model\User;
 
 class UserDbRepository extends MysqlDb
 {
+    
+    public function fetchAll()
+    {
+        $q = 'SELECT * FROM `user`';
+
+        try {
+            $stmt = $this->connection->prepare($q);
+            $stmt->execute(array());
+        } catch (\PDOException $e) {
+            trigger_error($e->getMessage(), E_USER_ERROR);
+
+            return false;
+        }
+
+        return $stmt->fetchAll(PDO::FETCH_CLASS, 'User');
+    }
+
+    public function findUser($username)
+    {
+        $q = 'SELECT * FROM `user` WHERE `username` = :value';
+
+        try {
+            $stmt = $this->connection->prepare($q);
+            $stmt->execute(array('value' => $value));
+        } catch (\PDOException $e) {
+            trigger_error($e->getMessage(), E_USER_ERROR);
+
+            return false;
+        }
+
+        return $stmt->fetch(PDO::FETCH_CLASS, 'User');
+    }
+
     /**
      * Find user by its username
      * 
      * @param string $value username
      * @return object
      */
-    public function findUser($value)
+    public function findUsername($value)
     {
         $q = 'SELECT `username` FROM `user` WHERE `username` = :value';
 
@@ -36,7 +70,7 @@ class UserDbRepository extends MysqlDb
      */
     public function findEmail($value)
     {
-        $q = 'SELECT `username` FROM `user` WHERE `email` = :value';
+        $q = 'SELECT `email` FROM `user` WHERE `email` = :value';
 
         try {
             $stmt = $this->connection->prepare($q);
@@ -60,12 +94,12 @@ class UserDbRepository extends MysqlDb
     {
         $userNameExists 
             = isset($data['register_username']) 
-                ? $this->findUser($data['register_username']) 
+                ? $this->findUsername($data['register_username']) 
                 : null
         ;
         $emailExists             
             = isset($data['register_email']) 
-                ? $this->findUser($data['register_email']) 
+                ? $this->findEmail($data['register_email']) 
                 : null
         ;
 
@@ -97,7 +131,7 @@ class UserDbRepository extends MysqlDb
 
                 return false;
             }
-            
+
             return false;
         }
     }

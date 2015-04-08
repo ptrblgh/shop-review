@@ -5,6 +5,7 @@ namespace Shopreview\Mvc\Controller;
 use Shopreview\Helper\Helper;
 use Shopreview\Helper\Crypt\BCrypt;
 use ShopReview\Helper\Session;
+use Shopreview\Mvc\Model\User;
 use Shopreview\Mvc\Model\UserDbRepository;
 
 class UserController extends BaseController
@@ -41,6 +42,31 @@ class UserController extends BaseController
         if ($res) {
             Session::getInstance()->username = $data['register_username'];
         }
+
+        header('Location: /');
+    }
+
+    /**
+     * Login
+     * 
+     * @return void
+     */
+    public function loginAction()
+    {
+        $data = Helper::sanitizeInput($_POST);
+
+        $user 
+            = $this->getUserRepository()->findUser($data['login_username']);
+
+        if ($user instanceof User) {
+            $bcrypt = new Bcrypt();
+            $valid = $bcrypt->isValid($data['login_psw'], $user->password);
+            if ($valid) {
+                Session::getInstance()->username = $data['login_username'];
+            }
+        }
+
+        var_dump($user); die();
 
         header('Location: /');
     }
