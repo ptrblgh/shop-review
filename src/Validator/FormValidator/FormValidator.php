@@ -71,6 +71,16 @@ class FormValidator implements ValidatorInterface
         return false;
     }
 
+    /**
+     * Getter for error messages
+     * 
+     * @return array
+     */
+    public function getErrors()
+    {
+        return $this->errors;
+    }
+
     // TODO: add csrf validation (Shopreview\Validator\Csrf)
     // TODO: add add numbers captcha validation (Shopreview\Validator\Captcha)
 }
