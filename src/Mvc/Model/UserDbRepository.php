@@ -136,7 +136,6 @@ class UserDbRepository extends MysqlDb
 
             return false;
         }
-
     }
 
     /**
