@@ -89,6 +89,10 @@ class UserController extends BaseController
     {
         $data = Helper::sanitizeInput($_POST['email']);
 
+        $newPsw = Helper::getRandomPsw();
+
+        
+
         $view = new JsonTemplate($data);
 
         $view->display();
