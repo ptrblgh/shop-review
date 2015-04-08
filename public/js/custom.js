@@ -115,7 +115,10 @@ $( document ).ready( function() {
         }
     });
     $('#login-btn').on('click', function() {
-        if ($("#form-login").valid()) {
+        var name = $('#login-name').val();
+
+        // if name not empty, it is probably a bot
+        if ($("#form-login").valid() && !name) {
             $("#form-login").submit();
         }
     });
@@ -164,7 +167,10 @@ $( document ).ready( function() {
         }
     });
     $('#register-btn').on('click', function() {
-        if ($("#form-register").valid()) {
+        var name = $('#register-name').val();
+
+        // if name not empty, it is probably a bot
+        if ($("#form-register").valid() && !name) {
             $("#form-register").submit();
         }
     });
