@@ -72,25 +72,25 @@ class Helper
             '@<![\s\S]*?--[ \t\n\r]*>@'         // Strip multi-line comments
         );
 
-        $inputArr = array();
+        if (is_array($input)) {
+            foreach ($input as $key => $val) {
+                $val = preg_replace($search, '', $val);
 
-        if (!is_array($input)) {
-            $inputArr[] = $input;
-        } else {
-            $inputArr = $input;
-        }
+                if (get_magic_quotes_gpc()) {
+                    $val = stripslashes($val);
+                }
 
-        foreach ($inputArr as $key => $val) {
-            $val = preg_replace($search, '', $val);
-
-            if (get_magic_quotes_gpc()) {
-                $val = stripslashes($val);
+                $input[$key] = $val;
             }
 
-            $inputArr[$key] = $val;
+        } else {
+            $input = preg_replace($search, '', $input);
+            if (get_magic_quotes_gpc()) {
+                $input = stripslashes($input);
+            }
         }
 
-        return $inputArr;
+        return $input;
     }
 
     /**

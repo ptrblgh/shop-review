@@ -99,7 +99,7 @@ class UserDbRepository extends MysqlDb
         try {
             $stmt = $this->connection->prepare($q);
             $stmt->setFetchMode(\Pdo::FETCH_INTO, new User());
-            $stmt->execute(array('username' => $value));
+            $stmt->execute(array('value' => $value));
         } catch (\PDOException $e) {
             trigger_error($e->getMessage(), E_USER_ERROR);
 
@@ -167,7 +167,7 @@ class UserDbRepository extends MysqlDb
      * @param User $user
      * @return boolean
      */
-    public function updateUserPasssword(User $user)
+    public function updateUserPassword(User $user)
     {
         $q = "UPDATE `user` SET "
             . "`password` = :psw "

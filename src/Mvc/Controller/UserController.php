@@ -3,10 +3,12 @@
 namespace Shopreview\Mvc\Controller;
 
 use Shopreview\Helper\Helper;
+use Shopreview\Helper\Message;
 use Shopreview\Helper\Crypt\BCrypt;
 use ShopReview\Helper\Session;
 use Shopreview\Mvc\Model\User;
 use Shopreview\Mvc\Model\UserDbRepository;
+use Shopreview\Mvc\View\JsonTemplate;
 
 class UserController extends BaseController
 {
@@ -97,9 +99,27 @@ class UserController extends BaseController
             $user->password = $bcrypt->crypt($newPsw);
 
             $this->getUserRepository()->updateUserPassword($user);
+
+            $mailConfig = $this->appConfig['mail'];
+            $mail = new Message($mailConfig);
+            $mail->setAddress = $user->email;
+            $mail->setSubject = $user->email;
+            $mail->setBody = 'Dear' . $user->username . ',\n\n'
+                . 'Your new password: ' . $user->password;
+            $mailSent = $mail->send();
+            if ($mailSent) {
+                $jsonData['status'] = 'success';
+                $jsonData['msg'] = 'A new password was sent.';
+            } else {
+                $jsonData['status'] = 'error';
+                $jsonData['msg'] = $mailSent;
+            }
+        } else {
+            $jsonData['status'] = 'error';
+            $jsonData['msg'] = 'This email is not registered.';
         }
 
-        $view = new JsonTemplate($data);
+        $view = new JsonTemplate($jsonData);
 
         $view->display();
     }
