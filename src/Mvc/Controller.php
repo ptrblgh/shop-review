@@ -80,7 +80,7 @@ class Controller
 
         $this->getDbAdapter()->saveRegistration($data);
 
-        //header('Location: /');
+        header('Location: /');
     }
 
     /**
