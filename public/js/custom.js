@@ -214,9 +214,12 @@ $( document ).ready( function() {
                     posting = $.post(url, postData);
                 
                 posting.done( function(data) {
+                    var dataObj = data;
                     $('.spinner-icon').fadeOut(600, 'easeOutExpo', function() {
-                        var msg = '<small class="forgot-msg text-success">'
-                            + data + '</small>';
+                        var textClass = (dataObj.status == 'success')
+                            ? 'text-success' : 'text-danger';
+                        var msg = '<small class="forgot-msg ' + textClass + '">'
+                            + dataObj.msg + '</small>';
                         $('.forgot-msg').remove();
                         $('#form-forgot').append(msg);
                         $('#forgot-email').val('');
