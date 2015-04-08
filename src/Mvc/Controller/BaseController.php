@@ -2,9 +2,10 @@
 
 namespace Shopreview\Mvc\Controller;
 
-use Shopreview\Helper\MysqlDbAdapter;
+use Shopreview\Helper\Db\MysqlDb;
 use ShopReview\Helper\Session;
 use Shopreview\Mvc\Application;
+use Shopreview\Mvc\Model\ReviewDbRepository;
 use Shopreview\Mvc\Router;
 use Shopreview\Mvc\View;
 
@@ -22,11 +23,11 @@ class BaseController
     protected $appConfig = array();
 
     /**
-     * Database adapter
+     * Mysql database repository for review
      * 
-     * @var MysqlDbAdapter
+     * @var MysqlDb
      */
-    protected $dbAdapter;
+    protected $reviewRepository;
 
     /**
      * Constructor for Controller
@@ -53,12 +54,14 @@ class BaseController
             (isset(Session::getInstance()->username)) 
                 ? Session::getInstance()->username : null
         ;
-        $this->getDbAdapter();
+        $this->getReviewRepository();
         $view = new View\SmartyTemplate(
             $templatePath, 
             $this->getTemplateFileName(__FUNCTION__), 
             $templateParams
         );
+
+        $this->getReviewRepository()->close();
 
         return $view->display();
     }
@@ -82,23 +85,24 @@ class BaseController
     }
 
     /**
-     * Lazy-load mysql database adapter
+     * Lazy-load review database repository
      * 
-     * @return MysqlDbADapter
+     * @return MysqlDb
      */
-    public function getDbAdapter()
+    public function getReviewRepository()
     {
-        if (!$this->dbAdapter) {
+        if (!$this->reviewRepository) {
             $dbConfig = $this->appConfig['db'];
 
-            $this->dbAdapter = MysqlDbAdapter::getInstance(
+            $this->reviewRepository = ReviewDbRepository::getInstance(
                 $dbConfig['server'],
+                $dbConfig['driver'],
                 $dbConfig['username'],
                 $dbConfig['password'],
                 $dbConfig['dbname']
             );
         }
 
-        return $this->dbAdapter;
+        return $this->reviewRepository;
     }
 }

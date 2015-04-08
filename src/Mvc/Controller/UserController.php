@@ -6,6 +6,9 @@ use Shopreview\Helper\Helper;
 
 class UserController extends BaseController
 {
+
+    protected $userRepository;
+
     /**
      * Constructor for Controller
      */
@@ -43,5 +46,27 @@ class UserController extends BaseController
         $view = new JsonTemplate($data);
 
         $view->display();
+    }
+
+    /**
+     * Lazy-load review database repository
+     * 
+     * @return MysqlDb
+     */
+    public function getUserRepository()
+    {
+        if (!$this->userRepository) {
+            $dbConfig = $this->appConfig['db'];
+
+            $this->userRepository = UserDbRepository::getInstance(
+                $dbConfig['server'],
+                $dbConfig['driver'],
+                $dbConfig['username'],
+                $dbConfig['password'],
+                $dbConfig['dbname']
+            );
+        }
+
+        return $this->userRepository;
     }
 }
