@@ -2,15 +2,18 @@
 
 namespace Shopreview\Mvc;
 
+use Shopreview\Mvc\Controller\BaseController;
+
 class Router
 {
-    const ACTION = 'index';
-    const ACTION_PREFIX = 'Action';
+    const DEFAULT_CONTROLLER = 'Base';
+    const CONTROLLER_POSTFIX = 'Controller';
+    const DEFAULT_ACTION = 'index';
+    const ACTION_POSTFIX = 'Action';
 
     protected $route = '';
+    protected $controller = '';
     protected $action;
-    protected $params = array();
-    protected $view;
 
     /**
      * Constructor for router
@@ -31,17 +34,41 @@ class Router
      */
     protected function parseRoute()
     {       
-            $matches = explode("\\", $this->route);
+        $matches = explode("\/", $this->route);
 
-            // only the first part of the route needed right now (light)
-            if (!empty($matches[0])) {
-                $this->action = $matches[0];
-            }
+        $pattern = '/^([a-zA-Z0-9_-])+$/';
+        
+        if (preg_match($pattern, $matches[0])) {
+            $this->controller = ucfirst(strtolower($matches[0]));
+        }
 
-            // the second part is a digit, use as an id
-            if (!empty($metches[1]) && is_numeric($matches[1])) {
-                $this->params['id'] = $matches[1];
-            }
+        if (!empty($matches[1]) && preg_match($pattern, $matches[1])) {
+            $this->action = $this->convert($matches[1]);
+        }
+
+        if ($this->controller == '')
+            $this->controller = self::DEFAULT_CONTROLLER;
+    }
+
+    /**
+     * Convert method (action) name to camelCase
+     * 
+     * @param  string $route
+     * @return string
+     */
+    public function convert($routePart)
+    {
+        $routePartArr = explode('-', $routePart);
+
+        if (count($routePartArr) > 1) {
+            array_walk($routePartArr, function (&$value, $index) {
+                if ($index > 0) $value = ucfirst($value);
+            });
+        }
+
+        $routerPart = implode('', $routePartArr);
+
+        return $routePart;
     }
 
     /**
@@ -51,20 +78,31 @@ class Router
     {
         $this->parseRoute();
 
-        $methodName = $this->action . self::ACTION_PREFIX;
-        $controller = new Controller();
-
-        if (!method_exists($controller, $methodName)) {
-            $methodName = self::ACTION . self::ACTION_PREFIX;
+        if (!$this->controller) {
+            $controllerName 
+                = self::DEFAULT_CONTROLLER . self::CONTROLLER_POSTFIX;
+        } else {
+            $controllerName = 'Shopreview\Mvc\Controller\\' 
+                . $this->controller 
+                . self::CONTROLLER_POSTFIX
+            ;
         }
 
-        // call action method
-        $this->view = call_user_func_array(
-            array($controller, $methodName), 
-            $this->params
-        );
+        if (!class_exists($controllerName)) {
+            header('Location: /');
+        }
 
-        // // print out the html
-        // echo $this->view;
+        $controller = new $controllerName();
+
+        if (!($controller instanceof BaseController)) {
+            header('Location: /');
+        }
+
+        $methodName = $this->action . self::ACTION_POSTFIX;
+        if (!$this->action || !method_exists($controller, $methodName)) {
+             $methodName = self::DEFAULT_ACTION . self::ACTION_POSTFIX;
+        }
+
+        call_user_func_array(array($controller, $methodName), array()); 
     }
 }
