@@ -76,6 +76,8 @@ class Helper
 
         if (!is_array($input)) {
             $inputArr[] = $input;
+        } else {
+            $inputArr = $input;
         }
 
         foreach ($inputArr as $key => $val) {
