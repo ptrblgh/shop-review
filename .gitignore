@@ -9,3 +9,5 @@ nbproject
 composer.lock
 vendor
 *workspace
+view/cache
+view/templates_c
