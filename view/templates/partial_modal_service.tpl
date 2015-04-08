@@ -11,7 +11,7 @@
             <div class="modal-body">
                 <div id="myTabContent" class="tab-content">
                     <div class="tab-pane fade active in text-center" id="login">
-                        <form name="form-login" id="form-login" method="post" action ="/">
+                        <form name="form-login" id="form-login" method="post" action ="/user/login">
                             <div class="form-group">
                                 <div class="form-group has-feedback has-feedback-left">
                                     <label class="control-label" for="login-username">Username</label>
@@ -38,7 +38,7 @@
                         </form>
                     </div>
                     <div class="tab-pane fade text-center" id="register">
-                        <form name="form-register" id="form-register" method="post" action ="/register">
+                        <form name="form-register" id="form-register" method="post" action ="/user/register">
                             <div class="form-group">
                                 <div class="form-group has-feedback has-feedback-left">
                                     <label class="control-label" for="register-username">Username</label>
@@ -70,7 +70,7 @@
                         </form>
                     </div>
                     <div class="tab-pane fade text-center" id="forgot">
-                        <form name="form-forgot" id="form-forgot" method="post" action ="/">
+                        <form name="form-forgot" id="form-forgot" method="post" action ="/user/forgot">
                             <div class="form-group">
                                 <div class="form-group has-feedback has-feedback-left">
                                     <label class="control-label" for="forgot-email">E-mail</label>

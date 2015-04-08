@@ -205,7 +205,7 @@ $( document ).ready( function() {
             // not a bot
             $form.fadeOut(600, 'easeOutExpo', function() {
                 $('#forgot').append(spinnerEl);
-                var url = '/forgot',
+                var url = '/user/forgot',
                     postData = {
                         'email': $('#forgot-email').val()
                     },
