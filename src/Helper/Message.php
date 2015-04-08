@@ -38,13 +38,13 @@ class Message
      */
     public function setAddress($address)
     {
-        $this->mail->addAddress = Helper::sanitizeInput($address);
+        $this->mail->addAddress(Helper::sanitizeInput($address));
     }
 
     /**
      * Setter for the message body
      * 
-     * @param string $address
+     * @param string $body
      */
     public function setBody($body)
     {

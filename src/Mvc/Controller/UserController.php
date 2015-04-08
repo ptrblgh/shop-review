@@ -102,17 +102,19 @@ class UserController extends BaseController
 
             $mailConfig = $this->appConfig['mail'];
             $mail = new Message($mailConfig);
-            $mail->setAddress = $user->email;
-            $mail->setSubject = '[Shop review] New password';
-            $mail->setBody = 'Dear' . $user->username . ',\n\n'
-                . 'Your new password: ' . $user->password;
+            $mail->setAddress($user->email);
+            $mail->setSubject('[Shop review] New password');
+            $mail->setBody(
+                "Dear " . $user->username . ",\n\n"
+                . "Your new password: " . $newPsw);
             $mailSent = $mail->send();
-            if ($mailSent) {
+            if ($mailSent === true) {
                 $jsonData['status'] = 'success';
                 $jsonData['msg'] = 'A new password was sent.';
             } else {
                 $jsonData['status'] = 'error';
-                $jsonData['msg'] = $mailSent;
+                // $jsonData['msg'] = $mailSent;
+                $jsonData['msg'] = 'Please try again later.';
             }
         } else {
             $jsonData['status'] = 'error';

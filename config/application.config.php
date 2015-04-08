@@ -12,7 +12,7 @@ return array(
     ),
     'mail' => array(
         'host' => 'localhost',
-        'port' => '',
+        'port' => 25,
         'from' => 'noreply@localhost',
         'from_name' => 'Shop review'
     )
