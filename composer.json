@@ -10,6 +10,7 @@
         "psr-4": {"Shopreview\\": "src/"}
     },
     "require": {
+        "phpmailer/phpmailer": "dev-master",
         "twitter/bootstrap": "3.3.4",
         "smarty/smarty": "~3.1",
         "php": ">=5.3.3"
