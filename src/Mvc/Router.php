@@ -34,7 +34,7 @@ class Router
      */
     protected function parseRoute()
     {       
-        $matches = explode("\/", $this->route);
+        $matches = explode("/", $this->route);
 
         $pattern = '/^([a-zA-Z0-9_-])+$/';
         

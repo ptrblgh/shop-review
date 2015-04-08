@@ -3,10 +3,15 @@
 namespace Shopreview\Mvc\Controller;
 
 use Shopreview\Helper\Helper;
+use Shopreview\Mvc\Model\UserDbRepository;
 
 class UserController extends BaseController
 {
-
+    /**
+     * Mysql database repository for review
+     * 
+     * @var MysqlDb
+     */
     protected $userRepository;
 
     /**
@@ -29,7 +34,7 @@ class UserController extends BaseController
         // TODO
         // bcrypt $data['psw']
 
-        $this->getDbAdapter()->saveRegistration($data);
+        $this->getUserRepository()->saveRegistration($data);
 
         header('Location: /');
     }
