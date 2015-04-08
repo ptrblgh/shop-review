@@ -3,6 +3,8 @@
 namespace Shopreview\Mvc\Controller;
 
 use Shopreview\Helper\Helper;
+use Shopreview\Helper\Crypt\BCrypt;
+use ShopReview\Helper\Session;
 use Shopreview\Mvc\Model\UserDbRepository;
 
 class UserController extends BaseController
@@ -31,10 +33,14 @@ class UserController extends BaseController
     {
         $data = Helper::sanitizeInput($_POST);
 
-        // TODO
-        // bcrypt $data['psw']
+        $bcrypt = new BCrypt();
+        $data['crypted_psw'] = $bcrypt->crypt($data['register_psw']);
 
-        $this->getUserRepository()->saveRegistration($data);
+        $res = $this->getUserRepository()->saveRegistration($data);
+
+        if ($res) {
+            Session::getInstance()->username = $data['register_username'];
+        }
 
         header('Location: /');
     }

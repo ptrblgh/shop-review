@@ -57,7 +57,7 @@ class Application
         $route = isset($_GET['route']) ? $_GET['route'] : '';
         $router = new Router($route);
         $router->dispatch();
-
+        
         // speed up concurrent connections
         $sess->writeSession();
     }

@@ -73,9 +73,9 @@ class UserDbRepository extends MysqlDb
             && (strlen($data['register_username']) >= 3 
                 && strlen($data['register_username']) <= 20
                 && !$userNameExists)
-            && (strlen($data['register_psw']) >= 6
-                && strlen($data['register_psw']) <= 72
+            && (!empty($data['register_psw'])
                 && $data['register_psw'] === $data['register_psw2'])
+            && !empty($data['crypted_psw'])
             && (!empty($data['register_email']) && !$emailExists)
         ) {
             $q = "INSERT INTO `user` "
@@ -85,16 +85,20 @@ class UserDbRepository extends MysqlDb
 
             try {
                 $stmt = $this->connection->prepare($q);
-                $stmt->execute(array(
+                $ret = $stmt->execute(array(
                     'register_username' => $data['register_username'],
-                    'register_psw' => $data['register_psw'],
+                    'register_psw' => $data['crypted_psw'],
                     'register_email' => $data['register_email']
                 ));
+
+                return $ret;
             } catch (\PDOException $e) {
                 trigger_error($e->getMessage(), E_USER_ERROR);
 
                 return false;
             }
+            
+            return false;
         }
     }
 }
