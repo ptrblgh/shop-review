@@ -8,6 +8,7 @@ use Shopreview\Helper\Crypt\BCrypt;
 use ShopReview\Helper\Session;
 use Shopreview\Mvc\Model\User;
 use Shopreview\Mvc\Model\UserDbRepository;
+use Shopreview\Validator\FormValidator\UserRegistrationFormValidator;
 use Shopreview\Mvc\View\JsonTemplate;
 
 class UserController extends BaseController
@@ -39,13 +40,19 @@ class UserController extends BaseController
         $bcrypt = new BCrypt();
         $data['crypted_psw'] = $bcrypt->crypt($data['register_psw']);
 
-        $res = $this->getUserRepository()->saveUser($data);
+        $form = new UserRegistrationFormValidator($data);
 
-        if ($res) {
-            Session::getInstance()->username = $data['register_username'];
+        if ($form->isValid()) {
+            $res = $this->getUserRepository()->saveUser($data);
+
+            if ($res) {
+                Session::getInstance()->username = $data['register_username'];
+            } 
+        } else {
+            Session::getInstance()->form_errors = $form->getErrors();
         }
 
-        header('Location: /');
+        //header('Location: /');
     }
 
     /**
