@@ -32,6 +32,7 @@ class FormValidator implements ValidatorInterface
     {
         $this->elements = $elements;
         $this->required($required);
+        $this->nameIsEmpty($this->elements['register_name']);
     }
 
     /**
@@ -50,7 +51,8 @@ class FormValidator implements ValidatorInterface
 
         foreach ($this->elements as $key => $val) {
             if (in_array($key, $required) || empty($required)) {
-                if (empty($val)) {
+                // name needs to be empty always (if human)
+                if (empty($val) && $key !== 'register_name') {
                     $this->errors[] = 'Required fields are empty.';
 
                     return false;
@@ -79,6 +81,23 @@ class FormValidator implements ValidatorInterface
     public function getErrors()
     {
         return $this->errors;
+    }
+
+    /**
+     * Checks name element (anti-bot)
+     * 
+     * @param string $data
+     * @return booelan
+     */
+    public function nameIsEmpty($data)
+    {
+        if (!empty($data)) {
+            $this->errors[] = 'No bots are allowed.';
+
+            return false;
+        }
+
+        return true;
     }
 
     // TODO: add csrf validation (Shopreview\Validator\Csrf)
