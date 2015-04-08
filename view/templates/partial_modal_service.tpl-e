@@ -74,7 +74,7 @@
                             <div class="form-group">
                                 <div class="form-group has-feedback has-feedback-left">
                                     <label class="control-label" for="forgot-email">E-mail</label>
-                                    <input type="text" name="forgot-email" id="forgot-email" class="form-control" placeholder="E-mail" />
+                                    <input type="text" name="forgot_email" id="forgot-email" class="form-control" placeholder="E-mail" />
                                     <span class="form-control-feedback glyphicon glyphicon-envelope"></span>
                                 </div>
                                 <div class="name-group">

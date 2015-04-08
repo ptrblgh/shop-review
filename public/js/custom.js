@@ -172,7 +172,7 @@ $( document ).ready( function() {
     // forgot validation
     $('#form-forgot').validate({
         rules: {
-            'forgot-email': {
+            'forgot_email': {
                 email: true,                
                 required: true
             }
