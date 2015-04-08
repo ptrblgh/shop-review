@@ -4,6 +4,7 @@ namespace Shopreview\Mvc;
 
 use Shopreview\Helper\Helper;
 use Shopreview\Helper\Session;
+use Shopreview\Mvc\Router;
 
 class Application
 {

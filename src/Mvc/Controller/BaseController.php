@@ -1,26 +1,25 @@
 <?php
 
-namespace Shopreview\Mvc;
+namespace Shopreview\Mvc\Controller;
 
-use Shopreview\Helper\Helper;
-use Shopreview\Helper\Session;
 use Shopreview\Helper\MysqlDbAdapter;
+use ShopReview\Helper\Session;
+use Shopreview\Mvc\Application;
+use Shopreview\Mvc\Router;
+use Shopreview\Mvc\View;
 
-class Controller
+/**
+ * Basic action controller
+ */
+class BaseController
 {
+
     /**
      * Application config
      * 
      * @var array
      */
-    protected $appConfig;
-
-    /**
-     * Default prefix for actions parsed from route
-     * 
-     * @var string
-     */
-    protected $defaultActionPrefix;
+    protected $appConfig = array();
 
     /**
      * Database adapter
@@ -36,7 +35,6 @@ class Controller
     {
         $application = Application::getInstance();
         $this->appConfig = $application->getConfig();
-        $this->defaultActionPrefix = Router::ACTION_PREFIX;
     }
 
     /**
@@ -46,8 +44,7 @@ class Controller
      */
     public function indexAction()
     {
-        $templateFileName 
-            = str_replace($this->defaultActionPrefix, '', __FUNCTION__);
+
         $templatePath = $this->appConfig['template_path'];
         $templateParams = array();
         
@@ -57,9 +54,9 @@ class Controller
                 ? Session::getInstance()->username : null
         ;
         $this->getDbAdapter();
-        $view = new SmartyTemplate(
+        $view = new View\SmartyTemplate(
             $templatePath, 
-            $templateFileName, 
+            $this->getTemplateFileName(__FUNCTION__), 
             $templateParams
         );
 
@@ -67,34 +64,21 @@ class Controller
     }
 
     /**
-     * Registration
+     * Returns the temaplate's filename without extension
      * 
-     * @return void
+     * @param string $functionName
+     * @return string
      */
-    public function registerAction()
+    public function getTemplateFileName($functionName)
     {
-        $data = Helper::sanitizeInput($_POST);
+        if ($functionName) {
+            $templateFileName 
+                = str_replace(Router::ACTION_POSTFIX, '', $functionName);           
+        } else {
+            $templateFileName = Router::DEFAULT_ACTION;
+        }
 
-        // TODO
-        // bcrypt $data['psw']
-
-        $this->getDbAdapter()->saveRegistration($data);
-
-        header('Location: /');
-    }
-
-    /**
-     * Create new password for email
-     * 
-     * @return string application/json
-     */
-    public function forgotAction()
-    {
-        $data = Helper::sanitizeInput($_POST['email']);
-
-        $view = new JsonTemplate($data);
-
-        $view->display();
+        return $templateFileName;
     }
 
     /**

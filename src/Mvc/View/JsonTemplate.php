@@ -1,6 +1,6 @@
 <?php
 
-namespace Shopreview\Mvc;
+namespace Shopreview\Mvc\View;
 
 class JsonTemplate implements TemplateInterface
 {
