@@ -15,12 +15,12 @@
                             <div class="form-group">
                                 <div class="form-group has-feedback has-feedback-left">
                                     <label class="control-label" for="login-username">Username</label>
-                                    <input type="text" name="login-username" id="login-username" class="form-control" placeholder="Username" />
+                                    <input type="text" name="login_username" id="login-username" class="form-control" placeholder="Username" />
                                     <span class="form-control-feedback glyphicon glyphicon-user"></span>
                                 </div>
                                 <div class="form-group has-feedback has-feedback-left">
                                     <label class="control-label" for="login-psw">Password</label>
-                                    <input type="password" name="login-psw" id="login-psw" class="form-control" placeholder="Password" />
+                                    <input type="password" name="login_psw" id="login-psw" class="form-control" placeholder="Password" />
                                     <span class="form-control-feedback glyphicon glyphicon-lock"></span>
                                 </div>
                                 <div class="form-group">

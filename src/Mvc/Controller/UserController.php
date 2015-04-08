@@ -57,7 +57,6 @@ class UserController extends BaseController
 
         $user 
             = $this->getUserRepository()->findUser($data['login_username']);
-
         if ($user instanceof User) {
             $bcrypt = new Bcrypt();
             $valid = $bcrypt->isValid($data['login_psw'], $user->password);
@@ -66,7 +65,17 @@ class UserController extends BaseController
             }
         }
 
-        var_dump($user); die();
+        header('Location: /');
+    }
+
+    /**
+     * Logout
+     * 
+     * @return void
+     */
+    public function logoutAction()
+    {
+        Session::getInstance()->destroy();
 
         header('Location: /');
     }

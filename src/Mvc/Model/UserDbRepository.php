@@ -21,7 +21,7 @@ class UserDbRepository extends MysqlDb
             return false;
         }
 
-        return $stmt->fetchAll(PDO::FETCH_CLASS, 'User');
+        return $stmt->fetchAll(\Pdo::FETCH_CLASS, 'User');
     }
 
     public function findUser($username)
@@ -30,14 +30,15 @@ class UserDbRepository extends MysqlDb
 
         try {
             $stmt = $this->connection->prepare($q);
-            $stmt->execute(array('value' => $value));
+            $stmt->setFetchMode(\Pdo::FETCH_INTO, new User());
+            $stmt->execute(array('value' => $username));
         } catch (\PDOException $e) {
             trigger_error($e->getMessage(), E_USER_ERROR);
 
             return false;
         }
 
-        return $stmt->fetch(PDO::FETCH_CLASS, 'User');
+        return $stmt->fetch();
     }
 
     /**
@@ -52,6 +53,7 @@ class UserDbRepository extends MysqlDb
 
         try {
             $stmt = $this->connection->prepare($q);
+            $stmt->setFetchMode(\Pdo::FETCH_INTO, new User());
             $stmt->execute(array('value' => $value));
         } catch (\PDOException $e) {
             trigger_error($e->getMessage(), E_USER_ERROR);
@@ -59,7 +61,7 @@ class UserDbRepository extends MysqlDb
             return false;
         }
 
-        return $stmt->fetch(\PDO::FETCH_OBJ);
+        return $stmt->fetch();
     }
 
     /**
@@ -81,7 +83,7 @@ class UserDbRepository extends MysqlDb
             return false;
         }
 
-        return $stmt->fetch(PDO::FETCH_OBJ);
+        return $stmt->fetch(\PDO::FETCH_OBJ);
     }
 
     /**

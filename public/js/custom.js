@@ -81,12 +81,12 @@ $( document ).ready( function() {
     // login validation
     $('#form-login').validate({
         rules: {
-            'login-username': {
+            'login_username': {
                 minlength: 3,
                 maxlength: 20,
                 required: true
             },
-            'login-psw': {
+            'login_psw': {
                 minlength: 6,
                 maxlength: 72,                
                 required: true
@@ -115,7 +115,9 @@ $( document ).ready( function() {
         }
     });
     $('#login-btn').on('click', function() {
-        $("#form-login").valid();
+        if ($("#form-login").valid()) {
+            $("#form-login").submit();
+        }
     });
 
     // register validation
