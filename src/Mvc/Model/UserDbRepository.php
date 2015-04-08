@@ -87,12 +87,35 @@ class UserDbRepository extends MysqlDb
     }
 
     /**
+     * Find user by email
+     * 
+     * @param string $value username
+     * @return object
+     */
+    public function findByEmail($value)
+    {
+        $q = 'SELECT * FROM `user` WHERE `email` = :value';
+
+        try {
+            $stmt = $this->connection->prepare($q);
+            $stmt->setFetchMode(\Pdo::FETCH_INTO, new User());
+            $stmt->execute(array('username' => $value));
+        } catch (\PDOException $e) {
+            trigger_error($e->getMessage(), E_USER_ERROR);
+
+            return false;
+        }
+
+        return $stmt->fetch();
+    }
+
+    /**
      * Insert registration data into database
      * 
      * @param array $data
      * @return boolean
      */
-    public function saveRegistration($data)
+    public function saveUser($data)
     {
         $userNameExists 
             = isset($data['register_username']) 
@@ -136,5 +159,35 @@ class UserDbRepository extends MysqlDb
 
             return false;
         }
+    }
+
+    /**
+     * Update user's password
+     * 
+     * @param User $user
+     * @return boolean
+     */
+    public function updateUserPasssword(User $user)
+    {
+        $q = "UPDATE `user` SET "
+            . "`password` = :psw "
+            . "WHERE `username` = :usr"
+        ;
+
+        try {
+            $stmt = $this->connection->prepare($q);
+            $ret = $stmt->execute(array(
+                'psw' => $user->password,
+                'usr' => $user->username
+            ));
+
+            return $ret;
+        } catch (\PDOException $e) {
+            trigger_error($e->getMessage(), E_USER_ERROR);
+
+            return false;
+        }
+
+        return false;
     }
 }

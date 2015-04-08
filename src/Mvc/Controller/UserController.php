@@ -37,7 +37,7 @@ class UserController extends BaseController
         $bcrypt = new BCrypt();
         $data['crypted_psw'] = $bcrypt->crypt($data['register_psw']);
 
-        $res = $this->getUserRepository()->saveRegistration($data);
+        $res = $this->getUserRepository()->saveUser($data);
 
         if ($res) {
             Session::getInstance()->username = $data['register_username'];
@@ -87,11 +87,17 @@ class UserController extends BaseController
      */
     public function forgotAction()
     {
-        $data = Helper::sanitizeInput($_POST['email']);
+        $data = Helper::sanitizeInput($_POST);
 
-        $newPsw = Helper::getRandomPsw();
+        $user = $this->getUserRepository()->findByEmail($data['email']);
 
-        
+        if ($user) {
+            $newPsw = Helper::getRandomPsw();
+            $bcrypt = new BCrypt();
+            $user->password = $bcrypt->crypt($newPsw);
+
+            $this->getUserRepository()->updateUserPassword($user);
+        }
 
         $view = new JsonTemplate($data);
 
