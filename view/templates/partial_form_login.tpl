@@ -14,6 +14,7 @@
                 <h4 class="text-center">
                     You need to log in or register for this service
                 </h4>
+                {include file="partial_errors.tpl"}
                 <p class="text-center">
                     <button type="button" class="btn btn-primary" href="#service-modal" data-toggle="modal" data-target="#service-modal">Login / Register / Forgot</button>
                 </p>

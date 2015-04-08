@@ -55,6 +55,11 @@ class BaseController
                 ? Session::getInstance()->username : null
         ;
 
+        $templateParams['form_errors'] = 
+            (Session::getInstance()->form_errors !== '') 
+                ? Session::getInstance()->form_errors : null
+        ;
+
         $this->getReviewRepository();
         $view = new View\SmartyTemplate(
             $templatePath, 

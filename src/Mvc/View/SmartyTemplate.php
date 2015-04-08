@@ -2,6 +2,8 @@
 
 namespace Shopreview\Mvc\View;
 
+use Shopreview\Helper\Session;
+
 class SmartyTemplate implements TemplateInterface
 {
     const EXTENSION = '.tpl';
@@ -35,6 +37,9 @@ class SmartyTemplate implements TemplateInterface
                 $this->template->assign($var, $val);
             }
         }
+
+        // no form error messages on next request
+        Session::getInstance()->form_errors = null;
 
         // setting utf-8 character coding for php
         mb_internal_encoding('UTF-8');

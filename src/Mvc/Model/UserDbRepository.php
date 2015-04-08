@@ -76,7 +76,7 @@ class UserDbRepository extends MysqlDb
 
         try {
             $stmt = $this->connection->prepare($q);
-            $stmt->execute(array('username' => $value));
+            $stmt->execute(array('value' => $value));
         } catch (\PDOException $e) {
             trigger_error($e->getMessage(), E_USER_ERROR);
 
