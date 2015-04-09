@@ -79,8 +79,6 @@ class BaseController
 
         $this->getReviewRepository()->close();
 
-        echo '&nbsp';
-
         echo $view->display();
     }
 
