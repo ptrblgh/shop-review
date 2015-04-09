@@ -59,11 +59,13 @@ class Router
 
         if (count($routePartArr) > 1) {
             array_walk($routePartArr, function (&$value, $index) {
-                if ($index > 0) $value = ucfirst($value);
+                if ($index > 0) {
+                    $value = ucfirst($value);
+                }
             });
         }
 
-        $routerPart = implode('', $routePartArr);
+        $routePart = implode('', $routePartArr);
 
         return $routePart;
     }

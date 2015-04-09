@@ -128,13 +128,17 @@ $( document ).ready( function() {
         console.log(params);
         return this.optional(element) 
             || parseInt(value, 10) == params[0] + params[1];
-    }, jQuery.validator.format(("Please enter the correct value: {0} + {1}")));
+    }, jQuery.validator.format(("Please enter the correct value: {0} + {1}.")));
     $('#form-register').validate({
         rules: {
             'register_username': {
                 minlength: 3,
                 maxlength: 20,
-                required: true
+                required: true,
+                remote: {
+                    url: "/user/check-username",
+                    type: "post"
+                }
             },
             'register_psw': {
                 minlength: 6,
@@ -149,7 +153,11 @@ $( document ).ready( function() {
             },
             'register_email': {
                 email: true,                
-                required: true
+                required: true,
+                remote: {
+                    url: "/user/check-email",
+                    type: "post"
+                }
             },
             'register_captcha': {
                 required: true,
@@ -174,7 +182,7 @@ $( document ).ready( function() {
         },
         unhighlight: function(element, errorClass, validClass) {
             $(element).closest('.form-group').find('small')
-                .removeClass(errorClass).addClass(validClass)
+                .removeClass(errorClass).addClass(validClass).hide();
             ;
             $(element).closest('.form-group').removeClass('has-error')
                 .addClass('has-success')
