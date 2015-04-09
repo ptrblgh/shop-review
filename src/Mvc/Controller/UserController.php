@@ -141,6 +141,42 @@ class UserController extends BaseController
     }
 
     /**
+     * Check username availability
+     * 
+     * @return string false or true
+     */
+    public function checkUsernameAction()
+    {
+        $data = Helper::sanitizeInput($_POST['register_username']);
+
+        $ret = $this->getUserRepository()->findUser($data);
+
+        $jsonData = ($ret) ? 'Username is taken.' : true;
+
+        $view = new JsonTemplate($jsonData);
+
+        $view->display();
+    }
+
+    /**
+     * Check email availability
+     * 
+     * @return string false or true
+     */
+    public function checkEmailAction()
+    {
+        $data = Helper::sanitizeInput($_POST['register_email']);
+
+        $ret = $this->getUserRepository()->findEmail($data);
+
+        $jsonData = ($ret) ? 'E-mail is taken.' : true;
+
+        $view = new JsonTemplate($jsonData);
+
+        $view->display();
+    }
+
+    /**
      * Lazy-load review database repository
      * 
      * @return MysqlDb
