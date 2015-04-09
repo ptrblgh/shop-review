@@ -82,27 +82,29 @@ class Router
             $controllerName 
                 = self::DEFAULT_CONTROLLER . self::CONTROLLER_POSTFIX;
         } else {
-            $controllerName = 'Shopreview\Mvc\Controller\\' 
+            $controllerName = '\\Shopreview\\Mvc\\Controller\\' 
                 . $this->controller 
                 . self::CONTROLLER_POSTFIX
             ;
         }
 
         if (!class_exists($controllerName)) {
-            header('Location: /');
+            header('Location: /', true, 302);
+            exit();
         }
 
         $controller = new $controllerName();
 
         if (!($controller instanceof BaseController)) {
-            header('Location: /');
+            header('Location: /', true, 302);
+            exit();
         }
 
         $methodName = $this->action . self::ACTION_POSTFIX;
         if (!$this->action || !method_exists($controller, $methodName)) {
-             $methodName = self::DEFAULT_ACTION . self::ACTION_POSTFIX;
+            $methodName = self::DEFAULT_ACTION . self::ACTION_POSTFIX;
         }
 
-        call_user_func_array(array($controller, $methodName), array()); 
+        call_user_func_array(array($controller, $methodName), array());
     }
 }

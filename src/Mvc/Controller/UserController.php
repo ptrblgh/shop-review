@@ -55,8 +55,9 @@ class UserController extends BaseController
         } else {
             Session::getInstance()->form_errors = $form->getErrors();
         }
-
-        header('Location: /');
+        
+        header('Location: /', true, 302);
+        exit();
     }
 
     /**
@@ -78,7 +79,8 @@ class UserController extends BaseController
             }
         }
 
-        header('Location: /');
+        header('Location: /', true, 302);
+        exit();
     }
 
     /**
@@ -90,7 +92,8 @@ class UserController extends BaseController
     {
         Session::getInstance()->destroy();
 
-        header('Location: /');
+        header('Location: /', true, 302);
+        exit();
     }
 
     /**

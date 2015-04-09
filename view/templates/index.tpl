@@ -15,6 +15,7 @@
 
     <link rel="stylesheet" type="text/css" media="all" href="css/star-rating.min.css"/>
     <link rel="stylesheet" type="text/css" media="screen" href="css/shop-review.css" />
+    <link rel="shortcut icon" href="img/favico.ico" />
 </head>
 <body>
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">

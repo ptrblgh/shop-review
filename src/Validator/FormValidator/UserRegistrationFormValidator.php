@@ -25,12 +25,12 @@ class UserRegistrationFormValidator extends FormValidator
         $this->userDbRepository = $userDbRepository;
 
         $this->usernameLength($this->elements['register_username']);
-        $this->usernameisTaken($this->elements['register_username']);
+        $this->usernameIsTaken($this->elements['register_username']);
         $this->equalPasswords(
             $this->elements['register_psw'],
             $this->elements['register_psw2']
         );
-        $this->emailisTaken($this->elements['register_email']);
+        $this->emailIsTaken($this->elements['register_email']);
     }
 
     /**
@@ -41,7 +41,7 @@ class UserRegistrationFormValidator extends FormValidator
      */
     public function usernameLength($data)
     {
-        if (strlen($data) <= 3 || strlen($data) >= 20) {
+        if (strlen($data) < 3 || strlen($data) > 20) {
             $this->errors[] = 'Username length needs to be between 3 and 20.';
 
             return false;

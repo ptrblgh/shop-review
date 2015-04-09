@@ -3,6 +3,7 @@
 namespace Shopreview\Validator\FormValidator;
 
 use Shopreview\Validator\ValidatorInterface;
+use Shopreview\Validator\CsrfValidator;
 
 class FormValidator implements ValidatorInterface
 {
@@ -33,6 +34,10 @@ class FormValidator implements ValidatorInterface
         $this->elements = $elements;
         $this->required($required);
         $this->nameIsEmpty($this->elements['register_name']);
+        $this->checkCsrf(
+            'register_csrf_token', 
+            $this->elements['register_csrf_token']
+        );
     }
 
     /**
@@ -100,6 +105,25 @@ class FormValidator implements ValidatorInterface
         return true;
     }
 
-    // TODO: add csrf validation (Shopreview\Validator\Csrf)
+    /**
+     * Checks CSRF token (anti-bot)
+     * 
+     * @param string $data
+     * @return booelan
+     */
+    public function checkCsrf($elementName, $token)
+    {
+        $csrf = new CsrfValidator();
+        $valid = $csrf->checkToken($elementName, $token);
+
+        if (!$csrf->isValid()) {
+            $this->errors[] = 'Invalid CSRF token.';
+
+            return false;            
+        }
+
+        return true;
+    }
+
     // TODO: add add numbers captcha validation (Shopreview\Validator\Captcha)
 }
