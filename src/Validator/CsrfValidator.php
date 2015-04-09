@@ -51,7 +51,7 @@ class CsrfValidator implements ValidatorInterface
     }
 
     /**
-     * Cheks the token for the element
+     * Checks the token for the element
      *
      * Also removes (always) the token from session (ensure one-timeness)
      * 
@@ -63,14 +63,9 @@ class CsrfValidator implements ValidatorInterface
     {
         $token = Session::getInstance()->$elementName;
 
-        // var_dump($tokenValue);
-        // var_dump(Session::getInstance()->$elementName);
-        // var_dump($_SESSION);
-        // die();
-
         if ($token === false) {
             
-            $this->result = $result;            
+            $this->result = false;            
             return false;
         } elseif ($token === $tokenValue) {
             $result = true;
