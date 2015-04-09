@@ -64,9 +64,6 @@ class BaseController
             $captcha = new CaptchaValidator();
             $captchaArr = $captcha->generateCaptcha('register_captcha');
             $templateParams['register_captcha'] = $captchaArr;
-
-            // $csrfToken = $csrf->generateToken('login_csrf_token');
-            // $templateParams['login_csrf_token'] = $csrfToken;
         }
 
         $templateParams['form_errors'] = 
