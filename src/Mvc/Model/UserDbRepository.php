@@ -24,14 +24,14 @@ class UserDbRepository extends MysqlDb
         return $stmt->fetchAll(\Pdo::FETCH_CLASS, 'User');
     }
 
-    public function findUser($username)
+    public function findUser($value)
     {
         $q = 'SELECT * FROM `user` WHERE `username` = :value';
 
         try {
             $stmt = $this->connection->prepare($q);
             $stmt->setFetchMode(\Pdo::FETCH_INTO, new User());
-            $stmt->execute(array('value' => $username));
+            $stmt->execute(array('value' => $value));
         } catch (\PDOException $e) {
             trigger_error($e->getMessage(), E_USER_ERROR);
 
