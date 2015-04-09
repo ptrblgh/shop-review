@@ -61,6 +61,11 @@
                                     <input type="text" name="register_email" id="register-email" class="form-control" placeholder="E-mail" />
                                     <span class="form-control-feedback glyphicon glyphicon-envelope"></span>
                                 </div>
+                                <div class="form-group has-feedback has-feedback-left">
+                                    <label class="control-label" for="register-captcha">{if !empty($register_captcha)}{$register_captcha.num1} + {$register_captcha.num2} ={/if}</label>
+                                    <input type="text" name="register_captcha" id="register-captcha" class="form-control" placeholder="Sum" />
+                                    <span class="form-control-feedback glyphicon glyphicon-plus"></span>
+                                </div>
                                 <div class="name-group">
                                     <input type="text" name="register_csrf_token" id="register-csrf-token" value="{if isset($register_csrf_token)}{$register_csrf_token}{/if}" />
                                     <input type="text" name="register_name" id="register-name" class="form-control" placeholder="E-mail" />
