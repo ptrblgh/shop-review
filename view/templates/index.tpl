@@ -13,9 +13,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Shop review - a project for miniCRM</title>
-    <link rel="stylesheet" type="text/css" media="all" href="css/star-rating.min.css"/>
-    <link rel="stylesheet" type="text/css" media="screen" href="css/shop-review.css" />
-    <link rel="shortcut icon" href="img/favico.ico" />
+    <link rel="stylesheet" type="text/css" media="all" href="/css/star-rating.min.css"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/shop-review.css" />
 </head>
 <body>
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -57,16 +56,16 @@
                 </ol>
                 <div class="carousel-inner">
                     <div class="item active">
-                        <img src="img/slide-01.jpg" alt="Panerai">
+                        <img src="/img/slide-01.jpg" alt="Panerai">
                     </div>
                     <div class="item">
-                        <img src="img/slide-02.jpg" alt="Panerai">
+                        <img src="/img/slide-02.jpg" alt="Panerai">
                     </div>
                     <div class="item">
-                        <img src="img/slide-03.jpg" alt="Panerai">
+                        <img src="/img/slide-03.jpg" alt="Panerai">
                     </div>
                     <div class="item">
-                        <img src="img/slide-04.jpg" alt="Panerai">
+                        <img src="/img/slide-04.jpg" alt="Panerai">
                     </div>
                 </div>
                 <a class="left carousel-control" href="#carousel-shop-pics" data-slide="prev">
@@ -212,13 +211,13 @@
     {include file="partial_modal_service.tpl"}
 {/if}
 
-    <script src="js/jquery-1.11.1.min.js"></script>
-    <script src="js/jquery.easing.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/star-rating.min.js"></script>
-    <script src="js/bootstrap-confirmation.min.js"></script>
-    <script src="js/jquery.validate.min.js"></script>
+    <script src="/js/jquery-1.11.1.min.js"></script>
+    <script src="/js/jquery.easing.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/star-rating.min.js"></script>
+    <script src="/js/bootstrap-confirmation.min.js"></script>
+    <script src="/js/jquery.validate.min.js"></script>
     <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
-    <script src="js/custom.js"></script>
+    <script src="/js/custom.js"></script>
 </body>
 </html>

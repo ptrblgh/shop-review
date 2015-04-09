@@ -45,9 +45,6 @@ class Router
         if (!empty($matches[1]) && preg_match($pattern, $matches[1])) {
             $this->action = $this->convert($matches[1]);
         }
-
-        if ($this->controller == '')
-            $this->controller = self::DEFAULT_CONTROLLER;
     }
 
     /**
@@ -78,25 +75,14 @@ class Router
     {
         $this->parseRoute();
 
-        if (!$this->controller) {
-            $controllerName 
-                = self::DEFAULT_CONTROLLER . self::CONTROLLER_POSTFIX;
-        } else {
-            $controllerName = '\\Shopreview\\Mvc\\Controller\\' 
-                . $this->controller 
-                . self::CONTROLLER_POSTFIX
-            ;
-        }
+        $controller = new BaseController();
 
-        if (!class_exists($controllerName)) {
-            header('Location: /', true, 302);
-            exit();
-        }
+        $controllerName = '\\Shopreview\\Mvc\\Controller\\' . $this->controller . self::CONTROLLER_POSTFIX;
 
-        $controller = new $controllerName();
-
-        if (!($controller instanceof BaseController)) {
-            header('Location: /', true, 302);
+        if (class_exists($controllerName)) {
+            $controller = new $controllerName();
+        } elseif(!empty($this->controller)) {
+            header('Location: /');
             exit();
         }
 

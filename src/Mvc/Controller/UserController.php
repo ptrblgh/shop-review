@@ -55,7 +55,7 @@ class UserController extends BaseController
         } else {
             Session::getInstance()->form_errors = $form->getErrors();
         }
-        
+
         header('Location: /', true, 302);
         exit();
     }

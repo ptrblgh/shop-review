@@ -29,7 +29,7 @@
                                     </label>
                                 </div>
                                 <div class="name-group">
-                                    <input type="text" name="login_csrf_token" id="login-csrf-token" value="{$login_csrf_token}" />
+                                    <input type="text" name="login_csrf_token" id="login-csrf-token" value="{if isset($login_csrf_token)}{$login_csrf_token}{/if}" />
                                     <input type="text" name="login-name" id="login-name" class="form-control" placeholder="E-mail" />
                                 </div>
                             </div>
@@ -62,7 +62,7 @@
                                     <span class="form-control-feedback glyphicon glyphicon-envelope"></span>
                                 </div>
                                 <div class="name-group">
-                                    <input type="text" name="register_csrf_token" id="register-csrf-token" value="{$register_csrf_token}" />
+                                    <input type="text" name="register_csrf_token" id="register-csrf-token" value="{if isset($register_csrf_token)}{$register_csrf_token}{/if}" />
                                     <input type="text" name="register_name" id="register-name" class="form-control" placeholder="E-mail" />
                                 </div>
                                 <div class="form-group text-center">
