@@ -41,10 +41,9 @@ class SmartyTemplate implements TemplateInterface
         // no form error messages on next request
         Session::getInstance()->form_errors = null;
 
-        // setting utf-8 character coding for php
-        mb_internal_encoding('UTF-8');
+        // setting utf-8 header
         header('Content-Type: text/html; charset=utf-8');
-
-        $this->template->display($this->fileName);
+        
+        return $this->template->fetch($this->fileName);
     }
 }

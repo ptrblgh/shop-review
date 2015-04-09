@@ -37,7 +37,6 @@ class Application
                 $instance->config = $config;
             }
         }
-
         return $instance;
     }
 

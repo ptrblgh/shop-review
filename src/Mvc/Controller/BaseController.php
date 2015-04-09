@@ -8,6 +8,7 @@ use Shopreview\Mvc\Application;
 use Shopreview\Mvc\Model\ReviewDbRepository;
 use Shopreview\Mvc\Router;
 use Shopreview\Mvc\View;
+use Shopreview\Validator\CsrfValidator;
 
 /**
  * Basic action controller
@@ -45,7 +46,6 @@ class BaseController
      */
     public function indexAction()
     {
-
         $templatePath = $this->appConfig['template_path'];
         $templateParams = array();
         
@@ -54,6 +54,15 @@ class BaseController
             (Session::getInstance()->username !== '') 
                 ? Session::getInstance()->username : null
         ;
+        // csrf tokens for forms (register, login)
+        if (empty($templateParams['logged_in'])) {
+            $csrf = new CsrfValidator();
+            $csrfToken = $csrf->generateToken('register_csrf_token');
+            $templateParams['register_csrf_token'] = $csrfToken;
+
+            // $csrfToken = $csrf->generateToken('login_csrf_token');
+            // $templateParams['login_csrf_token'] = $csrfToken;
+        }
 
         $templateParams['form_errors'] = 
             (Session::getInstance()->form_errors !== '') 
@@ -61,6 +70,7 @@ class BaseController
         ;
 
         $this->getReviewRepository();
+
         $view = new View\SmartyTemplate(
             $templatePath, 
             $this->getTemplateFileName(__FUNCTION__), 
@@ -69,7 +79,9 @@ class BaseController
 
         $this->getReviewRepository()->close();
 
-        return $view->display();
+        echo '&nbsp';
+
+        echo $view->display();
     }
 
     /**
