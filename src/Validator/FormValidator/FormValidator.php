@@ -4,6 +4,7 @@ namespace Shopreview\Validator\FormValidator;
 
 use Shopreview\Validator\ValidatorInterface;
 use Shopreview\Validator\CsrfValidator;
+use Shopreview\Validator\CaptchaValidator;
 
 class FormValidator implements ValidatorInterface
 {
@@ -37,6 +38,10 @@ class FormValidator implements ValidatorInterface
         $this->checkCsrf(
             'register_csrf_token', 
             $this->elements['register_csrf_token']
+        );
+        $this->checkCaptcha(
+            'register_captcha', 
+            $this->elements['register_captcha']
         );
     }
 
@@ -107,8 +112,9 @@ class FormValidator implements ValidatorInterface
 
     /**
      * Checks CSRF token (anti-bot)
-     * 
-     * @param string $data
+     *
+     * @param string $elementName input elment's name that holds the token
+     * @param string $token
      * @return booelan
      */
     public function checkCsrf($elementName, $token)
@@ -125,5 +131,23 @@ class FormValidator implements ValidatorInterface
         return true;
     }
 
-    // TODO: add add numbers captcha validation (Shopreview\Validator\Captcha)
-}
+    /**
+     * Checks captcha (anti-bot)
+     *
+     * @param string $elementName input elment's name that holds the sum
+     * @param string $sum
+     * @return booelan
+     */
+    public function checkCaptcha($elementName, $sum)
+    {
+        $captcha = new CaptchaValidator();
+        $valid = $captcha->checkCaptcha($elementName, $sum);
+
+        if (!$captcha->isValid()) {
+            $this->errors[] = 'Wrong sum for catpcha numbers.';
+
+            return false;            
+        }
+
+        return true;
+    }}

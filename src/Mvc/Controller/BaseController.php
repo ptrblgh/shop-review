@@ -8,6 +8,7 @@ use Shopreview\Mvc\Application;
 use Shopreview\Mvc\Model\ReviewDbRepository;
 use Shopreview\Mvc\Router;
 use Shopreview\Mvc\View;
+use Shopreview\Validator\CaptchaValidator;
 use Shopreview\Validator\CsrfValidator;
 
 /**
@@ -59,6 +60,10 @@ class BaseController
             $csrf = new CsrfValidator();
             $csrfToken = $csrf->generateToken('register_csrf_token');
             $templateParams['register_csrf_token'] = $csrfToken;
+
+            $captcha = new CaptchaValidator();
+            $captchaArr = $captcha->generateCaptcha('register_captcha');
+            $templateParams['register_captcha'] = $captchaArr;
 
             // $csrfToken = $csrf->generateToken('login_csrf_token');
             // $templateParams['login_csrf_token'] = $csrfToken;

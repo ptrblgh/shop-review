@@ -124,6 +124,11 @@ $( document ).ready( function() {
     });
 
     // register validation
+    jQuery.validator.addMethod("sum", function(value, element, params) {
+        console.log(params);
+        return this.optional(element) 
+            || parseInt(value, 10) == params[0] + params[1];
+    }, jQuery.validator.format(("Please enter the correct value: {0} + {1}")));
     $('#form-register').validate({
         rules: {
             'register_username': {
@@ -145,6 +150,16 @@ $( document ).ready( function() {
             'register_email': {
                 email: true,                
                 required: true
+            },
+            'register_captcha': {
+                required: true,
+                sum: function(element) {
+                    var text = $(element)
+                        .closest('.form-group').find('label').text(),
+                        arr = text.split(' ');
+
+                    return [parseInt(arr[0], 10), parseInt(arr[2], 10)];
+                }
             }
         },
         errorElement: 'small',
