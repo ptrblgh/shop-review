@@ -39,10 +39,6 @@ class FormValidator implements ValidatorInterface
             'register_csrf_token', 
             $this->elements['register_csrf_token']
         );
-        $this->checkCaptcha(
-            'register_captcha', 
-            $this->elements['register_captcha']
-        );
     }
 
     /**
@@ -130,24 +126,4 @@ class FormValidator implements ValidatorInterface
 
         return true;
     }
-
-    /**
-     * Checks captcha (anti-bot)
-     *
-     * @param string $elementName input elment's name that holds the sum
-     * @param string $sum
-     * @return booelan
-     */
-    public function checkCaptcha($elementName, $sum)
-    {
-        $captcha = new CaptchaValidator();
-        $valid = $captcha->checkCaptcha($elementName, $sum);
-
-        if (!$captcha->isValid()) {
-            $this->errors[] = 'Wrong sum for catpcha numbers.';
-
-            return false;            
-        }
-
-        return true;
-    }}
+}
