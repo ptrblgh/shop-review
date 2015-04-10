@@ -13,6 +13,10 @@ define('DS', DIRECTORY_SEPARATOR);
  */
 chdir(dirname(__DIR__));
 
+// Compatibility with the password_* functions being worked on for PHP 5.5
+// https://github.com/ircmaxell/password_compat
+require_once 'src/Password.php';
+
 // Composer autoloading
 if (file_exists('vendor/autoload.php')) {
     $loader = require_once 'vendor/autoload.php';
