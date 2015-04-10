@@ -31,6 +31,10 @@ class UserRegistrationFormValidator extends FormValidator
             $this->elements['register_psw2']
         );
         $this->emailIsTaken($this->elements['register_email']);
+        $this->checkCaptcha(
+            'register_captcha', 
+            $this->elements['register_captcha']
+        );
     }
 
     /**
@@ -111,6 +115,27 @@ class UserRegistrationFormValidator extends FormValidator
             $this->errors[] = 'This email is already registered.';
 
             return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Checks captcha (anti-bot)
+     *
+     * @param string $elementName input elment's name that holds the sum
+     * @param string $sum
+     * @return booelan
+     */
+    public function checkCaptcha($elementName, $sum)
+    {
+        $captcha = new CaptchaValidator();
+        $valid = $captcha->checkCaptcha($elementName, $sum);
+
+        if (!$captcha->isValid()) {
+            $this->errors[] = 'Wrong sum for catpcha numbers.';
+
+            return false;            
         }
 
         return true;
