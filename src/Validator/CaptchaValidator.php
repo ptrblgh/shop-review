@@ -37,7 +37,7 @@ class CaptchaValidator implements ValidatorInterface
     /**
      * Checks the token for the element
      *
-     * Also removes (always) the token from session (ensure one-timeness)
+     * Also removes (always) the captcha elements from session
      * 
      * @param string $elementName input elment's name that holds the token
      * @param  $tokenValue the CSRF token
