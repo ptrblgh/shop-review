@@ -34,6 +34,9 @@
                 <li><a href="#top" class="to-top active">About</a></li>
                 <li><a href="#my-review" class="smooth-scroll">My review</a></li>
                 <li><a href="#others-review" class="smooth-scroll">Others' reviews</a></li>
+{if isset($logged_in)}
+    {include file="partial_admin_menu.tpl"}
+{/if}
             </ul> 
         </div><!--/.nav-collapse -->
     </div>
@@ -209,6 +212,9 @@
 
 {if !isset($logged_in)}
     {include file="partial_modal_service.tpl"}
+{/if}
+{if isset($logged_in)}
+    {include file="partial_modal_change_password.tpl"}
 {/if}
 
     <script src="/js/jquery-1.11.1.min.js"></script>

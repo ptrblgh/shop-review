@@ -198,6 +198,54 @@ $( document ).ready( function() {
         }
     });
 
+    // change password validation
+    $('#form-change-psw').validate({
+        rules: {
+            'change_psw_current_psw': {
+                minlength: 6,
+                maxlength: 72,                
+                required: true
+            },
+            'change_psw_psw': {
+                minlength: 6,
+                maxlength: 72,                
+                required: true
+            },
+            'change_psw_psw2': {
+                minlength: 6,
+                maxlength: 72,                
+                required: true,
+                equalTo : "#change-psw-psw"
+            }
+        },
+        errorElement: 'small',
+        errorClass: 'text-danger',
+        highlight: function(element, errorClass, validClass) {
+            $(element).closest('.form-group').find('small')
+                .removeClass(validClass).addClass(errorClass)
+            ;
+            $(element).closest('.form-group').removeClass('has-success')
+                .addClass('has-error')
+            ;
+        },
+        unhighlight: function(element, errorClass, validClass) {
+            $(element).closest('.form-group').find('small')
+                .removeClass(errorClass).addClass(validClass).hide();
+            ;
+            $(element).closest('.form-group').removeClass('has-error')
+                .addClass('has-success')
+            ;
+        }
+    });
+    $('#change-psw-btn').on('click', function() {
+        var name = $('#change-psw-name').val();
+
+        // if name not empty, it is probably a bot
+        if ($("#form-change-psw").valid() && !name) {
+            $("#form-change-psw").submit();
+        }
+    });
+
     // forgot validation
     $('#form-forgot').validate({
         rules: {

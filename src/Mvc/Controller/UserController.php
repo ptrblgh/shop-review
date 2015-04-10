@@ -177,6 +177,46 @@ class UserController extends BaseController
     }
 
     /**
+     * Change password
+     * 
+     * @return void
+     */
+    public function changePasswordAction()
+    {
+        $data = Helper::sanitizeInput($_POST);
+
+        $username = Session::getInstance()->username;
+
+        $user 
+            = $this->getUserRepository()->findUser($username);
+        if ($user instanceof User) {
+            $bcrypt = new Bcrypt();
+            $valid = $bcrypt
+                ->isValid($data['change_psw_current_psw'], $user->password);
+
+            if ($valid) {
+                $form = new ChangePasswordFormValidator(
+                    $data, 
+                    array(), 
+                    $this->getUserRepository()
+                );
+
+                if ($form->isValid()) {
+                    $user->password = $bcrypt->crypt($data['change_psw_psw']);
+                    $ret = $this->getUserRepository()->updateUserPassword($user);
+                    if (!$ret) {
+                        
+                        $this->logoutAction();
+                    }
+                }
+            }
+        }
+
+        header('Location: /', true, 302);
+        exit();
+    }
+
+    /**
      * Lazy-load review database repository
      * 
      * @return MysqlDb
