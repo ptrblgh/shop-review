@@ -4,27 +4,51 @@ namespace Shopreview\Validator;
 
 use Shopreview\Helper\Session;
 
-class CaptchaValidator implements ValidatorInterface
+class CaptchaValidator extends AbstractValidator
 {
-    protected $result = false;
+    /**
+     * Options for validator
+     *
+     * @var array
+     */    
+    protected $options = array(
+        'min' => 0,
+        'max' => 10,
+        'elementName' => 'captcha',
+        'message' => 'Wrong sum for catpcha numbers.'
+    );
+
+    /**
+     * Constructor for validator
+     * 
+     * @param array $options
+     * @return void
+     */
+    public function __construct($options = array())
+    {
+        parent::__construct($options);
+    }
 
     /**
      * Generate two random 0-10 numbers and their sum
      * 
-     * @param string $elementName input elment's name that holds the token
      * @throws Exception if element name is a proper HTML name
      * @return array the numbers to add and their sum
      */
-    public function generateCaptcha($elementName)
+    public function generateCaptcha()
     {   
-        $pattern = '/^[a-zA-Z][a-zA-Z0-9_]*$/';
+        $elementName = $this->getOption('elementName');
+
+        $pattern = '/^[a-zA-Z][a-zA-Z0-9_]*$/';        
 
         if (!preg_match($pattern, $elementName)) {
             throw new Exception("Not allowed name.");
         }
 
-        $num1 = mt_rand(0, 10);
-        $num2 = mt_rand(0, 10);
+        $min = $this->getOption('min');
+        $max = $this->getOption('max');
+        $num1 = mt_rand($min, $max);
+        $num2 = mt_rand($min, $max);
         $sum = $num1 + $num2;
 
         $captchaArr = array('num1' => $num1, 'num2' => $num2, 'sum' => $sum);
@@ -39,12 +63,13 @@ class CaptchaValidator implements ValidatorInterface
      *
      * Also removes (always) the captcha elements from session
      * 
-     * @param string $elementName input elment's name that holds the token
-     * @param  $tokenValue the CSRF token
+     * @param  $captchaValue the CSRF token
      * @return boolean
      */
-    function checkCaptcha($elementName, $captchaValue)
+    public function isValid($captchaValue)
     {
+        $elementName = $this->getOption('elementName');
+
         $captchaArr = Session::getInstance()->$elementName;
 
         if (!is_array($captchaArr)
@@ -52,9 +77,8 @@ class CaptchaValidator implements ValidatorInterface
             || !array_key_exists('num2', $captchaArr)
             || !array_key_exists('sum', $captchaArr)
         ) {
-            $this->result = false;
 
-            return false;
+            $result = false;
         } elseif ($captchaArr['sum'] === (int) $captchaValue) {
             $result = true;
         } else { 
@@ -62,16 +86,7 @@ class CaptchaValidator implements ValidatorInterface
         }
         
         Session::getInstance()->$elementName = null;
-        $this->result = $result;
         
         return $result;
-    }
-
-    /**
-     * {inheritdoc}
-     */
-    function isValid()
-    {
-        return $this->result;
     }
 }

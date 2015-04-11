@@ -4,9 +4,29 @@ namespace Shopreview\Validator;
 
 use Shopreview\Helper\Session;
 
-class CsrfValidator implements ValidatorInterface
+class CsrfValidator extends AbstractValidator
 {
-    protected $result = false;
+    /**
+     * Options for validator
+     *
+     * @var array
+     */    
+    protected $options = array(
+        'elementName' => 'csrf',
+        'captchaData' => array(),
+        'message' => 'Invalid CSRF token.'
+    );
+
+    /**
+     * Constructor for validator
+     * 
+     * @param array $options
+     * @return void
+     */
+    public function __construct($options = array())
+    {
+        parent::__construct($options);
+    }
 
     /**
      * Generate random secure one-time CSRF token
@@ -19,8 +39,10 @@ class CsrfValidator implements ValidatorInterface
      * @throws Exception if element name is a proper HTML name
      * @return string the generated CSRF token
      */
-    public function generateToken($elementName)
+    public function generateToken()
     {
+        $elementName = $this->getOption('elementName');        
+
         $pattern = '/^[a-zA-Z][a-zA-Z0-9_]*$/';
 
         if (!preg_match($pattern, $elementName)) {
@@ -55,18 +77,18 @@ class CsrfValidator implements ValidatorInterface
      *
      * Also removes (always) the token from session (ensure one-timeness)
      * 
-     * @param string $elementName input elment's name that holds the token
      * @param  $tokenValue the CSRF token
      * @return boolean
      */
-    function checkToken($elementName, $tokenValue)
+    public function isValid($tokenValue)
     {
+        $elementName = $this->getOption('elementName');
+        
         $token = Session::getInstance()->$elementName;
 
         if ($token === false) {
             
-            $this->result = false;            
-            return false;
+            $result = false;
         } elseif ($token === $tokenValue) {
             $result = true;
         } else { 
@@ -74,16 +96,7 @@ class CsrfValidator implements ValidatorInterface
         }
         
         Session::getInstance()->$elementName = null;
-        $this->result = $result;
         
         return $result;
-    }
-
-    /**
-     * {inheritdoc}
-     */
-    function isValid()
-    {
-        return $this->result;
     }
 }

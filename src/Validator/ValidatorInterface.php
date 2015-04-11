@@ -5,9 +5,10 @@ namespace Shopreview\Validator;
 interface ValidatorInterface
 {
     /**
-     * Checks agains a validation rule 
+     * Checks $data agains a validation rule(s)
      *
+     * @param $data
      * @return boolean
      */
-    public function isValid();
+    public function isValid($data);
 }
