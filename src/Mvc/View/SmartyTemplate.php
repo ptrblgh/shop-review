@@ -2,7 +2,7 @@
 
 namespace Shopreview\Mvc\View;
 
-use Shopreview\Helper\Session;
+use Shopreview\Session;
 
 class SmartyTemplate implements TemplateInterface
 {

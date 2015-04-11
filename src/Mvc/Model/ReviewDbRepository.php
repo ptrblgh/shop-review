@@ -2,7 +2,7 @@
 
 namespace Shopreview\Mvc\Model;
 
-use Shopreview\Helper\Db\MysqlDb;
+use Shopreview\Db\MysqlDb;
 
 class ReviewDbRepository extends MysqlDb
 {

@@ -1,6 +1,8 @@
 <?php
 
-namespace Shopreview\Helper;
+namespace Shopreview;
+
+use Shopreview\Helper;
 
 class Message
 {

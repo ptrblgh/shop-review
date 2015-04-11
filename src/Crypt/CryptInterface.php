@@ -1,6 +1,6 @@
 <?php
 
-namespace Shopreview\Helper\Crypt;
+namespace Shopreview\Crypt;
 
 interface CryptInterface
 {

@@ -2,7 +2,7 @@
 
 namespace Shopreview\Validator;
 
-use Shopreview\Helper\Db\DbAdapterInterface;
+use Shopreview\Db\DbAdapterInterface;
 
 class ValueTakenValidator extends AbstractValidator
 {

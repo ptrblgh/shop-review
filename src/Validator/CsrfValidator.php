@@ -2,7 +2,7 @@
 
 namespace Shopreview\Validator;
 
-use Shopreview\Helper\Session;
+use Shopreview\Session;
 
 class CsrfValidator extends AbstractValidator
 {

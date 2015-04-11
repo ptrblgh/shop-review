@@ -1,6 +1,6 @@
 <?php
 
-namespace Shopreview\Helper\Db;
+namespace Shopreview\Db;
 
 interface DbAdapterInterface
 {

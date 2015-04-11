@@ -2,8 +2,8 @@
 
 namespace Shopreview\Mvc\Controller;
 
-use Shopreview\Helper\Db\MysqlDb;
-use ShopReview\Helper\Session;
+use Shopreview\Db\MysqlDb;
+use ShopReview\Session;
 use Shopreview\Mvc\Application;
 use Shopreview\Mvc\Model\ReviewDbRepository;
 use Shopreview\Mvc\Router;
