@@ -5,9 +5,11 @@ namespace Shopreview\Mvc\Model;
 class Review
 {
     public $id;
-    public $user_id;
-    public $review_text;
-    public $erview_rating;
+    public $review_body;
+    public $rerview_rating;
+    public $review_edit_date;
+    public $review_add_date;
+    public $username;
 
     /**
      * Retriving entity properties

@@ -15,5 +15,12 @@ return array(
         'port' => 25,
         'from' => 'noreply@localhost',
         'from_name' => 'Shop review'
+    ),
+    'reviews' => array(
+        // number of reviews (start and loaded by ajax loader)
+        'batch' => 3,
+        // (how many complete words - by characters - appear before 'more' in 
+        // review body)
+        'body_lead' => 150 
     )
 );

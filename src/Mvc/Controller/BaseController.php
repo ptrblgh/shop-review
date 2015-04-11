@@ -51,12 +51,14 @@ class BaseController
         $templateParams = array();
         
         // sets variable for template if logged in
-        $templateParams['logged_in'] = 
-            (Session::getInstance()->username !== '') 
-                ? Session::getInstance()->username : null
-        ;
+        $templateParams['logged_in'] 
+            = (Session::getInstance()->username !== '') 
+                ? Session::getInstance()->username 
+                : null
+            ;
+
         // csrf tokens for forms (register, login)
-        if (empty($templateParams['logged_in'])) {
+        if (!empty($templateParams['logged_in'])) {
             $csrf = new CsrfValidator();
             $csrfToken = $csrf->generateToken();
             $templateParams['csrf_token'] = $csrfToken;
@@ -64,10 +66,20 @@ class BaseController
             $captcha = new CaptchaValidator();
             $captchaArr = $captcha->generateCaptcha();
             $templateParams['register_captcha'] = $captchaArr;
+
+            $reviewOptions = array(
+                'exclude' => Session::getInstance()->username,
+                'batch' => $this->appConfig['reviews']['batch']
+            );
         } else {
             $csrf = new CsrfValidator();
             $csrfToken = $csrf->generateToken();
-            $templateParams['csrf_token'] = $csrfToken;            
+            $templateParams['csrf_token'] = $csrfToken; 
+
+            $reviewOptions = array(
+                'exclude' => '',
+                'batch' => $this->appConfig['reviews']['batch']
+            );           
         }
 
         $templateParams['form_errors'] = 
@@ -75,7 +87,11 @@ class BaseController
                 ? Session::getInstance()->form_errors : null
         ;
 
-        $this->getReviewRepository();
+        $templateParams['reviews']
+            = $this->getReviewRepository()->fetchAll($reviewOptions);
+
+        $templateParams['review_lead'] 
+            = $this->appConfig['reviews']['body_lead'];
 
         $view = new View\SmartyTemplate(
             $templatePath, 

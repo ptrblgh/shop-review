@@ -3,12 +3,21 @@
 namespace Shopreview\Mvc\Controller;
 
 use Shopreview;
-use Shopreview\Session;
-use Shopreview\MysqlDbAdapter;
-use Shopreview\Mvc\Application;
+use Shopreview\Helper;
+use ShopReview\Session;
+use Shopreview\Mvc\Model\Review;
+use Shopreview\Mvc\Model\ReviewDbRepository;
+use Shopreview\Validator\FormValidator\ReviewFormValidator;
 
 class ReviewController extends BaseController
 {
+    /**
+     * Mysql database repository for review
+     * 
+     * @var MysqlDb
+     */
+    protected $reviewRepository;
+
     /**
      * Constructor for Controller
      */

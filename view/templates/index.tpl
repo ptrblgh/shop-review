@@ -133,46 +133,7 @@
     </div>
     <div class="row">
         <div class="col-xs-12">
-            <div class="media">
-                <div class="hidden-xs media-left media-top">
-                    <span class="glyphicon glyphicon-user"></span>
-                </div>
-                <div class="media-body">
-                    <h4 class="media-heading"><a name="username1" href="#username1" class="smooth-scroll">username1</a> <small>@ 2015.01.01. 12:01:01</small></h4>
-                    <input class="rating" value="4" data-min="0" data-max="5" data-step="1" data-readonly="true" data-size="xs">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec tempus lorem. Pellentesque vehicula sollicitudin nisi et blandit.<a class="collapse-btn" href="#"> <small class="glyphicon glyphicon-plus"></small> more </a> <span class="collapse-body">Pellentesque mollis libero sodales posuere auctor. Pellentesque fermentum diam quis ipsum maximus sodales. Nulla viverra lacinia ante at ullamcorper. Duis in maximus odio. Nullam rhoncus nulla metus, vitae dictum orci consectetur sed. Vestibulum egestas finibus mi, in sagittis quam aliquam sit amet. Nullam volutpat et neque et porttitor. Cras id venenatis ipsum. In volutpat elit ut mauris tincidunt, quis cursus eros cursus. Morbi ac mauris eget dui consequat tempor ac in mauris. Cras malesuada, ex sed molestie vehicula, felis est suscipit arcu, id congue turpis ligula et nisl. Aliquam accumsan venenatis quam, sit amet finibus nulla varius at.</span></p>
-                </div>
-            </div>
-            <div class="media">
-                <div class="hidden-xs media-left media-top">
-                    <span class="glyphicon glyphicon-user"></span>
-                </div>
-                <div class="media-body">
-                    <h4 class="media-heading"><a name="username2" href="#username2" class="smooth-scroll">username2</a> <small>@ 2015.01.01. 12:01:01</small></h4>
-                    <input class="rating" value="2" data-min="0" data-max="5" data-step="1" data-readonly="true" data-size="xs">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec tempus lorem. Pellentesque vehicula sollicitudin nisi et blandit.<a class="collapse-btn" href="#"> <small class="glyphicon glyphicon-plus"></small> more </a> <span class="collapse-body">Pellentesque mollis libero sodales posuere auctor. Pellentesque fermentum diam quis ipsum maximus sodales. Nulla viverra lacinia ante at ullamcorper. Duis in maximus odio. Nullam rhoncus nulla metus, vitae dictum orci consectetur sed. Vestibulum egestas finibus mi, in sagittis quam aliquam sit amet. Nullam volutpat et neque et porttitor. Cras id venenatis ipsum. In volutpat elit ut mauris tincidunt, quis cursus eros cursus. Morbi ac mauris eget dui consequat tempor ac in mauris. Cras malesuada, ex sed molestie vehicula, felis est suscipit arcu, id congue turpis ligula et nisl. Aliquam accumsan venenatis quam, sit amet finibus nulla varius at.</span></p>
-                </div>
-            </div>
-            <div class="media">
-                <div class="hidden-xs media-left media-top">
-                    <span class="glyphicon glyphicon-user"></span>
-                </div>
-                <div class="media-body">
-                    <h4 class="media-heading"><a name="username3" href="#username3" class="smooth-scroll">username3</a> <small>@ 2015.01.01. 12:01:01</small></h4>
-                    <input class="rating" value="3" data-min="0" data-max="5" data-step="1" data-readonly="true" data-size="xs">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec tempus lorem. Pellentesque vehicula sollicitudin nisi et blandit.<a class="collapse-btn" href="#"> <small class="glyphicon glyphicon-plus"></small> more </a> <span class="collapse-body">Pellentesque mollis libero sodales posuere auctor. Pellentesque fermentum diam quis ipsum maximus sodales. Nulla viverra lacinia ante at ullamcorper. Duis in maximus odio. Nullam rhoncus nulla metus, vitae dictum orci consectetur sed. Vestibulum egestas finibus mi, in sagittis quam aliquam sit amet. Nullam volutpat et neque et porttitor. Cras id venenatis ipsum. In volutpat elit ut mauris tincidunt, quis cursus eros cursus. Morbi ac mauris eget dui consequat tempor ac in mauris. Cras malesuada, ex sed molestie vehicula, felis est suscipit arcu, id congue turpis ligula et nisl. Aliquam accumsan venenatis quam, sit amet finibus nulla varius at.</span></p>
-                </div>
-            </div>
-            <div class="media">
-                <div class="hidden-xs media-left media-top">
-                    <span class="glyphicon glyphicon-user"></span>
-                </div>
-                <div class="media-body">
-                    <h4 class="media-heading"><a name="username4" href="#username4" class="smooth-scroll">username4</a> <small>@ 2015.01.01. 12:01:01</small></h4>
-                    <input class="rating" value="5" data-min="0" data-max="5" data-step="1" data-readonly="true" data-size="xs">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec tempus lorem. Pellentesque vehicula sollicitudin nisi et blandit.<a class="collapse-btn" href="#"> <small class="glyphicon glyphicon-plus"></small> more </a> <span class="collapse-body">Pellentesque mollis libero sodales posuere auctor. Pellentesque fermentum diam quis ipsum maximus sodales. Nulla viverra lacinia ante at ullamcorper. Duis in maximus odio. Nullam rhoncus nulla metus, vitae dictum orci consectetur sed. Vestibulum egestas finibus mi, in sagittis quam aliquam sit amet. Nullam volutpat et neque et porttitor. Cras id venenatis ipsum. In volutpat elit ut mauris tincidunt, quis cursus eros cursus. Morbi ac mauris eget dui consequat tempor ac in mauris. Cras malesuada, ex sed molestie vehicula, felis est suscipit arcu, id congue turpis ligula et nisl. Aliquam accumsan venenatis quam, sit amet finibus nulla varius at.</span></p>
-                </div>
-            </div>
+{include file="partial_reviews.tpl"}
         </div>
     </div>
 </div>
