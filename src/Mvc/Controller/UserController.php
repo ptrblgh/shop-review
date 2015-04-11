@@ -5,7 +5,7 @@ namespace Shopreview\Mvc\Controller;
 use Shopreview;
 use Shopreview\Helper;
 use Shopreview\Message;
-use Shopreview\Crypt\BCrypt;
+use Shopreview\Crypt\Bcrypt;
 use ShopReview\Session;
 use Shopreview\Mvc\Model\User;
 use Shopreview\Mvc\Model\UserDbRepository;
@@ -42,7 +42,7 @@ class UserController extends BaseController
     {
         $data = Helper::sanitizeInput($_POST);
 
-        $bcrypt = new BCrypt();
+        $bcrypt = new Bcrypt();
         $data['crypted_psw'] = $bcrypt->crypt($data['register_psw']);
 
         $validator = new RegisterFormValidator($this->getUserRepository());
