@@ -7,7 +7,8 @@
     ],
     "homepage": "http://shop-review.theory9.hu",    
     "autoload": {
-        "psr-4": {"Shopreview\\": "src/"}
+        "psr-4": {"Shopreview\\": "src/"},
+        "classmap": ["src/"]
     },
     "require": {
         "phpmailer/phpmailer": "dev-master",
