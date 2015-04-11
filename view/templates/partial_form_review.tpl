@@ -23,6 +23,7 @@
                             <input class="rating" value="0" data-min="0" data-max="5" data-step="1" data-size="sm">
                         </div>
                         <hr />
+                        {include file="partial_errors.tpl"}
                         <div class="form-group text-center">
                             <button type="button" class="btn btn-primary">Send review</button>
                             <button type="button" class="btn btn-danger btn-confirm">Delete review</button>

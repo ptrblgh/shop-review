@@ -8,7 +8,11 @@ use Shopreview\Helper\Crypt\BCrypt;
 use ShopReview\Helper\Session;
 use Shopreview\Mvc\Model\User;
 use Shopreview\Mvc\Model\UserDbRepository;
-use Shopreview\Validator\FormValidator\UserRegistrationFormValidator;
+use Shopreview\Validator\LoggedInPasswordValidator;
+use Shopreview\Validator\ValueTakenValidator;
+use Shopreview\Validator\FormValidator\RegisterFormValidator;
+use Shopreview\Validator\FormValidator\ChangePasswordFormValidator;
+use Shopreview\Validator\FormValidator\LoginFormValidator;
 use Shopreview\Mvc\View\JsonTemplate;
 
 class UserController extends BaseController
@@ -40,20 +44,16 @@ class UserController extends BaseController
         $bcrypt = new BCrypt();
         $data['crypted_psw'] = $bcrypt->crypt($data['register_psw']);
 
-        $form = new UserRegistrationFormValidator(
-            $data, 
-            array(), 
-            $this->getUserRepository()
-        );
+        $validator = new RegisterFormValidator($this->getUserRepository());
 
-        if ($form->isValid()) {
+        if ($validator->isValid($data)) {
             $res = $this->getUserRepository()->saveUser($data);
 
             if ($res) {
                 Session::getInstance()->username = $data['register_username'];
             } 
         } else {
-            Session::getInstance()->form_errors = $form->getErrors();
+            Session::getInstance()->form_errors = $validator->getErrors();
         }
 
         header('Location: /', true, 302);
@@ -69,15 +69,27 @@ class UserController extends BaseController
     {
         $data = Helper::sanitizeInput($_POST);
 
-        $user 
-            = $this->getUserRepository()->findUser($data['login_username']);
-        if ($user instanceof User) {
-            $bcrypt = new Bcrypt();
-            $valid = $bcrypt->isValid($data['login_psw'], $user->password);
-            if ($valid) {
-                Session::getInstance()->username = $data['login_username'];
-            }
+        $validator = new LoginFormValidator($this->getUserRepository());
+
+        if ($validator->isValid($data)) {
+            Session::getInstance()->username = $data['login_username'];
+        } else {
+            Session::getInstance()->form_errors = $validator->getErrors();
         }
+
+        // $options = array(
+        //     'repository' => $this->getUserRepository(),
+        //     'method' => 'findUser',
+        //     'username' => $data['login_username']
+        // );
+        // $validator 
+        //     = new LoggedInPasswordValidator($options);
+        // if ($validator->isValid($data['login_psw'])) {
+        //     Session::getInstance()->username = $data['login_username'];
+        // } else {
+        //     Session::getInstance()->form_errors 
+        //         = $validator->getOption('message');
+        // }
 
         header('Location: /', true, 302);
         exit();
@@ -149,13 +161,23 @@ class UserController extends BaseController
     {
         $data = Helper::sanitizeInput($_POST['register_username']);
 
-        $ret = $this->getUserRepository()->findUser($data);
+        $options = array(
+            'repository' => $this->getUserRepository(),
+            'method' => 'findUsername'
+        );
+        try {
+            $validator = new ValueTakenValidator($options);   
+            
+            $ret = $validator->isValid($data);
 
-        $jsonData = ($ret) ? 'Username is taken.' : true;
+            $jsonData = ($ret === false) ? 'Username is taken.' : true;
 
-        $view = new JsonTemplate($jsonData);
+            $view = new JsonTemplate($jsonData);
 
-        $view->display();
+            $view->display();
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+        }
     }
 
     /**
@@ -167,13 +189,23 @@ class UserController extends BaseController
     {
         $data = Helper::sanitizeInput($_POST['register_email']);
 
-        $ret = $this->getUserRepository()->findEmail($data);
+        $options = array(
+            'repository' => $this->getUserRepository(),
+            'method' => 'findEmail'
+        );
+        try {
+            $validator = new ValueTakenValidator($options);   
+            
+            $ret = $validator->isValid($data);
 
-        $jsonData = ($ret) ? 'E-mail is taken.' : true;
+            $jsonData = ($ret === false) ? 'Email is already registered.' : true;
 
-        $view = new JsonTemplate($jsonData);
+            $view = new JsonTemplate($jsonData);
 
-        $view->display();
+            $view->display();
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+        }
     }
 
     /**
@@ -185,31 +217,23 @@ class UserController extends BaseController
     {
         $data = Helper::sanitizeInput($_POST);
 
-        $username = Session::getInstance()->username;
+        $form = 
+            new ChangePasswordFormValidator($this->getUserRepository());
 
-        $user 
-            = $this->getUserRepository()->findUser($username);
-        if ($user instanceof User) {
-            $bcrypt = new Bcrypt();
-            $valid = $bcrypt
-                ->isValid($data['change_psw_current_psw'], $user->password);
+        if ($form->isValid($data)) {
+            $bcrypt = new BCrypt();
+            $user = new User();
+            $user->password = $bcrypt->crypt($data['change_psw_psw']);
+            $user->username = Session::getInstance()->username;
+            $ret = $this->getUserRepository()->updateUserPassword($user);
+            if ($ret) {
+                $message = 'Password has changed.';
+                Session::getInstance()->form_errors = $message;
 
-            if ($valid) {
-                $form = new ChangePasswordFormValidator(
-                    $data, 
-                    array(), 
-                    $this->getUserRepository()
-                );
-
-                if ($form->isValid()) {
-                    $user->password = $bcrypt->crypt($data['change_psw_psw']);
-                    $ret = $this->getUserRepository()->updateUserPassword($user);
-                    if (!$ret) {
-                        
-                        $this->logoutAction();
-                    }
-                }
+                return $this->logoutAction();
             }
+        } else {
+            Session::getInstance()->form_errors = $form->getErrors();
         }
 
         header('Location: /', true, 302);

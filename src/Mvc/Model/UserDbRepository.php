@@ -7,7 +7,6 @@ use Shopreview\Mvc\Model\User;
 
 class UserDbRepository extends MysqlDb
 {
-    
     public function fetchAll()
     {
         $q = 'SELECT * FROM `user`';

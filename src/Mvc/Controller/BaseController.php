@@ -58,12 +58,16 @@ class BaseController
         // csrf tokens for forms (register, login)
         if (empty($templateParams['logged_in'])) {
             $csrf = new CsrfValidator();
-            $csrfToken = $csrf->generateToken('register_csrf_token');
-            $templateParams['register_csrf_token'] = $csrfToken;
+            $csrfToken = $csrf->generateToken();
+            $templateParams['csrf_token'] = $csrfToken;
 
             $captcha = new CaptchaValidator();
-            $captchaArr = $captcha->generateCaptcha('register_captcha');
+            $captchaArr = $captcha->generateCaptcha();
             $templateParams['register_captcha'] = $captchaArr;
+        } else {
+            $csrf = new CsrfValidator();
+            $csrfToken = $csrf->generateToken();
+            $templateParams['change_psw_csrf_token'] = $csrfToken;            
         }
 
         $templateParams['form_errors'] = 

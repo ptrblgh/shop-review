@@ -13,6 +13,13 @@ class Session
     public static $sessionId;
 
     /**
+     * These elements will not be purged upon destroy
+     * 
+     * @var array
+     */
+    protected $exclude = array('form_errors');
+
+    /**
      * Prevent creating a new instance
      */
     protected function __construct()
@@ -82,10 +89,12 @@ class Session
     public function destroy()
     {
         foreach ($_SESSION as $key => $val) {
-            $_SESSION[$key] = null;
+            if (!in_array($key, $this->exclude)) {
+                $_SESSION[$key] = null;
+            }
         }
 
-        session_destroy();
+        //session_destroy();
     }
 
     /**

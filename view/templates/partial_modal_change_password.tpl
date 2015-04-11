@@ -9,11 +9,11 @@
             <div class="modal-body">
                 <div id="myTabContent" class="tab-content">
                     <div class="tab-pane fade active in text-center" id="change-psw">
-                        <form name="form-change-psw" id="form-change-psw" method="post" action ="/user/change-psw">
+                        <form name="form-change-psw" id="form-change-psw" method="post" action ="/user/change-password">
                             <div class="form-group">
                                 <div class="form-group has-feedback has-feedback-left">
-                                    <label class="control-label" for="change-psw-psw">Current password</label>
-                                    <input type="password" name="change_psw_current_psw" id="change-psw-psw" class="form-control" placeholder="Current password" />
+                                    <label class="control-label" for="change-psw-current-psw">Current password</label>
+                                    <input type="password" name="change_psw_current_psw" id="change-psw-current-psw" class="form-control" placeholder="Current password" />
                                     <span class="form-control-feedback glyphicon glyphicon-lock"></span>
                                 </div>
                                 <div class="form-group has-feedback has-feedback-left">
