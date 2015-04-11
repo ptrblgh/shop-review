@@ -1,6 +1,6 @@
 <?php
 
-namespace Shopreview\Helper;
+namespace Shopreview;
 
 class Helper
 {

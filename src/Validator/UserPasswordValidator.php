@@ -2,8 +2,8 @@
 
 namespace Shopreview\Validator;
 
-use Shopreview\Helper\Session;
-use Shopreview\Helper\Crypt\Bcrypt;
+use Shopreview\Session;
+use Shopreview\Crypt\Bcrypt;
 use Shopreview\Mvc\Model\User;
 
 class UserPasswordValidator extends AbstractValidator

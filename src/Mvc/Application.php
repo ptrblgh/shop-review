@@ -2,8 +2,9 @@
 
 namespace Shopreview\Mvc;
 
-use Shopreview\Helper\Helper;
-use Shopreview\Helper\Session;
+use Shopreview;
+use Shopreview\Helper;
+use Shopreview\Session;
 use Shopreview\Mvc\Router;
 
 class Application

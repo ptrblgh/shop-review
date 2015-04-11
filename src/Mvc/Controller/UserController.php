@@ -2,10 +2,11 @@
 
 namespace Shopreview\Mvc\Controller;
 
-use Shopreview\Helper\Helper;
-use Shopreview\Helper\Message;
-use Shopreview\Helper\Crypt\BCrypt;
-use ShopReview\Helper\Session;
+use Shopreview;
+use Shopreview\Helper;
+use Shopreview\Message;
+use Shopreview\Crypt\BCrypt;
+use ShopReview\Session;
 use Shopreview\Mvc\Model\User;
 use Shopreview\Mvc\Model\UserDbRepository;
 use Shopreview\Validator\LoggedInPasswordValidator;

@@ -2,7 +2,7 @@
 
 namespace Shopreview\Validator\FormValidator;
 
-use Shopreview\Helper\Session;
+use Shopreview\Session;
 use Shopreview\Mvc\Model\UserDbRepository;
 use Shopreview\Validator\FormValidator\AbstractFormValidator;
 use Shopreview\Validator;
