@@ -125,7 +125,6 @@ $( document ).ready( function() {
 
     // register validation
     jQuery.validator.addMethod("sum", function(value, element, params) {
-        console.log(params);
         return this.optional(element) 
             || parseInt(value, 10) == params[0] + params[1];
     }, jQuery.validator.format(("Please enter the correct value: {0} + {1}.")));
