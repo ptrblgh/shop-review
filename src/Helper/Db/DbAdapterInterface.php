@@ -2,7 +2,7 @@
 
 namespace Shopreview\Helper\Db;
 
-interface DbInterface
+interface DbAdapterInterface
 {
     public static function getInstance(
         $server, 
