@@ -27,7 +27,7 @@
                                     <span class="form-control-feedback glyphicon glyphicon-lock"></span>
                                 </div>
                                 <div class="name-group">
-                                    <input type="text" name="change_psw_csrf_token" id="change-psw-csrf-token" value="{if isset($change_psw_csrf_token)}{$change_psw_csrf_token}{/if}" />
+                                    <input type="text" name="change_psw_csrf_token" id="change-psw-csrf-token" value="{if isset($csrf_token)}{$csrf_token}{/if}" />
                                     <input type="text" name="change_psw_name" id="change-psw-name" class="form-control" placeholder="E-mail" />
                                 </div>
                                 <div class="form-group text-center">
