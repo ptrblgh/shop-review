@@ -67,7 +67,7 @@ class BaseController
         } else {
             $csrf = new CsrfValidator();
             $csrfToken = $csrf->generateToken();
-            $templateParams['change_psw_csrf_token'] = $csrfToken;            
+            $templateParams['csrf_token'] = $csrfToken;            
         }
 
         $templateParams['form_errors'] = 

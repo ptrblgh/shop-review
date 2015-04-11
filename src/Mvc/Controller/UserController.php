@@ -19,7 +19,7 @@ use Shopreview\Mvc\View\JsonTemplate;
 class UserController extends BaseController
 {
     /**
-     * Mysql database repository for review
+     * Mysql database repository for user
      * 
      * @var MysqlDb
      */
@@ -242,7 +242,7 @@ class UserController extends BaseController
     }
 
     /**
-     * Lazy-load review database repository
+     * Lazy-load user database repository
      * 
      * @return MysqlDb
      */
