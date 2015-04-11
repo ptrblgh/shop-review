@@ -7,17 +7,67 @@ use Shopreview\Db\MysqlDb;
 class ReviewDbRepository extends MysqlDb
 {
     /**
-     * Find user by its username
-     * 
-     * @param string $value username
-     * @return object
+     * Retrive all reviews
+     *
+     * @param string $options
+     * @return array
      */
-    public function findUser($value)
+    public function fetchAll($options = array())
     {
-        $q = 'SELECT `username` FROM `shop-review_user` WHERE `username` = :value';
+        $exclude = '';
+        $limit = '';
+        $valueArr = array();
+        $start = (!empty($options['start']) ? (int) $options['start'] : 0);
+        $batch = (!empty($options['batch']) ? (int) $options['batch'] : 1);
+
+        if ($batch > 0) {
+            $limit = ' LIMIT :start, :batch';
+            $valueArr['start'] = $start;
+            $valueArr['batch'] = $batch;
+        }
+
+        if (!empty($options['exclude'])) {
+            $exclude = ' WHERE `username` != :exclude';
+            $valueArr['exclude'] = $options['exclude'];
+        }
+
+        $q = 'SELECT * FROM `shop-review_review`' . $exclude;
+        $q .= ' ORDER BY `review_add_date` DESC';
+        $q .= $limit;
 
         try {
             $stmt = $this->connection->prepare($q);
+            $stmt->bindParam(':start',$valueArr['start'], \PDO::PARAM_INT);
+            $stmt->bindParam(':batch',$valueArr['batch'], \PDO::PARAM_INT);
+            if (!empty($options['exclude'])) {
+                $stmt->bindParam(':exclude', $valueArr['exclude'], \PDO::PARAM_STR);
+            }
+            $stmt->execute();
+        } catch (\PdoException $e) {
+            trigger_error($e->getMessage(), E_USER_ERROR);
+
+            return false;
+        }
+
+        return $stmt->fetchAll(
+            \Pdo::FETCH_CLASS, 
+            'Shopreview\Mvc\Model\Review'
+        );
+    }
+
+    /**
+     * Find review username
+     * 
+     * @param string $value username
+     * @return Review
+     */
+    public function findReview($value)
+    {
+        $q = 'SELECT * FROM `shop-review_review` WHERE `username` = :value';
+
+        try {
+            $stmt = $this->connection->prepare($q);
+            $stmt->setFetchMode(\Pdo::FETCH_INTO, new Review());
             $stmt->execute(array('value' => $value));
         } catch (\PDOException $e) {
             trigger_error($e->getMessage(), E_USER_ERROR);
@@ -25,76 +75,6 @@ class ReviewDbRepository extends MysqlDb
             return false;
         }
 
-        return $stmt->fetch(\PDO::FETCH_OBJ);
-    }
-
-    /**
-     * Find user email in table
-     * 
-     * @param string $value username
-     * @return object
-     */
-    public function findEmail($value)
-    {
-        $q = 'SELECT `username` FROM `shop-review_user` WHERE `email` = :value';
-
-        try {
-            $stmt = $this->connection->prepare($q);
-            $stmt->execute(array('username' => $value));
-        } catch (\PDOException $e) {
-            trigger_error($e->getMessage(), E_USER_ERROR);
-
-            return false;
-        }
-
-        return $stmt->fetch(PDO::FETCH_OBJ);
-    }
-
-    /**
-     * Insert registration data into database
-     * 
-     * @param array $data
-     * @return boolean
-     */
-    public function saveRegistration($data)
-    {
-        $userNameExists 
-            = isset($data['register_username']) 
-                ? $this->findUser($data['register_username']) 
-                : null
-        ;
-        $emailExists             
-            = isset($data['register_email']) 
-                ? $this->findUser($data['register_email']) 
-                : null
-        ;
-
-        if ((!empty($data) && is_array($data)) 
-            && (strlen($data['register_username']) >= 3 
-                && strlen($data['register_username']) <= 20
-                && !$userNameExists)
-            && (strlen($data['register_psw']) >= 6
-                && strlen($data['register_psw']) <= 72
-                && $data['register_psw'] === $data['register_psw2'])
-            && (!empty($data['register_email']) && !$emailExists)
-        ) {
-            $q = "INSERT INTO `shop-review_user` "
-                . "(`username`, `password`, `email`) "
-                . "VALUES (:register_username, :register_psw, :register_email)"
-            ;
-
-            try {
-                $stmt = $this->connection->prepare($q);
-                $stmt->execute(array(
-                    'register_username' => $data['register_username'],
-                    'register_psw' => $data['register_psw'],
-                    'register_email' => $data['register_email']
-                ));
-            } catch (\PDOException $e) {
-                trigger_error($e->getMessage(), E_USER_ERROR);
-
-                return false;
-            }
-        }
+        return $stmt->fetch();
     }
 }

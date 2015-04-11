@@ -11,21 +11,25 @@
         </div>
         <div class="row">
             <div class="col-xs-12">
-                <form name="form-login" id="#form-login" method="post" action ="/">
+                <form name="form-review" id="#form-review" method="post" action ="/">
                     <div class="form-group">
                         <div class="form-group has-feedback has-feedback-left">
                             <label class="control-label">My review</label>
-                            <textarea rows="5" class="form-control"></textarea>
+                            <textarea name="review_review_body" rows="5" class="form-control"></textarea>
                             <span class="form-control-feedback glyphicon glyphicon-pencil"></span>
                         </div>
                         <div class="form-group">
                             <label class="control-label">My rating</label>
-                            <input class="rating" value="0" data-min="0" data-max="5" data-step="1" data-size="sm">
+                            <input class="rating" name="review_review_rating" value="0" data-min="0" data-max="5" data-step="1" data-size="sm">
+                        </div>
+                        <div class="name-group">
+                            <input type="text" name="review_csrf_token" id="review-csrf-token" value="{if isset($csrf_token)}{$csrf_token}{/if}" />
+                            <input type="text" name="review_name" id="review-name" class="form-control" placeholder="E-mail" />
                         </div>
                         <hr />
                         {include file="partial_errors.tpl"}
                         <div class="form-group text-center">
-                            <button type="button" class="btn btn-primary">Send review</button>
+                            <button name="review-btn" id="review-btn" type="button" class="btn btn-primary">Send review</button>
                             <button type="button" class="btn btn-danger btn-confirm">Delete review</button>
                         </div>
                     </div>
