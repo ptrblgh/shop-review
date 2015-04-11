@@ -9,7 +9,7 @@ class UserDbRepository extends MysqlDb
 {
     public function fetchAll()
     {
-        $q = 'SELECT * FROM `user`';
+        $q = 'SELECT * FROM `shop-review_user`';
 
         try {
             $stmt = $this->connection->prepare($q);
@@ -25,7 +25,7 @@ class UserDbRepository extends MysqlDb
 
     public function findUser($value)
     {
-        $q = 'SELECT * FROM `user` WHERE `username` = :value';
+        $q = 'SELECT * FROM `shop-review_user` WHERE `username` = :value';
 
         try {
             $stmt = $this->connection->prepare($q);
@@ -48,7 +48,7 @@ class UserDbRepository extends MysqlDb
      */
     public function findUsername($value)
     {
-        $q = 'SELECT `username` FROM `user` WHERE `username` = :value';
+        $q = 'SELECT `username` FROM `shop-review_user` WHERE `username` = :value';
 
         try {
             $stmt = $this->connection->prepare($q);
@@ -71,7 +71,7 @@ class UserDbRepository extends MysqlDb
      */
     public function findEmail($value)
     {
-        $q = 'SELECT `email` FROM `user` WHERE `email` = :value';
+        $q = 'SELECT `email` FROM `shop-review_user` WHERE `email` = :value';
 
         try {
             $stmt = $this->connection->prepare($q);
@@ -93,7 +93,7 @@ class UserDbRepository extends MysqlDb
      */
     public function findByEmail($value)
     {
-        $q = 'SELECT * FROM `user` WHERE `email` = :value';
+        $q = 'SELECT * FROM `shop-review_user` WHERE `email` = :value';
 
         try {
             $stmt = $this->connection->prepare($q);
@@ -116,7 +116,7 @@ class UserDbRepository extends MysqlDb
      */
     public function saveUser($data)
     {
-        $q = "INSERT INTO `user` "
+        $q = "INSERT INTO `shop-review_user` "
             . "(`username`, `password`, `email`) "
             . "VALUES (:register_username, :register_psw, :register_email)"
         ;
@@ -145,7 +145,7 @@ class UserDbRepository extends MysqlDb
      */
     public function updateUserPassword(User $user)
     {
-        $q = "UPDATE `user` SET "
+        $q = "UPDATE `shop-review_user` SET "
             . "`password` = :psw "
             . "WHERE `username` = :usr"
         ;
