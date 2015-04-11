@@ -2,7 +2,7 @@
 
 namespace Shopreview\Helper\Db;
 
-class MysqlDb implements DbInterface
+class MysqlDb implements DbAdapterInterface
 {
     /**
      * Database server
