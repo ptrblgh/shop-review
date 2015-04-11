@@ -14,7 +14,7 @@ class ReviewDbRepository extends MysqlDb
      */
     public function findUser($value)
     {
-        $q = 'SELECT `username` FROM `user` WHERE `username` = :value';
+        $q = 'SELECT `username` FROM `shop-review_user` WHERE `username` = :value';
 
         try {
             $stmt = $this->connection->prepare($q);
@@ -36,7 +36,7 @@ class ReviewDbRepository extends MysqlDb
      */
     public function findEmail($value)
     {
-        $q = 'SELECT `username` FROM `user` WHERE `email` = :value';
+        $q = 'SELECT `username` FROM `shop-review_user` WHERE `email` = :value';
 
         try {
             $stmt = $this->connection->prepare($q);
@@ -78,7 +78,7 @@ class ReviewDbRepository extends MysqlDb
                 && $data['register_psw'] === $data['register_psw2'])
             && (!empty($data['register_email']) && !$emailExists)
         ) {
-            $q = "INSERT INTO `user` "
+            $q = "INSERT INTO `shop-review_user` "
                 . "(`username`, `password`, `email`) "
                 . "VALUES (:register_username, :register_psw, :register_email)"
             ;
