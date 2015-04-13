@@ -3,6 +3,7 @@
 namespace Shopreview\Mvc\Model;
 
 use Shopreview\Db\MysqlDb;
+use Shopreview\Session;
 
 class ReviewDbRepository extends MysqlDb
 {
@@ -37,10 +38,14 @@ class ReviewDbRepository extends MysqlDb
 
         try {
             $stmt = $this->connection->prepare($q);
-            $stmt->bindParam(':start',$valueArr['start'], \PDO::PARAM_INT);
-            $stmt->bindParam(':batch',$valueArr['batch'], \PDO::PARAM_INT);
+            $stmt->bindParam(':start', $valueArr['start'], \Pdo::PARAM_INT);
+            $stmt->bindParam(':batch', $valueArr['batch'], \Pdo::PARAM_INT);
             if (!empty($options['exclude'])) {
-                $stmt->bindParam(':exclude', $valueArr['exclude'], \PDO::PARAM_STR);
+                $stmt->bindParam(
+                    ':exclude', 
+                    $valueArr['exclude'], 
+                    \Pdo::PARAM_STR
+                );
             }
             $stmt->execute();
         } catch (\PdoException $e) {
@@ -77,4 +82,110 @@ class ReviewDbRepository extends MysqlDb
 
         return $stmt->fetch();
     }
+
+    /**
+     * Save/update review
+     * 
+     * @param array $value
+     * @return boolean
+     */
+    public function saveReview($value)
+    {
+        $username = Session::getInstance()->username;
+        $reviewExist = $this->findReview($username);
+        if ($reviewExist) {
+            $q = "UPDATE `shop-review_review` SET"
+                . "`review_body` = :body, "
+                . "`review_rating` = :rating, "
+                . "`review_edit_date` = NOW() "
+                . "WHERE `username` = :username"
+            ;
+        } else {
+            $q = "INSERT INTO `shop-review_review` ("
+                . "`review_body`, " 
+                . "`review_rating`, "
+                . "`review_edit_date`, "
+                . "`username`)"
+                . " VALUES ("
+                . ":body, "
+                . ":rating, "
+                . "NOW(), "
+                . ":username)"
+            ;
+        }
+
+        try {
+            $stmt = $this->connection->prepare($q);
+            $stmt->bindParam(
+                ':body', 
+                $value['review_review_body'], 
+                \Pdo::PARAM_STR
+            );
+            $stmt->bindParam(
+                ':rating', 
+                $value['review_review_rating'], 
+                \Pdo::PARAM_INT
+            );
+
+            $stmt->bindParam(
+                ':username', 
+                $username, 
+                \Pdo::PARAM_STR
+            );
+            
+            $ret = $stmt->execute();
+
+            return $ret;
+        } catch (\PdoException $e) {
+            trigger_error($e->getMessage(), E_USER_ERROR);
+
+            return false;
+        }
+    }
+
+    /**
+     * Delete review username
+     * 
+     * @param string $value username
+     * @return boolean
+     */
+    public function delReview($value)
+    {
+        $q = 'DELETE FROM `shop-review_review` WHERE `username` = :value';
+
+        try {
+            $stmt = $this->connection->prepare($q);
+            $stmt->bindParam(':value', $value, \Pdo::PARAM_STR);
+            $stmt->execute();
+        } catch (\PDOException $e) {
+            trigger_error($e->getMessage(), E_USER_ERROR);
+
+            return false;
+        }
+
+        return $stmt->fetch();
+    }
+
+    /**
+     * Get the average rating of the shop
+     * 
+     * @return object
+     */
+    public function getAverageRating()
+    {
+        $q = 'SELECT AVG(`review_rating`) AS `avg_rating` FROM `shop-review_review`';
+
+        try {
+            $stmt = $this->connection->prepare($q);
+            $stmt->execute();
+        } catch (\PDOException $e) {
+            trigger_error($e->getMessage(), E_USER_ERROR);
+
+            return false;
+        }
+
+        return $stmt->fetch(\Pdo::FETCH_OBJ);
+    }
+
+
 }
