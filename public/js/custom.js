@@ -109,9 +109,6 @@ $( document ).ready( function() {
             $(element).closest('.form-group').removeClass('has-error')
                 .addClass('has-success')
             ;
-        },
-        submitHandler: function(form) {
-            form.submit();
         }
     });
     $('#login-btn').on('click', function() {
@@ -303,6 +300,52 @@ $( document ).ready( function() {
                     });
                 });
             });
+        }
+    });
+
+    // review validation
+    jQuery.validator.addMethod("integer", function(value, element, params) {
+        return (value != 0) && (value == parseInt(value, 10));
+    }, jQuery.validator.format(("Please enter a non-zero integer.")));    
+    $('#form-review').validate({
+        rules: {
+            'review_review_body': {
+                minlength: 5,
+                maxlength: 21843,
+                required: true
+            },
+            'review_review_rating': {
+                digits: true,
+                range: [1, 5],
+                integer: true,               
+                required: true
+            }
+        },
+        errorElement: 'small',
+        errorClass: 'text-danger',
+        highlight: function(element, errorClass, validClass) {
+            $(element).closest('.form-group').find('small')
+                .removeClass(validClass).addClass(errorClass)
+            ;
+            $(element).closest('.form-group').removeClass('has-success')
+                .addClass('has-error')
+            ;
+        },
+        unhighlight: function(element, errorClass, validClass) {
+            $(element).closest('.form-group').find('small')
+                .removeClass(errorClass).addClass(validClass)
+            ;
+            $(element).closest('.form-group').removeClass('has-error')
+                .addClass('has-success')
+            ;
+        }
+    });
+    $('#review-btn').on('click', function() {
+        var name = $('#review-name').val();
+
+        // if name not empty, it is probably a bot
+        if ($("#form-review").valid() && !name) {
+            $("#form-review").submit();
         }
     });
 

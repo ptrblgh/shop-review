@@ -112,7 +112,7 @@
             </p>
             <hr />
             <p class="text-center">
-                <input class="rating" value="3.5" data-min="0" data-max="5" data-step="1" data-readonly="true" data-size="sm">
+                <input class="rating" value="{$average_rating->avg_rating}" data-min="0" data-max="5" data-step="1" data-readonly="true" data-size="sm">
             </p>
             <hr />
         </div>

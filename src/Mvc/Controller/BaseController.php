@@ -4,6 +4,7 @@ namespace Shopreview\Mvc\Controller;
 
 use Shopreview\Db\MysqlDb;
 use ShopReview\Session;
+use Shopreview\Helper;
 use Shopreview\Mvc\Application;
 use Shopreview\Mvc\Model\ReviewDbRepository;
 use Shopreview\Mvc\Router;
@@ -89,6 +90,12 @@ class BaseController
 
         $templateParams['reviews']
             = $this->getReviewRepository()->fetchAll($reviewOptions);
+
+        $templateParams['logged_in_review'] = $this->getReviewRepository()
+            ->findReview(Session::getInstance()->username);
+
+        $templateParams['average_rating']
+            = $this->getReviewRepository()->getAverageRating();
 
         $templateParams['review_lead'] 
             = $this->appConfig['reviews']['body_lead'];
