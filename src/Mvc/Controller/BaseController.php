@@ -68,7 +68,7 @@ class BaseController
             ;
 
         // csrf token and captcha for forms
-        if (!empty($templateParams['logged_in'])) {
+        if (empty($templateParams['logged_in'])) {
             // for login and register
             $csrf = new CsrfValidator();
             $csrfToken = $csrf->generateToken();
@@ -79,7 +79,7 @@ class BaseController
             $templateParams['register_captcha'] = $captchaArr;
 
             $reviewOptions = array(
-                'exclude' => Session::getInstance()->username,
+                'exclude' => '',
                 'batch' => $this->appConfig['reviews']['batch']
             );
         } else {
@@ -89,9 +89,9 @@ class BaseController
             $templateParams['csrf_token'] = $csrfToken; 
 
             $reviewOptions = array(
-                'exclude' => '',
+                'exclude' => Session::getInstance()->username,
                 'batch' => $this->appConfig['reviews']['batch']
-            );           
+            );
         }
 
         // transfer errors for views
