@@ -4,6 +4,16 @@ namespace Shopreview\Validator;
 
 use Shopreview\Session;
 
+/**
+ * A simple captcha validator
+ *
+ * Checks if the sum of two integer numbers that the user provided equals with
+ * the generated one.
+ * 
+ * @author Péter Balogh <peter.balogh@theory9.hu>
+ * @link https://github.com/ptrblgh/shop-review for source
+ * @link http://shop-review.theory9.hu for demo
+ */
 class CaptchaValidator extends AbstractValidator
 {
     /**
@@ -30,9 +40,9 @@ class CaptchaValidator extends AbstractValidator
     }
 
     /**
-     * Generate two random 0-10 numbers and their sum
+     * Generate two random (default: 0-10) numbers and their sum
      * 
-     * @throws Exception if element name is a proper HTML name
+     * @throws \Exception if element name is not a proper HTML name
      * @return array the numbers to add and their sum
      */
     public function generateCaptcha()
@@ -42,7 +52,7 @@ class CaptchaValidator extends AbstractValidator
         $pattern = '/^[a-zA-Z][a-zA-Z0-9_]*$/';        
 
         if (!preg_match($pattern, $elementName)) {
-            throw new Exception("Not allowed name.");
+            throw new \Exception("Not allowed name.");
         }
 
         $min = $this->getOption('min');
@@ -59,14 +69,14 @@ class CaptchaValidator extends AbstractValidator
     }
 
     /**
-     * Checks the token for the element
+     * Checks the sum agains the user provided data
      *
      * Also removes (always) the captcha elements from session
      * 
-     * @param  $captchaValue the CSRF token
+     * @param  $sum the sum of the two numbers given by the user
      * @return boolean
      */
-    public function isValid($captchaValue)
+    public function isValid($sum)
     {
         $elementName = $this->getOption('elementName');
 
@@ -79,7 +89,7 @@ class CaptchaValidator extends AbstractValidator
         ) {
 
             $result = false;
-        } elseif ($captchaArr['sum'] === (int) $captchaValue) {
+        } elseif ($captchaArr['sum'] === (int) $sum) {
             $result = true;
         } else { 
             $result = false;

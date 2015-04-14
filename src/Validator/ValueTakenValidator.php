@@ -4,6 +4,15 @@ namespace Shopreview\Validator;
 
 use Shopreview\Db\DbAdapterInterface;
 
+/**
+ * Value existing check validator
+ *
+ * Checks if the given value exists in database.
+ * 
+ * @author Péter Balogh <peter.balogh@theory9.hu>
+ * @link https://github.com/ptrblgh/shop-review for source
+ * @link http://shop-review.theory9.hu for demo
+ */
 class ValueTakenValidator extends AbstractValidator
 {
     /**
@@ -21,7 +30,6 @@ class ValueTakenValidator extends AbstractValidator
      * Constructor for validator
      *
      * @param array $options
-     * @throws \Exception if repository is not instance of UserDbRepository
      * @return void
      */
     public function __construct($options = array())
@@ -30,7 +38,7 @@ class ValueTakenValidator extends AbstractValidator
     }
 
     /**
-     * Checks username existance in database
+     * Checks value existance in database
      * 
      * @param string $data
      * @return booelan

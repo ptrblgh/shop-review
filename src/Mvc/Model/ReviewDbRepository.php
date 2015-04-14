@@ -5,13 +5,20 @@ namespace Shopreview\Mvc\Model;
 use Shopreview\Db\MysqlDb;
 use Shopreview\Session;
 
+/**
+ * Database repository for reviews
+ * 
+ * @author Péter Balogh <peter.balogh@theory9.hu>
+ * @link https://github.com/ptrblgh/shop-review for source
+ * @link http://shop-review.theory9.hu for demo
+ */
 class ReviewDbRepository extends MysqlDb
 {
     /**
      * Retrive all reviews
      *
-     * @param string $options
-     * @return array
+     * @param string[] $options
+     * @return Shopreview\Mvc\Model\Review
      */
     public function fetchAll($options = array())
     {
@@ -21,12 +28,15 @@ class ReviewDbRepository extends MysqlDb
         $start = (!empty($options['start']) ? (int) $options['start'] : 0);
         $batch = (!empty($options['batch']) ? (int) $options['batch'] : 1);
 
+        // only a limited set is needed so we construct the sql query for it
         if ($batch > 0) {
             $limit = ' LIMIT :start, :batch';
             $valueArr['start'] = $start;
             $valueArr['batch'] = $batch;
         }
 
+        // exclude this user's review (the logged in), because that user's
+        // review data is in the form on the homepage
         if (!empty($options['exclude'])) {
             $exclude = ' WHERE `username` != :exclude';
             $valueArr['exclude'] = $options['exclude'];
@@ -61,10 +71,10 @@ class ReviewDbRepository extends MysqlDb
     }
 
     /**
-     * Find review username
+     * Find review by username
      * 
      * @param string $value username
-     * @return Review
+     * @return Shopreview\Mvc\Model\Review
      */
     public function findReview($value)
     {
@@ -93,6 +103,7 @@ class ReviewDbRepository extends MysqlDb
     {
         $username = Session::getInstance()->username;
         $reviewExist = $this->findReview($username);
+        // user already wrote a review so we update that one
         if ($reviewExist) {
             $q = "UPDATE `shop-review_review` SET"
                 . "`review_body` = :body, "
@@ -100,6 +111,7 @@ class ReviewDbRepository extends MysqlDb
                 . "`review_edit_date` = NOW() "
                 . "WHERE `username` = :username"
             ;
+        // this will be a new review for the user
         } else {
             $q = "INSERT INTO `shop-review_review` ("
                 . "`review_body`, " 
@@ -144,7 +156,7 @@ class ReviewDbRepository extends MysqlDb
     }
 
     /**
-     * Delete review username
+     * Delete review by username
      * 
      * @param string $value username
      * @return boolean
@@ -157,7 +169,7 @@ class ReviewDbRepository extends MysqlDb
             $stmt = $this->connection->prepare($q);
             $stmt->bindParam(':value', $value, \Pdo::PARAM_STR);
             $stmt->execute();
-        } catch (\PDOException $e) {
+        } catch (\PdoException $e) {
             trigger_error($e->getMessage(), E_USER_ERROR);
 
             return false;
@@ -178,7 +190,7 @@ class ReviewDbRepository extends MysqlDb
         try {
             $stmt = $this->connection->prepare($q);
             $stmt->execute();
-        } catch (\PDOException $e) {
+        } catch (\PdoException $e) {
             trigger_error($e->getMessage(), E_USER_ERROR);
 
             return false;

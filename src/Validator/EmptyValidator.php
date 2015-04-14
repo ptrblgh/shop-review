@@ -2,6 +2,15 @@
 
 namespace Shopreview\Validator;
 
+/**
+ * Requirement check for elements
+ *
+ * Checks if the given value is set, not empty
+ * 
+ * @author Péter Balogh <peter.balogh@theory9.hu>
+ * @link https://github.com/ptrblgh/shop-review for source
+ * @link http://shop-review.theory9.hu for demo
+ */
 class EmptyValidator extends AbstractValidator
 {
     /**
@@ -28,7 +37,6 @@ class EmptyValidator extends AbstractValidator
      * Checks if data is empty
      * 
      * @param $data
-     * 
      * @return boolean
      */
     public function isValid($data)

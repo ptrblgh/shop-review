@@ -4,6 +4,13 @@ namespace Shopreview\Validator;
 
 use Shopreview\Db\DbAdapterInterface;
 
+/**
+ * Abstract class for validators
+ * 
+ * @author Péter Balogh <peter.balogh@theory9.hu>
+ * @link https://github.com/ptrblgh/shop-review for source
+ * @link http://shop-review.theory9.hu for demo
+ */
 abstract class AbstractValidator implements ValidatorInterface
 {
     /**
@@ -16,15 +23,16 @@ abstract class AbstractValidator implements ValidatorInterface
     );
     
     /**
-     * @var UserDbRepository
+     * @var DbAdapterInterface
      */
     protected $repository;
 
     /**
      * Constructor for validator
      * 
-     * @param  string $data
-     * @return boolean
+     * @param  array $data
+     * @throws \Exception if repository is not an instance of DbAdapterInterface
+     * @return void
      */
     public function __construct($options = array())
     {
@@ -32,6 +40,7 @@ abstract class AbstractValidator implements ValidatorInterface
             $this->setOptions($options);
         }
 
+        // repository check
         if (array_key_exists('repository', $options)) {
             $repository = $this->getOption('repository');
 
@@ -53,6 +62,7 @@ abstract class AbstractValidator implements ValidatorInterface
      * Set options
      * 
      * @param array $options
+     * @return object
      */
     public function setOptions($options = array())
     {
@@ -70,7 +80,7 @@ abstract class AbstractValidator implements ValidatorInterface
      * 
      * @param  $option option array key
      * @throws \Exception if option not in array
-     * @return mixed|\Exception
+     * @return array|\Exception
      */
     public function getOption($option)
     {

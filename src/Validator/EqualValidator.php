@@ -2,6 +2,15 @@
 
 namespace Shopreview\Validator;
 
+/**
+ * Equality validator
+ *
+ * Checks if the two given value equals or not.
+ * 
+ * @author Péter Balogh <peter.balogh@theory9.hu>
+ * @link https://github.com/ptrblgh/shop-review for source
+ * @link http://shop-review.theory9.hu for demo
+ */
 class EqualValidator extends AbstractValidator
 {
     /**
@@ -27,7 +36,7 @@ class EqualValidator extends AbstractValidator
     /**
      * Checks if data is empty
      * 
-     * @param $data
+     * @param array $data [0] is the first and [1] is the second value
      * @throws \Exception if invalid array given (see exception message)
      * @return boolean
      */
@@ -35,7 +44,8 @@ class EqualValidator extends AbstractValidator
     {
         if (!is_array($data) || !isset($data[0]) || !isset($data[1])) {
 
-            throw new \Exception('Wrong array given (array\'s first and second item needed.)');
+            throw new \Exception('Wrong array given (array\'s the first and 
+                second item need to be set in the given array.)');
             
         } elseif(count($data) != 2) {
 

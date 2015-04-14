@@ -4,6 +4,13 @@ namespace Shopreview;
 
 use Shopreview\Helper;
 
+/**
+ * A simple class for wrapping \PHPMailer
+ * 
+ * @author Péter Balogh <peter.balogh@theory9.hu>
+ * @link https://github.com/ptrblgh/shop-review for source
+ * @link http://shop-review.theory9.hu for demo
+ */
 class Message
 {
     /**
@@ -17,6 +24,7 @@ class Message
      * Constructor for message
      * 
      * @param array $config
+     * @return void
      */
     public function __construct(array $config)
     {
@@ -37,6 +45,7 @@ class Message
      * Setter for the message adressee's email
      * 
      * @param string $address
+     * @return void
      */
     public function setAddress($address)
     {
@@ -47,6 +56,7 @@ class Message
      * Setter for the message body
      * 
      * @param string $body
+     * @return void
      */
     public function setBody($body)
     {
@@ -58,14 +68,18 @@ class Message
     /**
      * Setter for the message subject
      * 
-     * @param string $address
+     * @param string $subject
+     * @return void
      */
     public function setSubject($subject)
     {
         $this->mail->Subject = Helper::sanitizeInput($subject);
     }
+
     /**
      * Send the message
+     *
+     * @return string|boolean
      */
     public function send()
     {

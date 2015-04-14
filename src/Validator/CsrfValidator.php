@@ -4,6 +4,16 @@ namespace Shopreview\Validator;
 
 use Shopreview\Session;
 
+/**
+ * Cross-site request forgery protection
+ *
+ * Checks if the form's CSRF token matches with the one that was generated and 
+ * saved in the session array.
+ * 
+ * @author Péter Balogh <peter.balogh@theory9.hu>
+ * @link https://github.com/ptrblgh/shop-review for source
+ * @link http://shop-review.theory9.hu for demo
+ */
 class CsrfValidator extends AbstractValidator
 {
     /**
@@ -36,7 +46,7 @@ class CsrfValidator extends AbstractValidator
      * unique name in session variable
      * 
      * @param string $elementName input elment's name that holds the token
-     * @throws Exception if element name is a proper HTML name
+     * @throws \Exception if element name is not a proper HTML name
      * @return string the generated CSRF token
      */
     public function generateToken()
@@ -46,7 +56,7 @@ class CsrfValidator extends AbstractValidator
         $pattern = '/^[a-zA-Z][a-zA-Z0-9_]*$/';
 
         if (!preg_match($pattern, $elementName)) {
-            throw new Exception("Not allowed name.");
+            throw new \Exception("Not allowed name.");
         }
 
         if (function_exists('hash_algos') 

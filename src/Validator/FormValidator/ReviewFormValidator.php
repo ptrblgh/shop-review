@@ -7,6 +7,13 @@ use Shopreview\Mvc\Model\ReviewDbRepository;
 use Shopreview\Validator\FormValidator\AbstractFormValidator;
 use Shopreview\Validator;
 
+/**
+ * Validators for sending reviews
+ * 
+ * @author Péter Balogh <peter.balogh@theory9.hu>
+ * @link https://github.com/ptrblgh/shop-review for source
+ * @link http://shop-review.theory9.hu for demo
+ */
 class ReviewFormValidator extends AbstractFormValidator
 {
     /**
@@ -20,6 +27,7 @@ class ReviewFormValidator extends AbstractFormValidator
      * Constructor for class
      * 
      * @param UserDbRepository $userRepository
+     * @return void
      */
     public function __construct(ReviewDbRepository $reviewRepository)
     {

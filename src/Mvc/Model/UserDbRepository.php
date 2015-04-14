@@ -5,24 +5,21 @@ namespace Shopreview\Mvc\Model;
 use Shopreview\Db\MysqlDb;
 use Shopreview\Mvc\Model\User;
 
+/**
+ * Database repository for user
+ * 
+ * @author Péter Balogh <peter.balogh@theory9.hu>
+ * @link https://github.com/ptrblgh/shop-review for source
+ * @link http://shop-review.theory9.hu for demo
+ */
 class UserDbRepository extends MysqlDb
 {
-    public function fetchAll()
-    {
-        $q = 'SELECT * FROM `shop-review_user`';
-
-        try {
-            $stmt = $this->connection->prepare($q);
-            $stmt->execute(array());
-        } catch (\PDOException $e) {
-            trigger_error($e->getMessage(), E_USER_ERROR);
-
-            return false;
-        }
-
-        return $stmt->fetchAll(\Pdo::FETCH_CLASS, 'User');
-    }
-
+    /**
+     * Find user by username
+     * 
+     * @param  string $value
+     * @return User
+     */
     public function findUser($value)
     {
         $q = 'SELECT * FROM `shop-review_user` WHERE `username` = :value';
@@ -64,7 +61,7 @@ class UserDbRepository extends MysqlDb
     }
 
     /**
-     * Find user email in table
+     * Find user's email
      * 
      * @param string $value username
      * @return object

@@ -7,6 +7,13 @@ use Shopreview\Mvc\Model\UserDbRepository;
 use Shopreview\Validator\FormValidator\AbstractFormValidator;
 use Shopreview\Validator;
 
+/**
+ * Validators for login form
+ * 
+ * @author Péter Balogh <peter.balogh@theory9.hu>
+ * @link https://github.com/ptrblgh/shop-review for source
+ * @link http://shop-review.theory9.hu for demo
+ */
 class LoginFormValidator extends AbstractFormValidator
 {
     /**
@@ -20,6 +27,7 @@ class LoginFormValidator extends AbstractFormValidator
      * Constructor for class
      * 
      * @param UserDbRepository $userRepository
+     * @return void
      */
     public function __construct(UserDbRepository $userRepository)
     {
@@ -103,6 +111,7 @@ class LoginFormValidator extends AbstractFormValidator
             }
         }
 
+        // we don't provide useful information for malicious users
         if (!empty($this->errors)) {
             $this->errors = "Wrong credentials.";
         }

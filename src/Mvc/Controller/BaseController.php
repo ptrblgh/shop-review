@@ -3,17 +3,20 @@
 namespace Shopreview\Mvc\Controller;
 
 use Shopreview\Db\MysqlDb;
-use ShopReview\Session;
-use Shopreview\Helper;
 use Shopreview\Mvc\Application;
-use Shopreview\Mvc\Model\ReviewDbRepository;
 use Shopreview\Mvc\Router;
 use Shopreview\Mvc\View;
+use Shopreview\Mvc\Model\ReviewDbRepository;
+use ShopReview\Session;
 use Shopreview\Validator\CaptchaValidator;
 use Shopreview\Validator\CsrfValidator;
 
 /**
- * Basic action controller
+ * Base action controller
+ * 
+ * @author Péter Balogh <peter.balogh@theory9.hu>
+ * @link https://github.com/ptrblgh/shop-review for source
+ * @link http://shop-review.theory9.hu for demo
  */
 class BaseController
 {
@@ -21,7 +24,7 @@ class BaseController
     /**
      * Application config
      * 
-     * @var array
+     * @var string[]
      */
     protected $appConfig = array();
 
@@ -34,6 +37,8 @@ class BaseController
 
     /**
      * Constructor for Controller
+     *
+     * @return void
      */
     public function __construct()
     {
@@ -48,18 +53,23 @@ class BaseController
      */
     public function indexAction()
     {
+        // get the root path for template files
         $templatePath = $this->appConfig['template_path'];
+
+        // this array will be passed to the template engine to create actual
+        // template variables inside views
         $templateParams = array();
         
-        // sets variable for template if logged in
+        // sets logged in username
         $templateParams['logged_in'] 
             = (Session::getInstance()->username !== '') 
                 ? Session::getInstance()->username 
                 : null
             ;
 
-        // csrf tokens for forms (register, login)
+        // csrf token and captcha for forms
         if (!empty($templateParams['logged_in'])) {
+            // for login and register
             $csrf = new CsrfValidator();
             $csrfToken = $csrf->generateToken();
             $templateParams['csrf_token'] = $csrfToken;
@@ -73,6 +83,7 @@ class BaseController
                 'batch' => $this->appConfig['reviews']['batch']
             );
         } else {
+            // for add/update review and change password
             $csrf = new CsrfValidator();
             $csrfToken = $csrf->generateToken();
             $templateParams['csrf_token'] = $csrfToken; 
@@ -83,29 +94,36 @@ class BaseController
             );           
         }
 
+        // transfer errors for views
         $templateParams['form_errors'] = 
             (Session::getInstance()->form_errors !== '') 
                 ? Session::getInstance()->form_errors : null
         ;
 
+        // others review
         $templateParams['reviews']
             = $this->getReviewRepository()->fetchAll($reviewOptions);
 
+        // the logged in user's review
         $templateParams['logged_in_review'] = $this->getReviewRepository()
             ->findReview(Session::getInstance()->username);
 
+        // average shop rating
         $templateParams['average_rating']
             = $this->getReviewRepository()->getAverageRating();
 
+        // review lead length from application config
         $templateParams['review_lead'] 
             = $this->appConfig['reviews']['body_lead'];
 
+        // pass information to the smarty view
         $view = new View\SmartyTemplate(
             $templatePath, 
             $this->getTemplateFileName(__FUNCTION__), 
             $templateParams
         );
 
+        // explicitly close database connection
         $this->getReviewRepository()->close();
 
         echo $view->display();
