@@ -128,7 +128,7 @@
 <div class="container">
     <div class="row">
         <div class="col-xs-12">
-            <h3 class="page-header text-center text-uppercase"><a name="others-review" href="#others-review"><small><span class="glyphicon glyphicon-stats"></span></small> Others' reviews</a></h3>
+            <h3 class="page-header text-center text-uppercase"><a name="others-review" href="#others-review" class="smooth-scroll"><small><span class="glyphicon glyphicon-stats"></span></small> Others' reviews</a></h3>
         </div>
     </div>
     <div class="row">
