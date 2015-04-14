@@ -99,22 +99,25 @@ class ReviewController extends BaseController
         $ret = $this->getReviewRepository()->fetchAll($reviewOptions);
 
         if ($ret) {
-            $templatePath = $this->appConfig['template_path'];
+            try {
+                $templatePath = $this->appConfig['template_path'];
 
-            $templateParams = array();
+                $templateParams = array();
 
-            $templateParams['reviews'] = $ret;
+                $templateParams['reviews'] = $ret;
 
-            $templateParams['review_lead'] 
-                = $this->appConfig['reviews']['body_lead'];
+                $templateParams['review_lead'] 
+                    = $this->appConfig['reviews']['body_lead'];
 
-            $view = new SmartyTemplate(
-                $templatePath, 
-                $this->getTemplateFileName('partial_reviews'), 
-                $templateParams
-            );
-
-            echo $view->display();
+                $view = new SmartyTemplate(
+                    $templatePath, 
+                    $this->getTemplateFileName('partial_reviews'), 
+                    $templateParams
+                );
+                echo $view->display();
+            } catch (\Exception $e) {
+                echo $e->getMessage();
+            }
         }
     }
 
