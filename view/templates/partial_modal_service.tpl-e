@@ -23,11 +23,11 @@
                                     <input type="password" name="login_psw" id="login-psw" class="form-control" placeholder="Password" />
                                     <span class="form-control-feedback glyphicon glyphicon-lock"></span>
                                 </div>
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <label class="" for="rememberme">
                                         <input type="checkbox" name="rememberme" id="rememberme" value="Remember me"> Remember me
                                     </label>
-                                </div>
+                                </div> -->
                                 <div class="name-group">
                                     <input type="text" name="login_csrf_token" id="login-csrf-token" value="{if isset($csrf_token)}{$csrf_token}{/if}" />
                                     <input type="text" name="login-name" id="login-name" class="form-control" placeholder="E-mail" />
