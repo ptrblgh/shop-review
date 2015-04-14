@@ -136,8 +136,8 @@ class MysqlDb implements DbAdapterInterface
         try {
             $this->connection 
                 = new \Pdo($dsn, $this->username, $this->password);
-        } catch (\PDOException $e) {
-            trigger_error($e->getMessage(), E_USER_ERROR);
+        } catch (\PdoException $e) {
+            exit('Database connection failed.');
 
             return false;
         }
