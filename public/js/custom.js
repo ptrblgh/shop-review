@@ -77,12 +77,6 @@ $( document ).ready( function() {
         }
     });
 
-    function loadData(items) {
-        var items = $('#others-reviews .media').length;        
-
-
-    }
-
     // smooth scroll
     $('body').on('click', 'a.smooth-scroll', function() {
         if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') 
