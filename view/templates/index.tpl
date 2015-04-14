@@ -179,13 +179,8 @@
     {include file="partial_modal_change_password.tpl"}
 {/if}
 
-    <script src="/js/jquery-1.11.1.min.js"></script>
-    <script src="/js/jquery.easing.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
-    <script src="/js/star-rating.min.js"></script>
-    <script src="/js/bootstrap-confirmation.min.js"></script>
-    <script src="/js/jquery.validate.min.js"></script>
+    <script src="/js/plugins.js"></script>
     <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
-    <script src="/js/custom.js"></script>
+    <script src="/js/custom.min.js"></script>
 </body>
 </html>
