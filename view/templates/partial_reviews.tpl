@@ -6,7 +6,7 @@
                     <span class="glyphicon glyphicon-user"></span>
                 </div>
                 <div class="media-body">
-                    <h4 class="media-heading"><a name="{$review->username}" href="#{$review->username}" class="smooth-scroll">{$review->username}</a> <small>@ {$review->review_add_date}</small></h4>
+                    <h4 class="media-heading"><a name="{$review->username}" href="#{$review->username}" class="smooth-scroll">{$review->username}</a> <small class="media-date">@ {$review->review_add_date}</small></h4>
                     <input class="rating" value="{$review->review_rating}" data-min="0" data-max="5" data-step="1" data-readonly="true" data-size="xs">
                     <p>
 {if strlen($review_body) > $review_lead}
