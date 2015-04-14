@@ -13,7 +13,7 @@ class Review
 {
     public $id;
     public $review_body;
-    public $rerview_rating;
+    public $review_rating;
     public $review_edit_date;
     public $review_add_date;
     public $username;
