@@ -84,7 +84,7 @@ $( document ).ready( function() {
     }
 
     // smooth scroll
-    $('a.smooth-scroll').click(function() {
+    $('body').on('click', 'a.smooth-scroll', function() {
         if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') 
             && location.hostname == this.hostname) 
         {
