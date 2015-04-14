@@ -13,6 +13,7 @@ $( document ).ready( function() {
                 'Roboto Slab: 100,300,400,700'
             ] 
         },
+        timeout: 2000, // Set the timeout to two seconds
         active: function() { $('html').trigger('wfactive'); }
     };
 
@@ -25,13 +26,6 @@ $( document ).ready( function() {
         var s = document.getElementsByTagName('script')[0];
         s.parentNode.insertBefore(wf, s);
     })();
-
-    // bind filter button click
-    $('#filters').on( 'click', 'button', function() {
-        var filterValue = $( this ).attr('data-filter');
-        $('#filters button').removeClass('active');
-        $container.isotope({ filter: filterValue });
-    });
 
     // scrollup button
     $(window).scroll(function () {
