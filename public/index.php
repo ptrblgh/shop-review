@@ -20,6 +20,9 @@ require_once 'src/Password.php';
 // Composer autoloading
 if (file_exists('vendor/autoload.php')) {
     $loader = require_once 'vendor/autoload.php';
+} else {
+    exit('PSR-4 autoloader not found. Please use composer or provide one in 
+        the \'vendor/\' directory.');
 }
 
 // Run the application

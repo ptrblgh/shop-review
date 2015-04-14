@@ -121,16 +121,20 @@ class BaseController
             = $this->appConfig['reviews']['body_lead'];
 
         // pass information to the smarty view
-        $view = new View\SmartyTemplate(
-            $templatePath, 
-            $this->getTemplateFileName(__FUNCTION__), 
-            $templateParams
-        );
+        try {
+            $view = new View\SmartyTemplate(
+                $templatePath, 
+                $this->getTemplateFileName(__FUNCTION__), 
+                $templateParams
+            );
 
-        // explicitly close database connection
-        $this->getReviewRepository()->close();
+            // explicitly close database connection
+            $this->getReviewRepository()->close();
 
-        echo $view->display();
+            echo $view->display();
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+        }
     }
 
     /**

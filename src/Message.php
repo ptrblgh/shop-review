@@ -28,7 +28,11 @@ class Message
      */
     public function __construct(array $config)
     {
-        $mail = new \PHPMailer();
+        if (class_exists('PHPMailer')) {
+             $mail = new \PHPMailer();
+        } else {
+            throw new \Exception("Failed to load PHPMailer. Class does not exist.");
+        }
 
         $mail->isSMTP();
         $mail->Host = $config['host'];

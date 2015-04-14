@@ -126,7 +126,11 @@ class UserController extends BaseController
 
             // constructing the mail object
             $mailConfig = $this->appConfig['mail'];
-            $mail = new Message($mailConfig);
+            try {
+                $mail = new Message($mailConfig);
+            } catch (\Exception $e) {
+                exit($e->getMessage());
+            }
             $mail->setAddress($user->email);
             $mail->setSubject('[Shop review] New password');
             $mail->setBody(

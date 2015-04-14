@@ -61,7 +61,11 @@ class SmartyTemplate implements TemplateInterface
     ) {
         $this->path = $templatePath;
 
-        $this->template = new \Smarty();
+        if (class_exists('Smarty')) {
+            $this->template = new \Smarty();
+        } else {
+            throw new \Exception("Failed to load Smarty. Class does not exist.");
+        }
         $this->template->template_dir = $this->path . DS . 'templates';
         $this->template->compile_dir = $this->path . DS . 'templates_c';
         $this->template->cache_dir = $this->path . DS . 'cache';
