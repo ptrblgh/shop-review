@@ -2,6 +2,15 @@
 
 namespace Shopreview\Validator;
 
+/**
+ * String length validator
+ *
+ * Checks if the given string is between the options values.
+ * 
+ * @author Péter Balogh <peter.balogh@theory9.hu>
+ * @link https://github.com/ptrblgh/shop-review for source
+ * @link http://shop-review.theory9.hu for demo
+ */
 class LengthValidator extends AbstractValidator
 {
     /**
@@ -27,9 +36,9 @@ class LengthValidator extends AbstractValidator
     }
 
     /**
-     * Checks if data is empty
+     * Checks if the string length is in range
      * 
-     * @param $data
+     * @param string $data
      * @return boolean
      */
     public function isValid($data)

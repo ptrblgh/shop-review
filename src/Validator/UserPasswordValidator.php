@@ -6,6 +6,15 @@ use Shopreview\Session;
 use Shopreview\Crypt\Bcrypt;
 use Shopreview\Mvc\Model\User;
 
+/**
+ * User password validation
+ *
+ * Checks if the given password string belongs to the given username
+ * 
+ * @author Péter Balogh <peter.balogh@theory9.hu>
+ * @link https://github.com/ptrblgh/shop-review for source
+ * @link http://shop-review.theory9.hu for demo
+ */
 class UserPasswordValidator extends AbstractValidator
 {
     /**
@@ -30,10 +39,9 @@ class UserPasswordValidator extends AbstractValidator
     }
 
     /**
-     * Checks if the given data is the current user's password
+     * Checks if the given data is the user's password
      * 
-     * @param string $data
-     * 
+     * @param string $data the password
      * @return boolean
      */
     public function isValid($data)

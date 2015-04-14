@@ -2,6 +2,13 @@
 
 namespace Shopreview\Db;
 
+/**
+ * Mysql database adapter
+ * 
+ * @author Péter Balogh <peter.balogh@theory9.hu>
+ * @link https://github.com/ptrblgh/shop-review for source
+ * @link http://shop-review.theory9.hu for demo
+ */
 class MysqlDb implements DbAdapterInterface
 {
     /**
@@ -48,6 +55,8 @@ class MysqlDb implements DbAdapterInterface
 
     /**
      * Prevent creating a new instance
+     *
+     * @return void
      */
     protected function __construct()
     {
@@ -55,6 +64,8 @@ class MysqlDb implements DbAdapterInterface
 
     /**
      * Prevent unserializing
+     *
+     * @return void
      */
     private function __wake()
     {
@@ -62,6 +73,8 @@ class MysqlDb implements DbAdapterInterface
 
     /**
      * Prevent cloning
+     *
+     * @return void
      */
     private function __clone()
     {

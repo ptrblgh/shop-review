@@ -7,12 +7,21 @@ use Shopreview\Helper;
 use Shopreview\Session;
 use Shopreview\Mvc\Router;
 
+/**
+ * Shop review application singleton class
+ * 
+ * @author Péter Balogh <peter.balogh@theory9.hu>
+ * @link https://github.com/ptrblgh/shop-review for source
+ * @link http://shop-review.theory9.hu for demo
+ */
 class Application
 {
     protected $config;
 
     /**
      * Prevent creating a new instance
+     *
+     * @return void
      */
     protected function __construct()
     {
@@ -43,6 +52,8 @@ class Application
 
     /**
      * Run the application
+     *
+     * @return void
      */
     public function run()
     {
@@ -74,6 +85,8 @@ class Application
 
     /**
      * Prevent unserializing
+     * 
+     * @return void
      */
     private function __wake()
     {
@@ -81,6 +94,8 @@ class Application
 
     /**
      * Prevent cloning
+     *
+     * @return void
      */
     private function __clone()
     {

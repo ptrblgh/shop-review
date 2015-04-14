@@ -4,15 +4,56 @@ namespace Shopreview\Mvc\View;
 
 use Shopreview\Session;
 
+/**
+ * Smarty templating engine wrapper
+ * 
+ * @author Péter Balogh <peter.balogh@theory9.hu>
+ * @link https://github.com/ptrblgh/shop-review for source
+ * @link http://shop-review.theory9.hu for demo
+ */
 class SmartyTemplate implements TemplateInterface
 {
+    /**
+     * Smarty template file extension
+     */
     const EXTENSION = '.tpl';
 
+    /**
+     * Template files' path
+     * 
+     * @var string|null
+     */
     protected $path = null;
+
+    /**
+     * The template file to render
+     * 
+     * @var string|null
+     */
     protected $fileName = null;
+
+    /**
+     * Smarty object
+     * 
+     * @var \Smarty
+     */
     protected $template = null;
+
+    /**
+     * Parameters from the controller to the view
+     * 
+     * @var array
+     */
     protected $templateParams = array();
 
+    /**
+     * Constructor for setting class data
+     * 
+     * @param string $templatePath
+     * @param string $templateFileName
+     * @param array $templateParams
+     * @return void
+     */
     public function __construct(
         $templatePath, 
         $templateFileName, 
@@ -30,6 +71,11 @@ class SmartyTemplate implements TemplateInterface
         $this->templateParams = $templateParams;
     }
 
+    /**
+     * Renderer function
+     * 
+     * @return string text/html
+     */
     public function display()
     {
         if (is_array($this->templateParams)) {

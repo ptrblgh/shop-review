@@ -4,6 +4,13 @@ namespace Shopreview\Validator\FormValidator;
 
 use Shopreview\Validator\ValidatorInterface;
 
+/**
+ * Abstract class for form validators
+ * 
+ * @author Péter Balogh <peter.balogh@theory9.hu>
+ * @link https://github.com/ptrblgh/shop-review for source
+ * @link http://shop-review.theory9.hu for demo
+ */
 abstract class AbstractFormValidator implements ValidatorInterface
 {
     /**

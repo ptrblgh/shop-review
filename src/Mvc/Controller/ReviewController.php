@@ -4,11 +4,18 @@ namespace Shopreview\Mvc\Controller;
 
 use Shopreview;
 use Shopreview\Helper;
-use ShopReview\Session;
 use Shopreview\Mvc\Model\Review;
 use Shopreview\Mvc\Model\ReviewDbRepository;
+use ShopReview\Session;
 use Shopreview\Validator\FormValidator\ReviewFormValidator;
 
+/**
+ * Controller for review-related actions
+ * 
+ * @author Péter Balogh <peter.balogh@theory9.hu>
+ * @link https://github.com/ptrblgh/shop-review for source
+ * @link http://shop-review.theory9.hu for demo
+ */
 class ReviewController extends BaseController
 {
     /**
@@ -20,6 +27,8 @@ class ReviewController extends BaseController
 
     /**
      * Constructor for Controller
+     *
+     * @return void
      */
     public function __construct()
     {

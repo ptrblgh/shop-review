@@ -16,6 +16,13 @@ use Shopreview\Validator\FormValidator\ChangePasswordFormValidator;
 use Shopreview\Validator\FormValidator\LoginFormValidator;
 use Shopreview\Mvc\View\JsonTemplate;
 
+/**
+ * Controller for user-related actions
+ * 
+ * @author Péter Balogh <peter.balogh@theory9.hu>
+ * @link https://github.com/ptrblgh/shop-review for source
+ * @link http://shop-review.theory9.hu for demo
+ */
 class UserController extends BaseController
 {
     /**
@@ -42,6 +49,7 @@ class UserController extends BaseController
     {
         $data = Helper::sanitizeInput($_POST);
 
+        // add the crypted password to the form data array
         $bcrypt = new Bcrypt();
         $data['crypted_psw'] = $bcrypt->crypt($data['register_psw']);
 
@@ -50,6 +58,7 @@ class UserController extends BaseController
         if ($validator->isValid($data)) {
             $res = $this->getUserRepository()->saveUser($data);
 
+            // after successfull registration we log in the registered user
             if ($res) {
                 Session::getInstance()->username = $data['register_username'];
             } 
@@ -78,20 +87,6 @@ class UserController extends BaseController
             Session::getInstance()->form_errors = $validator->getErrors();
         }
 
-        // $options = array(
-        //     'repository' => $this->getUserRepository(),
-        //     'method' => 'findUser',
-        //     'username' => $data['login_username']
-        // );
-        // $validator 
-        //     = new LoggedInPasswordValidator($options);
-        // if ($validator->isValid($data['login_psw'])) {
-        //     Session::getInstance()->username = $data['login_username'];
-        // } else {
-        //     Session::getInstance()->form_errors 
-        //         = $validator->getOption('message');
-        // }
-
         header('Location: /', true, 302);
         exit();
     }
@@ -110,7 +105,7 @@ class UserController extends BaseController
     }
 
     /**
-     * Create new password for email
+     * Create new password for email and sends it to the e-mail
      * 
      * @return string application/json
      */
@@ -121,12 +116,15 @@ class UserController extends BaseController
         $user = $this->getUserRepository()->findByEmail($data['email']);
 
         if ($user) {
-            $newPsw = Helper::getRandomPsw();
+            // create the new password
+            $newPsw = Helper::getRandomString();
             $bcrypt = new BCrypt();
             $user->password = $bcrypt->crypt($newPsw);
 
+            // sets the generated, bcrypted password
             $this->getUserRepository()->updateUserPassword($user);
 
+            // constructing the mail object
             $mailConfig = $this->appConfig['mail'];
             $mail = new Message($mailConfig);
             $mail->setAddress($user->email);
@@ -136,11 +134,11 @@ class UserController extends BaseController
                 . 'Your new password: ' . $newPsw);
             $mailSent = $mail->send();
             if ($mailSent === true) {
+                // password change process ends, inform the user
                 $jsonData['status'] = 'success';
                 $jsonData['msg'] = 'A new password was sent.';
             } else {
                 $jsonData['status'] = 'error';
-                // $jsonData['msg'] = $mailSent;
                 $jsonData['msg'] = 'Please try again later.';
             }
         } else {
@@ -171,6 +169,7 @@ class UserController extends BaseController
             
             $ret = $validator->isValid($data);
 
+            // return information for the javascript
             $jsonData = ($ret === false) ? 'Username is taken.' : true;
 
             $view = new JsonTemplate($jsonData);
@@ -199,6 +198,7 @@ class UserController extends BaseController
             
             $ret = $validator->isValid($data);
 
+            // return information for the javascript
             $jsonData = ($ret === false) ? 'Email is already registered.' : true;
 
             $view = new JsonTemplate($jsonData);
@@ -222,6 +222,7 @@ class UserController extends BaseController
             new ChangePasswordFormValidator($this->getUserRepository());
 
         if ($form->isValid($data)) {
+            // create new bcrypted password for the user
             $bcrypt = new BCrypt();
             $user = new User();
             $user->password = $bcrypt->crypt($data['change_psw_psw']);
@@ -231,6 +232,7 @@ class UserController extends BaseController
                 $message = 'Password has changed.';
                 Session::getInstance()->form_errors = $message;
 
+                // if everything went good we log out the user too
                 return $this->logoutAction();
             }
         } else {

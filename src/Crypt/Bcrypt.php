@@ -2,6 +2,13 @@
 
 namespace Shopreview\Crypt;
 
+/**
+ * Bcrypt wrapper class
+ * 
+ * @author Péter Balogh <peter.balogh@theory9.hu>
+ * @link https://github.com/ptrblgh/shop-review for source
+ * @link http://shop-review.theory9.hu for demo
+ */
 class Bcrypt implements CryptInterface
 {
     /**
@@ -12,7 +19,8 @@ class Bcrypt implements CryptInterface
     /**
      * Setter for cost
      * 
-     * @param string $string
+     * @param int $string
+     * @return void
      */
     public function setCost($cost)
     {

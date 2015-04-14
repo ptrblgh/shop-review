@@ -2,10 +2,20 @@
 
 namespace Shopreview;
 
+/**
+ * A simple class for holding helper static functions
+ * 
+ * @author Péter Balogh <peter.balogh@theory9.hu>
+ * @link https://github.com/ptrblgh/shop-review for source
+ * @link http://shop-review.theory9.hu for demo
+ */
 class Helper
 {
     /**
     * Check register globals and remove them
+    *
+    * @static
+    * @return void
     */
     public static function unregisterGlobals() {
         if (ini_get('register_globals')) {
@@ -31,6 +41,9 @@ class Helper
     
     /** 
     * Check for Magic Quotes and remove them 
+    *
+    * @static
+    * @return mixed
     */
     public static function stripSlashesDeep($value) {
         $value = is_array($value) 
@@ -42,6 +55,9 @@ class Helper
     
     /**
     * Check for Magic Quotes and remove them
+    *
+    * @static
+    * @return void
     */
     public static function removeMagicQuotes() {
         if (get_magic_quotes_gpc() ) {
@@ -62,6 +78,10 @@ class Helper
 
     /**
     * Sanitize user input
+    *
+    * @static
+    * @param mixed $input
+    * @return mixed
     */
     public static function sanitizeInput($input)
     {
@@ -94,16 +114,18 @@ class Helper
     }
 
     /**
-     * Generates random password
+     * Generates random character string
      * 
+     * @static
      * @param  integer $length length of the returned string
      * @return string
      */
-    public static function getRandomPsw($length = 8) 
+    public static function getRandomString($length = 8) 
     {
-        $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_-=+;:,.?";
-        $password = substr(str_shuffle($chars), 0, $length);
+        $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567
+            89!@#$%^&*()_-=+;:,.?";
+        $string = substr(str_shuffle($chars), 0, $length);
         
-        return $password;
+        return $string;
     }
 }

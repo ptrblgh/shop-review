@@ -2,6 +2,13 @@
 
 namespace Shopreview\Mvc\Model;
 
+/**
+ * Review entity
+ * 
+ * @author Péter Balogh <peter.balogh@theory9.hu>
+ * @link https://github.com/ptrblgh/shop-review for source
+ * @link http://shop-review.theory9.hu for demo
+ */
 class Review
 {
     public $id;

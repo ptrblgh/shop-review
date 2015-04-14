@@ -7,6 +7,13 @@ use Shopreview\Mvc\Model\UserDbRepository;
 use Shopreview\Validator\FormValidator\AbstractFormValidator;
 use Shopreview\Validator;
 
+/**
+ * Validators for changing password form
+ * 
+ * @author Péter Balogh <peter.balogh@theory9.hu>
+ * @link https://github.com/ptrblgh/shop-review for source
+ * @link http://shop-review.theory9.hu for demo
+ */
 class ChangePasswordFormValidator extends AbstractFormValidator
 {
     /**
@@ -20,6 +27,7 @@ class ChangePasswordFormValidator extends AbstractFormValidator
      * Constructor for class
      * 
      * @param UserDbRepository $userRepository
+     * @return void
      */
     public function __construct(UserDbRepository $userRepository)
     {
@@ -38,6 +46,8 @@ class ChangePasswordFormValidator extends AbstractFormValidator
 
         foreach ($elements as $key => $val) {
             switch ($key) {
+                // user can only change password if he/she knows his/her 
+                // current one
                 case 'change_psw_current_psw':
                     $validator = new Validator\EmptyValidator();
                     if (!$validator->isValid($val)) {

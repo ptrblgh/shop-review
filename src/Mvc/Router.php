@@ -4,6 +4,13 @@ namespace Shopreview\Mvc;
 
 use Shopreview\Mvc\Controller\BaseController;
 
+/**
+ * Default router class for application
+ * 
+ * @author Péter Balogh <peter.balogh@theory9.hu>
+ * @link https://github.com/ptrblgh/shop-review for source
+ * @link http://shop-review.theory9.hu for demo
+ */
 class Router
 {
     const DEFAULT_CONTROLLER = 'Base';
@@ -11,14 +18,32 @@ class Router
     const DEFAULT_ACTION = 'index';
     const ACTION_POSTFIX = 'Action';
 
+    /**
+     * Route from the url
+     * 
+     * @var string
+     */
     protected $route = '';
+
+    /**
+     * Controller from the route
+     * 
+     * @var string
+     */
     protected $controller = '';
+
+    /**
+     * Action from the route
+     * 
+     * @var string
+     */
     protected $action;
 
     /**
-     * Constructor for router
+     * Constructor for router (with the help of .htaccess)
      *
      * @param string $route
+     * @return void
      */
     public function __construct($route = '')
     {
@@ -31,6 +56,8 @@ class Router
 
     /**
      * Parsing controller, action and parameters from route
+     *
+     * @return void
      */
     protected function parseRoute()
     {       
@@ -72,6 +99,8 @@ class Router
 
     /**
      * Dispatching request to the proper controller
+     *
+     * @return void
      */
     public function dispatch()
     {
@@ -81,6 +110,7 @@ class Router
 
         $controllerName = '\\Shopreview\\Mvc\\Controller\\' . $this->controller . self::CONTROLLER_POSTFIX;
 
+        // controller test, if not found redirect to the homepage
         if (class_exists($controllerName)) {
             $controller = new $controllerName();
         } elseif(!empty($this->controller)) {
@@ -88,11 +118,13 @@ class Router
             exit();
         }
 
+        // finalizing method name
         $methodName = $this->action . self::ACTION_POSTFIX;
         if (!$this->action || !method_exists($controller, $methodName)) {
             $methodName = self::DEFAULT_ACTION . self::ACTION_POSTFIX;
         }
 
+        // calling the proper class and method
         call_user_func_array(array($controller, $methodName), array());
     }
 }

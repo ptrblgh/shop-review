@@ -2,7 +2,13 @@
 
 namespace Shopreview;
 
-
+/**
+ * Singleton Class for wrapping session actons
+ * 
+ * @author Péter Balogh <peter.balogh@theory9.hu>
+ * @link https://github.com/ptrblgh/shop-review for source
+ * @link http://shop-review.theory9.hu for demo
+ */
 class Session
 {
     /**
@@ -21,6 +27,8 @@ class Session
 
     /**
      * Prevent creating a new instance
+     *
+     * @return void
      */
     protected function __construct()
     {
@@ -47,6 +55,8 @@ class Session
 
     /**
      * Prevent unserializing
+     *
+     * @return void
      */
     private function __wake()
     {
@@ -54,6 +64,8 @@ class Session
 
     /**
      * Prevent cloning
+     *
+     * @return void
      */
     private function __clone()
     {
@@ -77,6 +89,7 @@ class Session
      * 
      * @param string $key
      * @param mixed $val
+     * @return mixed
      */
     public function __set($key, $val)
     {
@@ -85,6 +98,8 @@ class Session
 
     /**
      * Destroying session
+     * 
+     * @return void
      */
     public function destroy()
     {
@@ -99,6 +114,8 @@ class Session
 
     /**
      * Writes the current session
+     *
+     * @return void
      */
     public function writeSession()
     {
@@ -107,10 +124,11 @@ class Session
 
     /**
      * Destructor
+     *
+     * @return void
      */
     public function __destruct()
     {
         $this->writeSession();
     }
 }
-

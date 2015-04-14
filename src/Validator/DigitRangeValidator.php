@@ -2,6 +2,16 @@
 
 namespace Shopreview\Validator;
 
+/**
+ * Digit range valaidtaor
+ *
+ * Checks if the given digit's value is in the range that was set up before. 
+ * Also can check if the given value is an integer.
+ * 
+ * @author Péter Balogh <peter.balogh@theory9.hu>
+ * @link https://github.com/ptrblgh/shop-review for source
+ * @link http://shop-review.theory9.hu for demo
+ */
 class DigitRangeValidator extends AbstractValidator
 {
     /**
@@ -28,7 +38,7 @@ class DigitRangeValidator extends AbstractValidator
     }
 
     /**
-     * Checks if data is empty
+     * Checks if data is valid or not
      * 
      * @param $data
      * @return boolean
@@ -42,6 +52,7 @@ class DigitRangeValidator extends AbstractValidator
         if (!$int && is_numeric($data) && $data >= $min && $data <= $max) {
             
             return true;
+        // integer check
         } elseif ($int 
             && (int) $data == $data
             && is_numeric($data) 
