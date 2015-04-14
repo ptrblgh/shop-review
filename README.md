@@ -19,8 +19,8 @@ A test task for demonstration.
 
 Thank you:
 
-* [Bootstrap 3](https://github.com/twbs/bootstrap)
+* [Bootstrap 3 front-end framework ](https://github.com/twbs/bootstrap)
 * [Smarty 3 template engine](https://github.com/smarty-php/smarty)
-* [PHPMailer](https://github.com/PHPMailer/PHPMailer)
+* [PHPMailer email creation and transfer class for PHP](https://github.com/PHPMailer/PHPMailer)
 
 And [password_compat](https://github.com/ircmaxell/password_compat) "to provide forward compatibility with the password_* functions being worked on for PHP 5.5".
