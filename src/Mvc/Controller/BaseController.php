@@ -110,7 +110,11 @@ class BaseController
 
         // average shop rating
         $templateParams['average_rating']
-            = $this->getReviewRepository()->getAverageRating();
+            = round($this->getReviewRepository()
+                ->getAverageRating()
+                ->avg_rating
+            )
+        ;
 
         // review lead length from application config
         $templateParams['review_lead'] 
