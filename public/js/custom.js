@@ -40,6 +40,49 @@ $( document ).ready( function() {
         return false;
     });
 
+    // ajax loader for reviews
+    var loading = false;
+
+    $(window).scroll(function () {
+        if ($(window).scrollTop() == ($(document).height() - $(window).height())
+            && !loading
+        ) {
+            
+            var items = $('#others-reviews .media').length;
+
+            loading = true;
+            $.ajax({
+                type: 'post',
+                url: '/review/batch',
+                dataType: 'html',
+                cache: false,               
+                data: { itemCount: parseInt(items, 10) }
+            }).done( function(data) {
+                try {                
+                    var $sw = $('.spinner-wrapper');
+
+                    if (data) {
+                        $sw.fadeIn(1000, function() {
+                            $('.spinner-wrapper').before(data);
+                            $('input.rating').rating('refresh');
+                        });
+                        $sw.fadeOut('fast', function() {
+                            loading = false;
+                        });
+                    }
+                } catch(e) {     
+                    console.log(e);
+                }                   
+            });
+        }
+    });
+
+    function loadData(items) {
+        var items = $('#others-reviews .media').length;        
+
+
+    }
+
     // smooth scroll
     $('a.smooth-scroll').click(function() {
         if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') 
@@ -61,7 +104,7 @@ $( document ).ready( function() {
     })
 
     // collapse
-    $('.collapse-btn').on('click', function(e) {
+    $('#others-reviews').on('click', '.collapse-btn', function(e) {
         e.preventDefault();
         var $this = $(this);
         var $collapse = $this.closest('p').find('.collapse-body');

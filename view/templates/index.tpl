@@ -112,7 +112,7 @@
             </p>
             <hr />
             <p class="text-center">
-                <input class="rating" value="{$average_rating->avg_rating}" data-min="0" data-max="5" data-step="1" data-readonly="true" data-size="sm">
+                <input class="rating" value="{$average_rating}" data-min="0" data-max="5" data-step="1" data-readonly="true" data-size="sm">
             </p>
             <hr />
         </div>
@@ -132,8 +132,9 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-xs-12">
+        <div id="others-reviews" class="col-xs-12">
 {include file="partial_reviews.tpl"}
+        <div class="spinner-wrapper text-center"><span class="spinner-icon"></span></div>
         </div>
     </div>
 </div>

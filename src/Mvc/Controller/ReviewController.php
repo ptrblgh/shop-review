@@ -6,6 +6,8 @@ use Shopreview;
 use Shopreview\Helper;
 use Shopreview\Mvc\Model\Review;
 use Shopreview\Mvc\Model\ReviewDbRepository;
+use Shopreview\Mvc\View\JsonTemplate;
+use Shopreview\Mvc\View\SmartyTemplate;
 use ShopReview\Session;
 use Shopreview\Validator\FormValidator\ReviewFormValidator;
 
@@ -68,6 +70,52 @@ class ReviewController extends BaseController
 
         header('Location: /', true, 302);
         exit();
+    }
+
+
+    /**
+     * Get reviews on scroll
+     * 
+     * @return string application/json
+     */
+    public function batchAction()
+    {
+        $data = Helper::sanitizeInput($_POST);
+
+        if (!empty(Session::getInstance()->username)) {
+            $reviewOptions = array(
+                'exclude' => Session::getInstance()->username,
+                'start' => $data['itemCount'] + 1,
+                'batch' => $this->appConfig['reviews']['batch']
+            );
+        } else {
+            $reviewOptions = array(
+                'exclude' => '',
+                'start' => $data['itemCount'] + 1,
+                'batch' => $this->appConfig['reviews']['batch']
+            );            
+        }
+
+        $ret = $this->getReviewRepository()->fetchAll($reviewOptions);
+
+        if ($ret) {
+            $templatePath = $this->appConfig['template_path'];
+
+            $templateParams = array();
+
+            $templateParams['reviews'] = $ret;
+
+            $templateParams['review_lead'] 
+                = $this->appConfig['reviews']['body_lead'];
+
+            $view = new SmartyTemplate(
+                $templatePath, 
+                $this->getTemplateFileName('partial_reviews'), 
+                $templateParams
+            );
+
+            echo $view->display();
+        }
     }
 
     /**
