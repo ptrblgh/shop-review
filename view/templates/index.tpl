@@ -12,7 +12,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-
+    <title>Shop review</title>
     <link rel="stylesheet" type="text/css" media="all" href="/css/star-rating.min.css"/>
     <link rel="stylesheet" type="text/css" media="screen" href="/css/shop-review.css" />
 </head>
